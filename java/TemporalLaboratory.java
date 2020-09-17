@@ -59,7 +59,7 @@ public class TemporalLaboratory{
                 lEnd = Integer.parseInt(ts.substring(1));
                 ts = tsA[3];
                 lWeight = Double.parseDouble(ts.substring(1));
-                lab.network.addSuccessor(new Successor(lStart,lWeight,lEnd));
+                lab.network.addEdge(new Edge(lStart,lWeight,lEnd));
             }
             System.out.println("Finished network creation.");
         } catch (NullPointerException np){
