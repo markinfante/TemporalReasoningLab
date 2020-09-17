@@ -20,9 +20,9 @@ public abstract class TemporalNetwork{
     }
 
     abstract void addNode();
-    abstract void addEdge(Successor successor);
+    abstract void addEdge(Edge edge);
     abstract void removeNode();
-    abstract void removeEdge(Successor successor);
-    abstract void addSuccessor(Successor successor);
+    abstract void removeEdge(Edge edge);
+    abstract void addEdge(Edge edge);
 
 }
