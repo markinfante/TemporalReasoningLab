@@ -1,5 +1,7 @@
 package java;
 
+import java.util.List;
+
 /* TemporalNetwork.java
  * Author: Mark Infante
  *      Abstract class for temporal networks. 
@@ -8,6 +10,8 @@ package java;
 
 public abstract class TemporalNetwork{
     TemporalNetworks networkType; 
+    List<String> timePointNames;
+    Integer numTimePoints;
 
     public TemporalNetwork(){}
 
@@ -17,6 +21,22 @@ public abstract class TemporalNetwork{
 
     public TemporalNetworks getNetType(){
         return networkType;
+    }
+
+    public void setTimePointNames(List<String> timePointNames){
+        this.timePointNames = timePointNames;
+    }
+
+    public Integer getNumTimePoints(){
+        return numTimePoints;
+    }
+
+    public void setNumTimePoints(Integer numTimePoints){
+        this.numTimePoints = numTimePoints;
+    }
+
+    public List<String> getTimePointNames(){
+        return timePointNames;
     }
 
     abstract void addNode();

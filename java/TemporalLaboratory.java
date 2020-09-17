@@ -2,6 +2,9 @@ package java;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /* TemporalLaboratory.java
@@ -27,10 +30,13 @@ public class TemporalLaboratory{
         File file = null;   // Resource file containing type of network and constraints
         Scanner scanner = null; // Scanner for file     
         String ts; // Temporary string for reading from file 
-        String[] tsA; // Temporary string array
         Integer lStart = 0;   // Local start node 
         Integer lEnd = 0;     // Local end node
         Double lWeight = 0.0; // Local edge weight
+        Integer numTimePoints = 0; 
+        List<String> timePointNames = new ArrayList<String>();
+        List<String> pseudoEdge = new ArrayList<String>();
+
 
         if (args.length != 1){
             System.out.println("Temporal laboratory should take in a resource file of graph constraints.");
@@ -40,6 +46,7 @@ public class TemporalLaboratory{
             file = new File("/" + args[0]);
             scanner = new Scanner(file);
             if (scanner.hasNext()){
+                scanner.nextLine();
                 ts = scanner.nextLine(); // Get network type 
                 switch (ts) {   
                     case "STN": lab = new TemporalLaboratory(TemporalNetworks.STN);
@@ -50,14 +57,20 @@ public class TemporalLaboratory{
                 System.out.println("File is empty.");
                 return; 
             }
+            scanner.nextLine();
+            ts = scanner.nextLine();  // Get num time points
+            numTimePoints = Integer.parseInt(ts);
+            lab.network.setNumTimePoints(numTimePoints);
+            scanner.nextLine();
+            ts = scanner.nextLine();  // Get time point names
+            timePointNames = Arrays.asList(ts.split(" "));
+            lab.network.setTimePointNames(timePointNames);
+            scanner.nextLine();
             while (scanner.hasNext()){   // Get constraints
                 ts = scanner.nextLine();
-                tsA = ts.split("[ <=]+");
-                ts = tsA[0];
-                lStart = Integer.parseInt(ts.substring(1));
-                ts = tsA[2];
-                lEnd = Integer.parseInt(ts.substring(1));
-                ts = tsA[3];
+                pseudoEdge = Arrays.asList(ts.split(" "));
+                lStart = timePointNames.indexOf(pseudoEdge.get(0));
+                lEnd = timePointNames.indexOf(pseudoEdge.get(2));
                 lWeight = Double.parseDouble(ts.substring(1));
                 lab.network.addEdge(new Edge(lStart,lWeight,lEnd));
             }
