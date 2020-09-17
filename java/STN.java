@@ -39,8 +39,14 @@ public class STN extends TemporalNetwork{
     }
 
     @Override
-    void addEdge(Edge edge) {
+    void addNode() {
         // TODO: all
+    }
+
+    @Override
+    void removeNode() {
+        // TODO Auto-generated method stub
+
     }
     
 }
