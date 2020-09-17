@@ -14,7 +14,7 @@ public class Edge{
 
     // @params 
     // successor = (X, d, Y) = (Integer, Double, Integer)
-    public Edge(Integer startNode, Double weight, Integer endNode){
+    public Edge(Integer startNode, Integer endNode, Double weight){
         this.startNode = startNode;
         this.weight = weight;
         this.endNode = endNode; 
