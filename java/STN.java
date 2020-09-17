@@ -24,32 +24,22 @@ public class STN extends TemporalNetwork{
 
     // @params A list of edge 3-tuples (X, d, Y) where X is start node,
     //         Y is end node, and d is the edge weight.
-    public STN(ArrayList<Successor> graph){
+    public STN(ArrayList<Edge> graph){
         // TODO: convert a list of 3-tuples (X, d, Y) into a STN.
     }
 
     @Override
-    public void addNode(){
+    public void addEdge(Edge edge){
         // TODO: all
     }
 
     @Override
-    public void removeNode(){
+    public void removeEdge(Edge edge){
         // TODO: all
     }
 
     @Override
-    public void addEdge(Successor successor){
-        // TODO: all
-    }
-
-    @Override
-    public void removeEdge(Successor successor){
-        // TODO: all
-    }
-
-    @Override
-    void addSuccessor(Successor successor) {
+    void addEdge(Edge edge) {
         // TODO: all
     }
     
