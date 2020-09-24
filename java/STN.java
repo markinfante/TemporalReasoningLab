@@ -1,5 +1,3 @@
-package java;
-
 import java.util.*;
 
 /* STN.java
@@ -10,24 +8,33 @@ import java.util.*;
 
 public class STN extends TemporalNetwork{
     
-    private List<Map<String, Object>> successors;   // A 2D vector that holds information about a node's successors.
+    private List<Map<Integer, Edge>> successors;   // A 2D vector that holds information about a node's successors.
     private List<Integer> numSuccessors;            // Number of successor nodes for corresponding node index
-    private List<? extends List <Integer>> edgesMatrix;        // A 2D matrix of edge weights for corresponding node index pair
+    private List<ArrayList <Double>> edgesMatrix;        // A 2D matrix of edge weights for corresponding node index pair
 
     // Default constructor for simple temporal network
     public STN(){
         setNetType(TemporalNetworks.STN);
         numSuccessors = new ArrayList<Integer>();
         successors = new Vector<Map<Integer, Edge>>(); //iniitialize successors as a Vector
-        edgesMatrix = new ArrayList<ArrayList<Integer>>();
+        edgesMatrix = new ArrayList<ArrayList<Double>>();
         
+    }
+    
+    public void init(){
         int tps = super.getNumTimePoints(); //populate the spaces in the vector, based on the number of timepoints
         for (int i = 0; i < tps; i++) {
             successors.add(i, new HashMap<Integer, Edge>()); 
             numSuccessors.add(0);
-            edgesMatrix.add(i, new ArrayList<Integer>);
+            edgesMatrix.add(i, new ArrayList<Double>());
+            for (int k = 0; k < tps; k++)
+            {
+                edgesMatrix.get(i).add(0.0);
+            }
         }
         
+        
+        //System.out.println(edgesMatrix);
     }
 
     /* @params A list of edge 3-tuples (X, d, Y) where X is start node,
@@ -44,7 +51,7 @@ public class STN extends TemporalNetwork{
         // TODO: all
         Integer x = edge.getStart();
         Integer y = edge.getEnd();
-        Integer d = edge.getWeight();
+        Double d = edge.getWeight();
         Edge e = successors.get(x).get(y);
         
         if (e == null){ //if an edge doesn't exist in successors, input the given edge argument. also increment numsuccessors, since we are adding a new edge
@@ -60,6 +67,8 @@ public class STN extends TemporalNetwork{
 
     @Override
     public void removeEdge(Edge edge){
+        Integer x = edge.getStart();
+        Integer y = edge.getEnd();
         Edge e = successors.get(x).get(y);
         if (edge == null){
             System.out.println("Cannot remove edge because edge does not exist.");
@@ -68,13 +77,13 @@ public class STN extends TemporalNetwork{
         else {
             successors.get(x).put(y, null);
             numSuccessors.set(x, numSuccessors.get(x)-1);
-            edgesMatrix.get(x).set(y, 0);
+            edgesMatrix.get(x).set(y, 0.0);
         }
         return;
     }
     
     public Edge getEdge(Integer src, Integer dest){
-        return successors.get(x).get(y);
+        return successors.get(src).get(dest);
     }
 
     @Override
@@ -90,4 +99,8 @@ public class STN extends TemporalNetwork{
 
     }
     
+    public String toString()
+    {
+        return successors + "";
+    }
 }
