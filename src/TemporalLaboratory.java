@@ -66,6 +66,7 @@ public class TemporalLaboratory{
             lab.network.setTimePointNames(timePointNames);
             scanner.nextLine();
             System.out.println("Edges: ");
+            lab.network.init();
             while (scanner.hasNext()){   // Get constraints
                 ts = scanner.nextLine();
                 pseudoEdge = Arrays.asList(ts.split(" "));
