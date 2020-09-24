@@ -38,7 +38,8 @@ public abstract class TemporalNetwork{
     public List<String> getTimePointNames(){
         return timePointNames;
     }
-
+    
+    abstract void init();
     abstract void addNode();
     abstract void addEdge(Edge edge);
     abstract void removeNode();
