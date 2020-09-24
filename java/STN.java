@@ -21,7 +21,7 @@ public class STN extends TemporalNetwork{
         
     }
     
-    public void init(){
+    public void init(){ 
         int tps = super.getNumTimePoints(); //populate the spaces in the vector, based on the number of timepoints
         for (int i = 0; i < tps; i++) {
             successors.add(i, new HashMap<Integer, Edge>()); 
