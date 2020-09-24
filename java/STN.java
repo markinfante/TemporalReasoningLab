@@ -19,15 +19,13 @@ public class STN extends TemporalNetwork{
         setNetType(TemporalNetworks.STN);
         numSuccessors = new ArrayList<Integer>();
         successors = new Vector<Map<Integer, Edge>>(); //iniitialize successors as a Vector
+        edgesMatrix = new ArrayList<ArrayList<Integer>>();
         
         int tps = super.getNumTimePoints(); //populate the spaces in the vector, based on the number of timepoints
         for (int i = 0; i < tps; i++) {
             successors.add(i, new HashMap<Integer, Edge>()); 
-        }
-        
-        int tps = super.getNumTimePoints(); //populate the spaces in the vector, based on the number of timepoints
-        for (int i = 0; i < tps; i++) {
-            numSuccessors.add(0); 
+            numSuccessors.add(0);
+            edgesMatrix.add(i, new ArrayList<Integer>);
         }
         
     }
@@ -52,9 +50,11 @@ public class STN extends TemporalNetwork{
         if (e == null){ //if an edge doesn't exist in successors, input the given edge argument. also increment numsuccessors, since we are adding a new edge
             successors.get(x).put(y, edge);
             numSuccessors.set(x, numSuccessors.get(x)+1);
+            edgesMatrix.get(x).add(y, d);
         }
         else if (e != null && (e.getWeight() > d)){ //else if new edge gives a shorter path from x->y than the old edge, replace the old edge with the new one
             successors.get(x).put(y, edge);
+            edgesMatrix.get(x).set(y, d);
         }
     }
 
@@ -68,6 +68,7 @@ public class STN extends TemporalNetwork{
         else {
             successors.get(x).put(y, null);
             numSuccessors.set(x, numSuccessors.get(x)-1);
+            edgesMatrix.get(x).set(y, 0);
         }
         return;
     }
