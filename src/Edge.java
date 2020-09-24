@@ -1,4 +1,4 @@
-package java;
+package src;
 
 /* Edge.java
  * Author: Mark Infante
@@ -13,11 +13,11 @@ public class Edge{
     private Double weight; 
 
     // @params 
-    // successor = (X, d, Y) = (Integer, Double, Integer)
-    public Edge(Integer startNode, Double weight, Integer endNode){
+    // successor = (X, d, Y) = (Integer, Integer, Double)
+    public Edge(Integer startNode, Integer endNode, Double weight){
         this.startNode = startNode;
-        this.weight = weight;
         this.endNode = endNode; 
+        this.weight = weight;
     }
 
     public Integer getStart(){

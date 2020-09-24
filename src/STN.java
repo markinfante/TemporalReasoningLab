@@ -1,18 +1,20 @@
-package java;
+package src;
 
 import java.util.*;
 
-/* STN.java
- * Author: Mark Infante
+/** STN.java
  *      A Simple Temporal Network extending TemporalNetwork
  *      Allows for creation of directed, weighted graph  
+ *  @author Mark Infante
 */
 
 public class STN extends TemporalNetwork{
     
-    private List<? extends List <Integer>> successorsMatrix;   // A 2D matrix of nodes and their successors 
-    private List<Integer> numSuccessors;            // Number of successor nodes for corresponding node index
-    private List<? extends List <Integer>> edgesMatrix;        // A 2D matrix of edge weights for corresponding node index pair
+    private ArrayList<? extends List <Integer>> successorsMatrix;   // A 2D matrix of nodes and their successors 
+    private ArrayList<? extends List <Integer>> predsMatrix; 
+    private ArrayList<Integer> numSuccessors;            // Number of successor nodes for corresponding node index
+    private ArrayList<? extends List <Integer>> edgesMatrix;        // A 2D matrix of edge weights for corresponding node index pair
+    private ArrayList<? extends List <Integer>> distanceMatrix; 
 
     // Default constructor for simple temporal network
     public STN(){
