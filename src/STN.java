@@ -1,3 +1,4 @@
+package src;
 import java.util.*;
 
 /* STN.java
@@ -31,24 +32,14 @@ public class STN extends TemporalNetwork{
             {
                 edgesMatrix.get(i).add(0.0);
             }
-        }
-        
-        
-        //System.out.println(edgesMatrix);
+        }   
     }
 
-    /* @params A list of edge 3-tuples (X, d, Y) where X is start node,
-    //         Y is end node, and d is the edge weight.
-    public STN(ArrayList<Edge> graph){
-        // TODO: convert a list of 3-tuples (X, d, Y) into a STN.
-        
-        
-    }*/
 
     @Override 
     // @params An existing STN s and an Edge object edge consisting of a source, destination, and a weight.
     public void addEdge(Edge edge){ 
-        // TODO: all
+        // TODO: test
         Integer x = edge.getStart();
         Integer y = edge.getEnd();
         Double d = edge.getWeight();
@@ -58,8 +49,7 @@ public class STN extends TemporalNetwork{
             successors.get(x).put(y, edge);
             numSuccessors.set(x, numSuccessors.get(x)+1);
             edgesMatrix.get(x).add(y, d);
-        }
-        else if (e != null && (e.getWeight() > d)){ //else if new edge gives a shorter path from x->y than the old edge, replace the old edge with the new one
+        } else if (e.getWeight() > d){ //else if new edge gives a shorter path from x->y than the old edge, replace the old edge with the new one
             successors.get(x).put(y, edge);
             edgesMatrix.get(x).set(y, d);
         }
@@ -69,16 +59,11 @@ public class STN extends TemporalNetwork{
     public void removeEdge(Edge edge){
         Integer x = edge.getStart();
         Integer y = edge.getEnd();
-        Edge e = successors.get(x).get(y);
-        if (edge == null){
-            System.out.println("Cannot remove edge because edge does not exist.");
-            return;
-        }
-        else {
-            successors.get(x).put(y, null);
-            numSuccessors.set(x, numSuccessors.get(x)-1);
-            edgesMatrix.get(x).set(y, 0.0);
-        }
+        
+        successors.get(x).put(y, null);
+        numSuccessors.set(x, numSuccessors.get(x)-1);
+        edgesMatrix.get(x).set(y, 0.0);
+        
         return;
     }
     
@@ -99,8 +84,8 @@ public class STN extends TemporalNetwork{
 
     }
     
-    public String toString()
-    {
+    public String toString(){
+        // TODO: test
         return successors + "";
     }
 }
