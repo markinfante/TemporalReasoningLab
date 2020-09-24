@@ -25,6 +25,11 @@ public class STN extends TemporalNetwork{
             successors.add(i, new HashMap<Integer, Edge>()); 
         }
         
+        int tps = super.getNumTimePoints(); //populate the spaces in the vector, based on the number of timepoints
+        for (int i = 0; i < tps; i++) {
+            numSuccessors.add(0); 
+        }
+        
     }
 
     /* @params A list of edge 3-tuples (X, d, Y) where X is start node,
@@ -44,18 +49,26 @@ public class STN extends TemporalNetwork{
         Integer d = edge.getWeight();
         Edge e = successors.get(x).get(y);
         
-        if (e == null){ //if an edge doesn't exist in successors, input the given edge argument
+        if (e == null){ //if an edge doesn't exist in successors, input the given edge argument. also increment numsuccessors, since we are adding a new edge
+            successors.get(x).put(y, edge);
+            numSuccessors.set(x, numSuccessors.get(x)+1);
+        }
+        else if (e != null && (e.getWeight() > d)){ //else if new edge gives a shorter path from x->y than the old edge, replace the old edge with the new one
             successors.get(x).put(y, edge);
         }
-        else if (e != null && (e.getWeight() > d)){ //else if new edge gives a shorder path from x->y than the old edge, replace the old edge with the new one
-            successors.get(x).put(y, edge);
-        }
-            
     }
 
     @Override
     public void removeEdge(Edge edge){
-        successors.get(x).put(y, null);
+        Edge e = successors.get(x).get(y);
+        if (edge == null){
+            System.out.println("Cannot remove edge because edge does not exist.");
+            return;
+        }
+        else {
+            successors.get(x).put(y, null);
+            numSuccessors.set(x, numSuccessors.get(x)-1);
+        }
         return;
     }
     
