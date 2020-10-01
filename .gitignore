@@ -1,6 +1,6 @@
-/Edge.class
-/STN.class
-/TemporalLaboratory.class
-/TemporalNetwork.class
-/TemporalNetworks.class
-/BellmanFord.class
+/src/Edge.class
+/src/STN.class
+/src/TemporalLaboratory.class
+/src/TemporalNetwork.class
+/src/TemporalNetworks.class
+/src/BellmanFord.class
