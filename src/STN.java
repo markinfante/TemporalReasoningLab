@@ -5,6 +5,7 @@ import java.util.*;
  * Allows for creation of directed, weighted graph.
  * Extends TemporalNetwork.
  * @author Mark Infante
+ * @author Ciara O'Donnell
 */
 
 public class STN extends TemporalNetwork{
@@ -15,6 +16,7 @@ public class STN extends TemporalNetwork{
     private List<Map<Integer, Edge>> predecessors;  // A 2D vector that holds information about a node's preds.
 
     // Default constructor for simple temporal network
+    // TODO: Figure out how to prompt if wanting a distance matrix 
     public STN(){
         setNetType(TemporalNetworks.STN);
         numSuccessors = new ArrayList<Integer>();
@@ -36,25 +38,7 @@ public class STN extends TemporalNetwork{
         }   
     }
 
-    @Override
-    public void init(boolean wantDistanceMatrix, MatrixGeneratorType generatorType){
-        init();
-        if (wantDistanceMatrix == false) return;
-        switch (generatorType) {
-            case FWARSHALL:
-                FloydWarshall fw = new FloydWarshall(this);
-                this.setDistanceMatrix(fw.generateMatrix());
-                break;
-            case JOHNSONS:
-                break;
-            default:
-                break;
-        }
-
-    }
-
     @Override 
-    // @params An existing STN s and an Edge object edge consisting of a source, destination, and a weight.
     public void addEdge(Edge edge){ 
         // TODO: test
         Integer x = edge.getStart();
@@ -86,17 +70,17 @@ public class STN extends TemporalNetwork{
     
     @Override
     public Edge getEdge(Integer src, Integer dest){
-        return successors.get(src).get(dest);
+        return edgesMatrix.get(src).get(dest);
     }
 
     @Override
-    void addNode() {
+    public void addNode() {
         // TODO: all
         return;
     }
 
     @Override
-    void removeNode() {
+    public void removeNode() {
         // TODO Auto-generated method stub
         return;
 
@@ -107,8 +91,33 @@ public class STN extends TemporalNetwork{
         return edgesMatrix.size();
     }
     
+    @Override
     public String toString(){
         // TODO: test
-        return successors + "";
+        String output = "\nPrinting network: \n\n";
+        Edge tEdge = null;
+        for (int y = 0; y < getSizeEdgesMatrix() + 1; y++){
+            for (int x = 0; x <= getSizeEdgesMatrix() + 1; x++){
+                if (x == getSizeEdgesMatrix()+1){     // Create new line in matrix
+                    output = output + "\n\n";
+                } else if (y == 0){     // Create first row of start nodes
+                    if (x == 0) {       // Skip a space for alignment at 0,0 because we use 0 as a node
+                        output = output + "\t\t" + Integer.toString(x); 
+                    } else if (x < getSizeEdgesMatrix()){            
+                        output = output + "\t" + Integer.toString(x);
+                    }
+                } else if (x == 0){     // Create first column of end nodes
+                    output = output + "\t" + Integer.toString(y - 1); 
+                } else {
+                    tEdge = this.getEdge(x-1, y-1);
+                    if (tEdge == null) {
+                        output = output + "\t" + "null";
+                    } else {
+                        output = output + "\t" + tEdge.getWeight().toString();
+                    }
+                }
+            }
+        }
+        return output;
     }
 }
