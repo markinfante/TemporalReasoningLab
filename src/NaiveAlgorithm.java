@@ -2,7 +2,7 @@ public class NaiveAlgorithm
 {
     private TemporalNetwork network;
 
-    public NaiveAlgorithm()
+    public NaiveAlgorithm(TemporalNetwork network)
     {
         this.network = network;
     }
@@ -12,7 +12,7 @@ public class NaiveAlgorithm
         Integer x = edge.getStart();
         Integer y = edge.getEnd();
         Double ew = edge.getWeight();
-        network.addEdge(e) // is this necessary??
+        network.addEdge(e) //add edge to network graph
 
         for (int u = 0; u < dm.size(); u++){
             for (int v = 0; v < dm.size(); v++){
