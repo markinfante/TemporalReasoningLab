@@ -16,6 +16,7 @@ public class STN extends TemporalNetwork{
     private List<Map<Integer, Edge>> predecessors;  // A 2D vector that holds information about a node's preds.
 
     // Default constructor for simple temporal network
+    // TODO: Figure out how to prompt if wanting a distance matrix 
     public STN(){
         setNetType(TemporalNetworks.STN);
         numSuccessors = new ArrayList<Integer>();
@@ -35,23 +36,6 @@ public class STN extends TemporalNetwork{
                 edgesMatrix.get(i).add(null);
             }
         }   
-    }
-
-    @Override
-    public void init(boolean wantDistanceMatrix, MatrixGeneratorType generatorType){
-        init();
-        if (wantDistanceMatrix == false) return;
-        switch (generatorType) {
-            case FWARSHALL:
-                FloydWarshall fw = new FloydWarshall(this);
-                this.setDistanceMatrix(fw.generateMatrix());
-                break;
-            case JOHNSONS:
-                break;
-            default:
-                break;
-        }
-
     }
 
     @Override 

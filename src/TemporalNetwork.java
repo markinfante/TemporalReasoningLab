@@ -53,7 +53,6 @@ public abstract class TemporalNetwork{
     }
     
     public abstract void init();
-    public abstract void init(boolean wantDistanceMatrix, MatrixGeneratorType generatorType);
     public abstract void addNode();
     public abstract void addEdge(Edge edge);
     public abstract void removeNode();

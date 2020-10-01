@@ -13,7 +13,9 @@ public class FloydWarshall {
     /**
      * Creates a new instance of the algorithm and intitializes output matrix.
      * @param network The local temporal network 
+     * @deprecated
      */
+    @Deprecated
     public FloydWarshall(TemporalNetwork network){
         Edge tEdge = null;  // temp edge
 

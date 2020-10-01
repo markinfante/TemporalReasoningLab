@@ -37,7 +37,6 @@ public class TemporalLaboratory{
         Integer numTimePoints = 0; 
         List<String> timePointNames = new ArrayList<String>();
         List<String> pseudoEdge = new ArrayList<String>();
-        Boolean finsihedReading = false;
 
         if (args.length != 1){
             System.out.println("Temporal laboratory should take in a resource file of graph constraints.");
