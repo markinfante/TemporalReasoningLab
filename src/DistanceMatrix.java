@@ -10,7 +10,7 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
     private ConsistencyCheckerType checkType;
     private TemporalNetwork network;
 
-    public DistanceMatrix(TemporalNetwork network,){
+    public DistanceMatrix(TemporalNetwork network){
         upToDate = false; 
         incType = null;
         checkType = null;
@@ -35,7 +35,7 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
     public void incrementMatrix(Edge edge){
         switch(incType){
             case NAIVE:
-                NaiveAlgorithm na = new NaiveAlgorithm(tn); 
+                NaiveAlgorithm na = new NaiveAlgorithm(network);
                 na.updateDistanceMatrix(edge, this);
                 break;
             case TWOPHASE:

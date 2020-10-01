@@ -31,4 +31,5 @@ public class Edge{
     public Double getWeight(){
         return weight;
     }
+
 }
