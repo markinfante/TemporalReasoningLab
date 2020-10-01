@@ -31,4 +31,9 @@ public class Edge{
     public Double getWeight(){
         return weight;
     }
+
+    @Override
+    public String toString(){
+        return startNode.toString() + "-->" + endNode.toString() + ": " + weight.toString();
+    }
 }

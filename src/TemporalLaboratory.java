@@ -28,7 +28,8 @@ public class TemporalLaboratory{
     public static void main(String[] args){
         TemporalLaboratory lab = null; 
         File file = null;   // Resource file containing type of network and constraints
-        Scanner scanner = null; // Scanner for file     
+        Scanner fileScanner = null; // Scanner for file
+        Scanner inputScanner = null;     
         String ts; // Temporary string for reading from file 
         Integer lStart = 0;   // Local start node 
         Integer lEnd = 0;     // Local end node
@@ -36,6 +37,7 @@ public class TemporalLaboratory{
         Integer numTimePoints = 0; 
         List<String> timePointNames = new ArrayList<String>();
         List<String> pseudoEdge = new ArrayList<String>();
+        Boolean finsihedReading = false;
 
         if (args.length != 1){
             System.out.println("Temporal laboratory should take in a resource file of graph constraints.");
@@ -43,10 +45,10 @@ public class TemporalLaboratory{
         }
         try {
             file = new File("resources/" + args[0]);
-            scanner = new Scanner(file);
-            if (scanner.hasNext()){
-                scanner.nextLine();
-                ts = scanner.nextLine().trim(); // Get network type 
+            fileScanner = new Scanner(file);
+            if (fileScanner.hasNext()){
+                fileScanner.nextLine();
+                ts = fileScanner.nextLine().trim(); // Get network type 
                 TemporalNetworks typ = TemporalNetworks.valueOf(ts);
                 System.out.println("Type of temporal network: " + typ.toString());
                 lab = new TemporalLaboratory(typ);
@@ -54,21 +56,21 @@ public class TemporalLaboratory{
                 System.out.println("File is empty.");
                 return; 
             }
-            scanner.nextLine();
-            ts = scanner.nextLine();  // Get num time points
+            fileScanner.nextLine();
+            ts = fileScanner.nextLine();  // Get num time points
             numTimePoints = Integer.parseInt(ts);
             System.out.println("Number of time points: " + ts);
             lab.network.setNumTimePoints(numTimePoints);
-            scanner.nextLine();
-            ts = scanner.nextLine();  // Get time point names
+            fileScanner.nextLine();
+            ts = fileScanner.nextLine();  // Get time point names
             timePointNames = Arrays.asList(ts.split(" "));
             System.out.println("Time point names: \n" + ts);
             lab.network.setTimePointNames(timePointNames);
-            scanner.nextLine();
+            fileScanner.nextLine();
             lab.network.init();
             System.out.println("Edges: ");
-            while (scanner.hasNext()){   // Get constraints
-                ts = scanner.nextLine();
+            while (fileScanner.hasNext()){   // Get constraints
+                ts = fileScanner.nextLine();
                 pseudoEdge = Arrays.asList(ts.split(" "));
                 lStart = timePointNames.indexOf(pseudoEdge.get(0));
                 lEnd = timePointNames.indexOf(pseudoEdge.get(2));
@@ -84,7 +86,23 @@ public class TemporalLaboratory{
         } catch (Exception e){
             System.err.println(e);
         } finally {
-            if (scanner != null){ scanner.close(); }     
+            if (fileScanner != null){ fileScanner.close(); }     
+        }
+        try {
+            inputScanner = new Scanner(System.in);
+            while (inputScanner.hasNext()){
+                ts = inputScanner.nextLine().trim();
+                if (ts.equals("print") || ts.equals("p")){
+                    System.out.println(lab.network.toString());
+                } else if (ts.equals("quit") || ts.equals("q")){
+                    break;
+                }
+            }
+            
+            
+            
+        } catch (Exception e){
+            System.err.println("In lab class: " + e);
         }
         
     }

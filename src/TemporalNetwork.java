@@ -51,13 +51,13 @@ public abstract class TemporalNetwork{
         return distanceMatrix;
     }
     
-    abstract void init();
-    abstract void init(boolean wantDistanceMatrix, MatrixGeneratorType generatorType);
-    abstract void addNode();
-    abstract void addEdge(Edge edge);
-    abstract void removeNode();
-    abstract void removeEdge(Edge edge);
-    abstract Edge getEdge(Integer x, Integer y);
-    abstract Integer getSizeEdgesMatrix();  // This doesn't belong here but theres a lot to move around for now, so leave it -mark
-
+    public abstract void init();
+    public abstract void init(boolean wantDistanceMatrix, MatrixGeneratorType generatorType);
+    public abstract void addNode();
+    public abstract void addEdge(Edge edge);
+    public abstract void removeNode();
+    public abstract void removeEdge(Edge edge);
+    public abstract Edge getEdge(Integer x, Integer y);
+    public abstract Integer getSizeEdgesMatrix();  // This doesn't belong here but theres a lot to move around for now, so leave it -mark
+    public abstract String toString();
 }
