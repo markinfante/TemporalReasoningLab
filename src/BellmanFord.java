@@ -3,7 +3,8 @@ package src;
 /* 
  * BellmanFord.java
  * Author: Jonathan Fong
-=======
+ */
+
 /** 
  * Implementation of the Bellman-Ford algorithm
  * @author Jonathan Fong
@@ -37,9 +38,6 @@ public class BellmanFord {
 	 *  dist(v) = min{dist(v), dist(u)+l(u,v)}
 	 */
 	
-<<<<<<< HEAD
-	
-=======
 	private TemporalNetwork network;
 	private DistanceMatrix outputmatrix;
 	
@@ -98,5 +96,4 @@ public class BellmanFord {
         }
         return outputMatrix;
     }
->>>>>>> 88616efc09eef45f93ad63af0a5b91649e9c1ad6
 }
