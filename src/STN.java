@@ -39,7 +39,6 @@ public class STN extends TemporalNetwork{
     }
 
     @Override 
-    // @params An existing STN s and an Edge object edge consisting of a source, destination, and a weight.
     public void addEdge(Edge edge){ 
         // TODO: test
         Integer x = edge.getStart();
