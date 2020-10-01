@@ -10,7 +10,7 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
     private ConsistencyCheckerType checkType;
     private TemporalNetwork network;
 
-    public DistanceMatrix(TemporalNetwork network,){
+    public DistanceMatrix(TemporalNetwork network){
         upToDate = false; 
         incType = null;
         checkType = null;

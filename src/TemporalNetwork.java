@@ -5,6 +5,7 @@ import java.util.List;
 /** 
  * Abstract class for temporal networks. 
  * @author Mark Infante
+ * @author Ciara O'Donnell
 */
 
 public abstract class TemporalNetwork{

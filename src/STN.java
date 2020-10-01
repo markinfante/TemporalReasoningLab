@@ -5,6 +5,7 @@ import java.util.*;
  * Allows for creation of directed, weighted graph.
  * Extends TemporalNetwork.
  * @author Mark Infante
+ * @author Ciara O'Donnell
 */
 
 public class STN extends TemporalNetwork{

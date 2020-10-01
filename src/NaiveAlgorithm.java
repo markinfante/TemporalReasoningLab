@@ -1,3 +1,10 @@
+/**
+ * Implements the Naive Algorithm for updating the distance matrix
+ * @author Ciara O'Donnell
+ * @version 1.0
+*/
+
+
 public class NaiveAlgorithm
 {
     private TemporalNetwork network;
@@ -24,4 +31,4 @@ public class NaiveAlgorithm
             }
         }
     }
-}   
+}
