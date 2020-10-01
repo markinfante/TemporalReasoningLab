@@ -8,29 +8,35 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
     private boolean upToDate; 
     private MatrixIncrementorType incType;
     private ConsistencyCheckerType checkType;
+    private TemporalNetwork network;
 
-    public DistanceMatrix(){
+    public DistanceMatrix(TemporalNetwork network,){
         upToDate = false; 
         incType = null;
         checkType = null;
+        this.network = network;
     }
 
-    public DistanceMatrix(MatrixIncrementorType incrementorType){
+    public DistanceMatrix(TemporalNetwork network, MatrixIncrementorType incrementorType){
         upToDate = false; 
         incType = incrementorType;
         checkType = null;
+        this.network = network;
     }
 
-    public DistanceMatrix(MatrixIncrementorType incrementorType, 
+    public DistanceMatrix(TemporalNetwork network, MatrixIncrementorType incrementorType, 
                             ConsistencyCheckerType consistencyCheckerType){
         upToDate = false; 
         incType = incrementorType;
         checkType = consistencyCheckerType;
+        this.network = network;
     }
 
-    public void incrementMatrix(){
+    public void incrementMatrix(Edge edge){
         switch(incType){
             case NAIVE:
+                NaiveAlgorithm na = new NaiveAlgorithm(tn); 
+                na.updateDistanceMatrix(edge, this);
                 break;
             case TWOPHASE:
                 break;
