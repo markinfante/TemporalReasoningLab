@@ -2,16 +2,16 @@ package src;
 
 import java.util.List;
 
-/* TemporalNetwork.java
- * Author: Mark Infante
- *      Abstract class for temporal networks. 
- *      
+/** 
+ * Abstract class for temporal networks. 
+ * @author Mark Infante
 */
 
 public abstract class TemporalNetwork{
-    TemporalNetworks networkType; 
-    List<String> timePointNames;
-    Integer numTimePoints;
+    private TemporalNetworks networkType; 
+    private List<String> timePointNames;
+    private Integer numTimePoints;
+    private DistanceMatrix distanceMatrix;
 
     public TemporalNetwork(){}
 
@@ -38,11 +38,26 @@ public abstract class TemporalNetwork{
     public List<String> getTimePointNames(){
         return timePointNames;
     }
+
+    public boolean hasDistanceMatrix(){
+        return distanceMatrix == null;
+    }
+
+    public void setDistanceMatrix(DistanceMatrix dm){
+        distanceMatrix = dm;
+    }
+
+    public DistanceMatrix getDistanceMatrix(){
+        return distanceMatrix;
+    }
     
     abstract void init();
+    abstract void init(boolean wantDistanceMatrix, MatrixGeneratorType generatorType);
     abstract void addNode();
     abstract void addEdge(Edge edge);
     abstract void removeNode();
     abstract void removeEdge(Edge edge);
+    abstract Edge getEdge(Integer x, Integer y);
+    abstract Integer getSizeEdgesMatrix();  // This doesn't belong here but theres a lot to move around for now, so leave it -mark
 
 }
