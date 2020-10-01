@@ -1,6 +1,5 @@
 package src;
 
-<<<<<<< HEAD
 /* 
  * BellmanFord.java
  * Author: Jonathan Fong
@@ -8,7 +7,6 @@ package src;
 /** 
  * Implementation of the Bellman-Ford algorithm
  * @author Jonathan Fong
->>>>>>> 88616efc09eef45f93ad63af0a5b91649e9c1ad6
  */
 
 public class BellmanFord {
