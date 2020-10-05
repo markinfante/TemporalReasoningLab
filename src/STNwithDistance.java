@@ -1,3 +1,5 @@
+package src;
+
 import java.util.*;
 
 /**
@@ -27,8 +29,7 @@ public class STNWithDistance extends STN{
         successors = new ArrayList<Map<Integer, Edge>>(); //iniitialize successors as a Vector
         edgesMatrix = new ArrayList<ArrayList<Edge>>();
         this.network = network;
-        distanceMatrix = new DistanceMatrix(generatorType, this.network);w
-        distanceMatrix.generateMatrix();
+        distanceMatrix = new DistanceMatrix(generatorType, this.network);
     }
 
     /**

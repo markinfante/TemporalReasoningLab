@@ -25,6 +25,7 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
         incType = null;
         checkType = null;
         this.network = network;
+        this.generateMatrix();
     }
 
     /**
@@ -39,6 +40,7 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
         incType = incrementorType;
         checkType = null;
         this.network = network;
+        this.generateMatrix();
     }
 
     /**
@@ -55,6 +57,7 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
         incType = incrementorType;
         checkType = consistencyCheckerType;
         this.network = network;
+        this.generateMatrix();
     }
     
     /**
