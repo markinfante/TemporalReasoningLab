@@ -38,6 +38,14 @@ public class BellmanFord {
 	 *  dist(v) = min{dist(v), dist(u)+l(u,v)}
 	 */
 	
+	/*
+	 * Advice from Hunsberger:
+	 * Instead of "for each Edge(X, delta, Y) in STN",
+	 * 
+	 * do: for each node X,
+	 * 			for each (Y, delta) in succs[X] hash table...
+	 */
+	
 	private TemporalNetwork network;
 	private DistanceMatrix outputmatrix;
 	
@@ -51,37 +59,32 @@ public class BellmanFord {
 		Edge tEdge = null;	// temp edge
 		
 		this.network = network;
-		ArrayList<Double> distMatrix = new ArrayList<Double>(network.getSizeEdgesMatrix());
-		distMatrix.add(0);				// First element will be 0
+		ArrayList<Double> distVector = new ArrayList<Double>(network.getNumTimePoints());
+		distVector.add(0);				// First element will be the source (or sink) node, distance is 0
+		ArrayList<Double> prevVector = new ArrayList<Double>(network.getNumTimePoints());
+		prevVector.add(0);
 		
-		for (int i = 1; i < network.getSizeEdgesMatrix(); i++)
+		for (int i = 0; i < network.getNumTimePoints(); i++)			// for each node X
 		{
-			distMatrix.add(Double.POSITIVE_INFINITY);			// initialize entries to infinity
-			for (int j = 1; j < network.getSizeEdgesMatrix(); j++)
+			distVector.add(Double.POSITIVE_INFINITY);					// initialize distances to infinity
+			prevVector.add(null);								// previous values
+		}
+		
+		for (int i = 0; i < network.getNumTimePoints(); i++)			// for each node X
+		{
+			for (int j = 0; j < network.getNumTimePoints(); j++)		// for each outgoing edge from node X to node Y
 			{
 				tEdge = network.getEdge(i, j);
-				if (distMatrix.get(i) > tEdge.getWeight())		// Edit distance if needed
+				// Using i+1 so we don't interfere with index 0, which holds the source (or sink) node
+				if (tEdge != null && distVector.get(i+1) > prevVector.get(i+1) + tEdge.getWeight())		// Edit distance if needed
 				{
-					distMatrix.set(i, tEdge.getWeight());
+					prevVector.set(i+1, distVector.get(i+1));
+					distVector.set(i+1, tEdge.getWeight());
 				}
 			}
 		}
-			
-			/*if (i != vertex)							// Only run if i != vertex: distance from vertex to vertex is 0
-			{
-				outputMatrix.add(new ArrayList<Double>());  // Add lists for every edge 
-	            for (int j = 0; j < network.getNumTimePoints(); j++){
-	                tEdge = network.getEdge(i, j);
-	                if (tEdge != null){
-	                    outputMatrix.get(i).add(tEdge.getWeight());
-	                } else {
-	                    outputMatrix.get(i).add(Double.POSITIVE_INFINITY);  
-	                }
-	            }
-			}*/
-        }
 	}
-	
+	/*
 	// copied from Mark's Floyd-Warshall algorithm
 	public DistanceMatrix generateMatrix()
 	{
@@ -95,5 +98,6 @@ public class BellmanFord {
             }
         }
         return outputMatrix;
-    }
+	}
+	*/
 }
