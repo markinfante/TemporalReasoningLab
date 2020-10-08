@@ -1,4 +1,5 @@
 package src;
+import java.util.*;
 
 import java.util.List;
 
@@ -98,4 +99,18 @@ public abstract class TemporalNetwork{
      * @return A string representation of the network.
      */
     public abstract String toString();
+
+    /**
+     * Gets the successors of a specified start node in a network 
+     * @param node The start node
+     * @return A map containing pairs of End node and delta to the start 
+     */
+    public abstract Map<Integer, Double> getSuccsOf(Integer node);
+
+    /**
+     * Gets the predecessors of a specified end node in a network 
+     * @param node The end node
+     * @return A map containing pairs of Start node and delta to the end 
+     */
+    public abstract Map<Integer, Double> getPredsOf(Integer node);
 }
