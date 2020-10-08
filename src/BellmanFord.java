@@ -46,6 +46,7 @@ public class BellmanFord {
 	 */
 	public BellmanFord(TemporalNetwork network, Integer vertex)
 	{
+		/*
 		Edge tEdge = null;	// temp edge
 		
 		this.network = network;
@@ -64,6 +65,7 @@ public class BellmanFord {
 				}
 			}
 		}
+		*/
 			
 			/*if (i != vertex)							// Only run if i != vertex: distance from vertex to vertex is 0
 			{
@@ -77,9 +79,10 @@ public class BellmanFord {
 	                }
 	            }
 			}*/
-        }
+		
+		
 	}
-	
+	/*
 	// copied from Mark's Floyd-Warshall algorithm
 	public DistanceMatrix generateMatrix()
 	{
@@ -93,5 +96,6 @@ public class BellmanFord {
             }
         }
         return outputMatrix;
-    }
+	}
+	*/
 }
