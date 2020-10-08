@@ -65,6 +65,8 @@ public abstract class TemporalNetwork{
     /**
      * Adds an edge to the network.
      * @param edge The edge to be added.
+     * @param setSuccessor Flag indicating whether to update Sucessors Matrix
+     * @param setSuccessor Flag indicating whether to update Predecessors Matrix
      */
     public abstract void addEdge(Edge edge);
 
