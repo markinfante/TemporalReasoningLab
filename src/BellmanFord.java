@@ -1,7 +1,10 @@
 package src;
 
-/** 
+import java.util.ArrayList;
+
+/**
  * Implementation of the Bellman-Ford algorithm
+ * 
  * @author Jonathan Fong
  */
 
@@ -34,7 +37,7 @@ public class BellmanFord {
 	 */
 	
 	private TemporalNetwork network;
-	private DistanceMatrix outputmatrix;
+	private DistanceMatrix outputMatrix;
 	
 	/**
 	 * Create a new instance of the Bellman-Ford algorithm and generate a distance matrix as output.

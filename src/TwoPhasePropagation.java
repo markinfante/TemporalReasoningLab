@@ -1,39 +1,35 @@
 package src;
 
-import java.util.ArrayList;
+// import java.util.ArrayList;
 
 public class TwoPhasePropagation {
-    private TemporalNetwork network;
-    private DistanceMatrix distanceMatrix;
+    private STNWithDistance networkWithDistance;
+    private DistanceMatrix outputMatrix;
 
     public TwoPhasePropagation(TemporalNetwork TN){
-        network = TN;
-        Edge tEdge = null;  // temp edge
-        distanceMatrix = new DistanceMatrix(network);
+        networkWithDistance = new STNWithDistance(TN, MatrixGeneratorType.JOHNSONS, MatrixIncrementorType.TWOPHASE);
+        
+        // outputMatrix = networkWithDistance.getDistanceMatrix();
+        // Edge tEdge;  // temp edge
+        outputMatrix = networkWithDistance.getDistanceMatrix();
 
-        // Copied from Mark's code in FloydWarshall, initializes distance matrix
-        this.network = network;
-        for (int i = 0; i < network.getSizeEdgesMatrix(); i++){
-            distanceMatrix.add(new ArrayList<Double>());  // Add lists for every edge
-            for (int j = 0; j < network.getNumTimePoints(); j++){
-                tEdge = network.getEdge(i, j);
-                if (tEdge != null){
-                    distanceMatrix.get(i).add(tEdge.getWeight());
-                } else {
-                    distanceMatrix.get(i).add(Double.POSITIVE_INFINITY);
-                }
-            }
-        }
-        network.setDistanceMatrix(distanceMatrix);
+        // Copied from Mark's code in FloydWarshall, initializes distance matrix 
+        // for (int i = 0; i < networkWithDistance.getNumTimePoints(); i++){
+        //     outputMatrix.add(new ArrayList<Double>());  // Add list of connection weights for every time point
+        //     for (int j = 0; j < networkWithDistance.getNumTimePoints(); j++){ // check every other point for a connection
+        //         double nodeDistance = dm.get(i).get(j);
+        //         outputMatrix.get(i).add(nodeDistance);
+        //     }
+        // }
     }
 
     public DistanceMatrix forwardPropagate(){
-        int matrixSize = distanceMatrix.size();
-        for(int i = 0; i < matrixSize; i++){ // loop through every node
-            for(int j = 0; j < matrixSize; j++){ // check each connection
-                if(network.getEdge(i,j).getWeight() > distanceMatrix.get(i).get(j)){ // if weight update is needed
-                    // set new edge weight from the distance matrix
-                    network.getEdge(i,j).setWeight(distanceMatrix.get(i).get(j)); // TODO: THIS IS VERY WRONG
+        int matrixSize = networkWithDistance.getNumTimePoints();
+        for(int i = 0; i < matrixSize; i++){ // loop through every time point
+            for(int j = 0; j < matrixSize; j++){ // check each connection to that point
+                if(outputMatrix.get(i).get(j) > networkWithDistance.getEdge(i, j).getWeight()){ // if weight of this connection less than the saved weight
+                    // set new distance matrix weight from the edge weight
+                    outputMatrix.get(i).set(j, networkWithDistance.getEdge(i, j).getWeight());
                     // then recursively back propagate any changed nodes
                     backPropagate(i,j); // i is nodeFrom, j is nodeTo
 
@@ -45,13 +41,13 @@ public class TwoPhasePropagation {
     }
 
     public void backPropagate(int nodeFrom, int nodeTo){ // the edge that was just changed lead from nodeFrom to nodeTo
-        for(int i = 0; i < distanceMatrix.size(); i++){
-            if(distanceMatrix.get(i).get(nodeFrom) != Double.POSITIVE_INFINITY){ // if we find a predecessor
-                // get the ideal weight (i --> nodeFrom) + (nodeFrom --> nodeTo)
-                double idealWeight = network.getEdge(i, nodeFrom).getWeight() + network.getEdge(nodeFrom, nodeTo).getWeight();
-                if(network.getEdge(i, nodeTo).getWeight() > idealWeight){
+        for(int i = 0; i < outputMatrix.size(); i++){ // checking every node for predecessors
+            if(outputMatrix.get(i).get(nodeFrom) != Double.POSITIVE_INFINITY){ // if we find a predecessor i->nodeFrom->nodeTo
+                // get the ideal weight of (i --> nodeTo), which is: (i --> nodeFrom) + (nodeFrom --> nodeTo)
+                double idealWeight = networkWithDistance.getEdge(i, nodeFrom).getWeight() + networkWithDistance.getEdge(nodeFrom, nodeTo).getWeight();
+                if(outputMatrix.get(i).get(nodeTo) > idealWeight){
                     // set the weight to the better weight
-                    network.getEdge(i, nodeTo).setWeight(idealWeight);
+                    outputMatrix.get(i).set(nodeTo, idealWeight);
                     // recursively back propagate
                     backPropagate(i, nodeTo);
                 }
