@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * A matrix abstraction using a 2D ArrayList of Doubles. 
+ * @author Mark Infante
  */
 public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
     
@@ -36,6 +37,9 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
         }
     }
 
+    /**
+     * Converts the distance matrix to a string representation.
+     */
     @Override
     public String toString(){
         String output = "\nPrinting network: \n\n";

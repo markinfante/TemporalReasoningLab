@@ -8,19 +8,21 @@ import java.util.ArrayList;
  */
 public class FloydWarshall {
 
-    private DistanceMatrix outputMatrix;
+    private STN network; // STN to generate distance matrix
 
     /**
-     * Creates a new instance of the algorithm and intitializes output matrix.
+     * Creates a new instance of the Floyd-Warshall algorithm.
      * @param network The local temporal network 
      */
     public FloydWarshall(STN network){
-        Edge tEdge = null;  // temp edge
-        outputMatrix = new DistanceMatrix();
-        outputMatrix.makeCleanMatrixFromSTN(network);
+        this.network = network;
     }
 
-    public DistanceMatrix generateMatrix(){                                     
+    public DistanceMatrix generateMatrix(){     
+        DistanceMatrix outputMatrix = new DistanceMatrix();
+
+        outputMatrix.makeCleanMatrixFromSTN(network); 
+
         for (int k = 0; k < outputMatrix.size(); k++){                      
             for (int i = 0; i < outputMatrix.size(); i++){              
                 for (int j = 0; j< outputMatrix.size(); j++){
