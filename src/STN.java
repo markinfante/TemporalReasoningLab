@@ -33,9 +33,8 @@ public class STN {
         edgesMatrix = new ArrayList<ArrayList<Edge>>();
     }
     
-    @Override
     public void init(){
-        int tps = super.getNumTimePoints(); //populate the spaces in the vector, based on the number of timepoints
+        int tps = getNumTimePoints(); //populate the spaces in the vector, based on the number of timepoints
         for (int i = 0; i < tps; i++) {
             successors.add(i, new HashMap<Integer, Double>()); 
             numSuccessors.add(0);

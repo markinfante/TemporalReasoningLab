@@ -8,13 +8,13 @@ import java.util.HashMap;
 public class DPC {
 
     private List<Integer> shuffledNodes;
-    private TemporalNetwork network; 
+    private STN network; 
 
     /**
      * Creates a new instance of the algorithm and intitializes output matrix.
      * @param network The local temporal network 
      */
-    public DPC(TemporalNetwork network){
+    public DPC(STN network){
         this.network = network;
         for (int i = 0; i < network.getNumTimePoints(); i++){
             shuffledNodes.add(i);

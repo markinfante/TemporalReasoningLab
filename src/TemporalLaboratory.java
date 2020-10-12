@@ -14,7 +14,7 @@ import java.util.Scanner;
 */
 public class TemporalLaboratory{
 
-    private TemporalNetwork network;
+    private STN network;
 
     public TemporalLaboratory(TemporalNetworks networkType){
         switch (networkType) {

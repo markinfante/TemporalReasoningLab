@@ -20,7 +20,7 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
     /**
      * Initializes a distance matrix with network edge weights and infinity values if no edge weight exists.  
      */
-    private void makeCleanMatrixFromSTN(STN network){
+    public void makeCleanMatrixFromSTN(STN network){
         Edge tEdge = null;
 
         for (int i = 0; i < network.getSizeEdgesMatrix(); i++){
@@ -40,14 +40,14 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
     public String toString(){
         String output = "\nPrinting network: \n\n";
         Double tWeight = Double.POSITIVE_INFINITY;
-        for (int y = 0; y < getSizeEdgesMatrix() + 1; y++){
-            for (int x = 0; x <= getSizeEdgesMatrix() + 1; x++){
-                if (x == getSizeEdgesMatrix()+1){     // Create new line in matrix
+        for (int y = 0; y < size() + 1; y++){
+            for (int x = 0; x <= size() + 1; x++){
+                if (x == size()+1){     // Create new line in matrix
                     output = output + "\n\n";
                 } else if (y == 0){     // Create first row of start nodes
                     if (x == 0) {       // Skip a space for alignment at 0,0 because we use 0 as a node
                         output = output + "\t\t" + Integer.toString(x); 
-                    } else if (x < getSizeEdgesMatrix()){            
+                    } else if (x < size()){            
                         output = output + "\t" + Integer.toString(x);
                     }
                 } else if (x == 0){     // Create first column of end nodes
@@ -57,7 +57,7 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
                     if (tWeight == Double.POSITIVE_INFINITY) {
                         output = output + "\t" + "inf";
                     } else {
-                        output = output + "\t" + tWeight
+                        output = output + "\t" + tWeight;
                     }
                 }
             }

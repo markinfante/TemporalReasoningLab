@@ -8,9 +8,9 @@ package src;
 
 public class NaiveAlgorithm
 {
-    private TemporalNetwork network;
+    private STN network;
 
-    public NaiveAlgorithm(TemporalNetwork network)
+    public NaiveAlgorithm(STN network)
     {
         this.network = network;
     }

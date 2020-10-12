@@ -33,7 +33,7 @@ public class BellmanFord {
 	 *  dist(v) = min{dist(v), dist(u)+l(u,v)}
 	 */
 	
-	private TemporalNetwork network;
+	private STN network;
 	private DistanceMatrix outputmatrix;
 	
 	/**
@@ -41,7 +41,7 @@ public class BellmanFord {
 	 * @param network The local temporal network
 	 * @param vertex
 	 */
-	public BellmanFord(TemporalNetwork network, Integer vertex)
+	public BellmanFord(STN network, Integer vertex)
 	{
 		/*
 		Edge tEdge = null;	// temp edge
