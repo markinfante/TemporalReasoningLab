@@ -13,23 +13,11 @@ public class FloydWarshall {
     /**
      * Creates a new instance of the algorithm and intitializes output matrix.
      * @param network The local temporal network 
-     * @deprecated
      */
-    @Deprecated
-    public FloydWarshall(TemporalNetwork network){
+    public FloydWarshall(STN network){
         Edge tEdge = null;  // temp edge
-
-        for (int i = 0; i < network.getSizeEdgesMatrix(); i++){
-            outputMatrix.add(new ArrayList<Double>());  // Add lists for every edge 
-            for (int j = 0; j < network.getSizeEdgesMatrix(); j++){
-                tEdge = network.getEdge(i, j);
-                if (tEdge != null){
-                    outputMatrix.get(i).add(tEdge.getWeight());
-                } else {
-                    outputMatrix.get(i).add(Double.POSITIVE_INFINITY);  
-                }
-            }
-        }
+        outputMatrix = new DistanceMatrix();
+        outputMatrix.makeCleanMatrixFromSTN(network);
     }
 
     public DistanceMatrix generateMatrix(){                                     

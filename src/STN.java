@@ -8,8 +8,14 @@ import java.util.*;
  * @author Ciara O'Donnell
 */
 
-public class STN extends TemporalNetwork{
-    
+//#mi  NOTE DOES NOT EXTEND TEMPNET ANYMORE
+public class STN {
+    // #mi TRANSFERED FROM TEMPORAL NETWORK
+    private TemporalNetworks networkType; 
+    private List<String> timePointNames;
+    private Integer numTimePoints;
+    private DistanceMatrix distanceMatrix;
+
     private List<HashMap<Integer, Double>> successors;   // A 2D vector that holds information about a node's successors.
                                                      // index of the list is start, map at index contains end and delta
     private List<Integer> numSuccessors;             // Number of successor nodes for corresponding node index
@@ -41,7 +47,6 @@ public class STN extends TemporalNetwork{
         }   
     }
 
-    @Override 
     public void addEdge(Edge edge){ 
         // TODO: test
         Integer x = edge.getStart();
@@ -61,7 +66,6 @@ public class STN extends TemporalNetwork{
         }
     }
 
-    @Override
     public void removeEdge(Edge edge){
         Integer x = edge.getStart();
         Integer y = edge.getEnd();
@@ -73,38 +77,39 @@ public class STN extends TemporalNetwork{
         return;
     }
     
-    @Override
     public Edge getEdge(Integer src, Integer dest){
         return edgesMatrix.get(src).get(dest);
     }
 
-    @Override
     public void addNode() {
         // TODO: all
         return;
     }
 
-    @Override
     public void removeNode() {
-        // TODO Auto-generated method stub
-        return;
-
+        // TODO Auto-generated method stub 
+        return; 
     }
 
-    @Override
-    public Integer getSizeEdgesMatrix(){
-        return edgesMatrix.size();
-    }
+    public Integer getSizeEdgesMatrix(){ return edgesMatrix.size(); }
     
-    @Override
-    public Map<Integer, Double> getSuccsOf(Integer node){
-        return successors.get(node);
-    }
+    public Map<Integer, Double> getSuccsOf(Integer node){ return successors.get(node); }
 
-    @Override
-    public Map<Integer, Double> getPredsOf(Integer node){
-        return predecessors.get(node);
-    }
+    public Map<Integer, Double> getPredsOf(Integer node){ return predecessors.get(node); }
+
+    // #mi EVERYTHING EXCEPT toString IS ADDED FROM TEMPNET
+    public void setNetType(TemporalNetworks networkType){ this.networkType = networkType; }
+    public TemporalNetworks getNetType(){ return networkType; }
+
+    public void setTimePointNames(List<String> timePointNames){ this.timePointNames = timePointNames; }
+    public List<String> getTimePointNames(){ return timePointNames; }
+
+    public Integer getNumTimePoints(){ return numTimePoints; }
+    public void setNumTimePoints(Integer numTimePoints){ this.numTimePoints = numTimePoints; }
+
+    public boolean hasDistanceMatrix(){ return distanceMatrix == null; }
+    public void setDistanceMatrix(DistanceMatrix dm){ distanceMatrix = dm; }
+    public DistanceMatrix getDistanceMatrix(){ return distanceMatrix; }
 
     @Override
     public String toString(){
