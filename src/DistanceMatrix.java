@@ -42,7 +42,7 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
      */
     @Override
     public String toString(){
-        String output = "\nPrinting network: \n\n";
+        String output = "\nPrinting Distance Matrix: \n\n";
         Double tWeight = Double.POSITIVE_INFINITY;
         for (int y = 0; y < size() + 1; y++){
             for (int x = 0; x <= size() + 1; x++){

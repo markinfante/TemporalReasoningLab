@@ -4,28 +4,35 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * A parser that reads from STN files.
+ * @author Mark Infante
+ */
 public class STNParser {
     
-    private File file;
-    private File[] files; 
+    private HashMap<File,String> echoMap; // A mapping of file to echo string
 
     /**
      * Creates new STN parser object.
      */
-    public STNParser(){}
+    public STNParser(){
+        echoMap = new HashMap<File,String>();
+    }
 
     /**
      * Takes in a STN file, parses it, and returns an STN.
      * @param file A STN file.
-     * @return A STN.
+     * @return A STN object.
      * @throws Exception If file is empty.
      */
     public STN parseFile(File file) throws Exception{
         Scanner fileScanner = null;
-        String ts = "";
+        String echo = "";
+        String ts = ""; // Temp string
         Integer lStart = 0;   // Local start node 
         Integer lEnd = 0;     // Local end node
         Double lWeight = 0.0; // Local edge weight
@@ -40,37 +47,36 @@ public class STNParser {
                 fileScanner.nextLine();
                 ts = fileScanner.nextLine().trim(); // Get network type 
                 TemporalNetworks typ = TemporalNetworks.valueOf(ts);
-                System.out.println("Type of temporal network: " + typ.toString());
+                echo += "Type of temporal network: " + typ.toString() + "\n";
             } else {
                 throw new Exception("File is empty."); 
             }
             fileScanner.nextLine();
             ts = fileScanner.nextLine();  // Get num time points
             numTimePoints = Integer.parseInt(ts);
-            System.out.println("Number of time points: " + ts);
+            echo += "Number of time points: " + ts + "\n";
             network.setNumTimePoints(numTimePoints);
             fileScanner.nextLine();
             ts = fileScanner.nextLine();
-            System.out.println("Number of edges: " + ts);
+            echo += "Number of edges: " + ts + "\n";
             fileScanner.nextLine();
             ts = fileScanner.nextLine();  // Get time point names
             timePointNames = Arrays.asList(ts.split(" "));
-            System.out.println("Time point names: \n" + ts);
+            echo += "Time point names: \n" + ts + "\n";
             network.setTimePointNames(timePointNames);
             fileScanner.nextLine();
             network.init();
-            System.out.println("Edges: ");
+            echo += "Edges: \n";
             while (fileScanner.hasNext()){   // Get constraints
                 ts = fileScanner.nextLine();
                 pseudoEdge = Arrays.asList(ts.split(" "));
                 lStart = timePointNames.indexOf(pseudoEdge.get(0));
                 lEnd = timePointNames.indexOf(pseudoEdge.get(2));
                 lWeight = Double.parseDouble(pseudoEdge.get(1));
-                System.out.printf("Start: %d. End: %d. Weight: %f.\n", lStart, lEnd, lWeight);
+                echo += String.format("Start: %d. End: %d. Weight: %f.\n", lStart, lEnd, lWeight);
                 network.addEdge(new Edge(lStart,lEnd, lWeight));
             }
-            System.out.println("Finished network creation.\n\n");
-            System.out.println("================================================\n\n");
+            echo += "Finished network creation.\n";
         } catch (NullPointerException np){
             System.err.println("Path to file cannot be null.");
         } catch (FileNotFoundException fnf){
@@ -81,7 +87,8 @@ public class STNParser {
             if (fileScanner != null){ fileScanner.close(); }     
         }
 
-        return network;
+        echoMap.put(file, echo); // Put echo string in map
+        return network;  // Return new network
     }
 
     /**
@@ -107,6 +114,14 @@ public class STNParser {
         }
 
         return output;
+    }
+
+    /**
+     * Echos a file after its been parsed.
+     * @param file A File to be echoed.
+     */
+    public void echoFile(File file){
+        System.out.println(echoMap.get(file));
     }
 
     

@@ -96,8 +96,10 @@ public class STN {
     public Integer getSizeEdgesMatrix(){ return edgesMatrix.size(); }
     
     public Map<Integer, Double> getSuccsOf(Integer node){ return successors.get(node); }
+    public List<HashMap<Integer, Double>> getSuccs() { return successors; }
 
     public Map<Integer, Double> getPredsOf(Integer node){ return predecessors.get(node); }
+    public List<HashMap<Integer, Double>> getPreds() { return predecessors; }
 
     // #mi EVERYTHING EXCEPT toString IS ADDED FROM TEMPNET
     public void setNetType(TemporalNetworks networkType){ this.networkType = networkType; }

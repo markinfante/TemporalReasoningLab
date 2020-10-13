@@ -46,10 +46,13 @@ public class TemporalLaboratory{
     public static void main(String[] args){
         TemporalLaboratory lab = new TemporalLaboratory(); 
         STNParser parser = null;
+        TestSuite tSuite = null;
         File file = null;   // Resource file containing type of network and constraints
         Scanner inputScanner = null;     
         String ts = ""; // Temporary string for reading from file  
         String flag = "";
+        String option = "";
+        STN tSTN = null;
         ArrayList<STN> stnList = new ArrayList<>();
 
         if (args.length < 1){  // Dont let the user carry on without an input file
@@ -105,18 +108,27 @@ public class TemporalLaboratory{
         } else if (args.length == 2) {
             // Of the form <flag> <option>
             flag = args[0];
-            ts = args[1];
+            option = args[1];
             switch (flag){
                 case "-t":
-                    switch (ts){
+                    switch (option){
                         case "all":
                             try{
                                 file = new File("resources/");
                                 parser = new STNParser();
-                                stnList = parser.parseDirectory(file);
+                                tSuite = new TestSuite();
+                                for (File f : file.listFiles()){
+                                    tSTN = parser.parseFile(f);
+                                    parser.echoFile(f);
+                                    tSuite.testSTN(tSTN);
+                                }
                             } catch (Exception e){
                                 System.err.println(e);
                             }
+                            break;
+                        default:
+                            System.out.println("Not implemented.");
+                            break;
                     }
                     break;
                 default:
