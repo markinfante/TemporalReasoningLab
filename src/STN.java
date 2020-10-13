@@ -36,12 +36,14 @@ public class STN {
     public void init(){
         int tps = getNumTimePoints(); //populate the spaces in the vector, based on the number of timepoints
         for (int i = 0; i < tps; i++) {
-            successors.add(i, new HashMap<Integer, Double>()); 
+            successors.add(i, new HashMap<Integer, Double>());
+            predecessors.add(i, new HashMap<Integer, Double>()); 
             numSuccessors.add(0);
             edgesMatrix.add(i, new ArrayList<Edge>());
             for (int k = 0; k < tps; k++)
             {
                 edgesMatrix.get(i).add(null);
+                successors.get(i).put(k, 0.0);
             }
         }   
     }
@@ -51,14 +53,15 @@ public class STN {
         Integer x = edge.getStart();
         Integer y = edge.getEnd();
         Double d = edge.getWeight();
-        Double e = successors.get(x).get(y);
+        Double w = successors.get(x).get(y);
         
-        if (e == 0.0){ //if an edge doesn't exist in successors, input the given edge argument. also increment numsuccessors, since we are adding a new edge
+        if (w == 0.0){ //if an edge doesn't exist in successors, input the given edge argument. also increment numsuccessors, since we are adding a new edge
             successors.get(x).put(y, d);
             predecessors.get(y).put(x,d);
             numSuccessors.set(x, numSuccessors.get(x)+1);
-            edgesMatrix.get(x).add(y, edge);
-        } else if (e > d){ //else if new edge gives a shorter path from x->y than the old edge, replace the old edge with the new one
+            edgesMatrix.get(x).set(y, edge);
+        } else if (w > d){ //else if new edge gives a shorter path from x->y than the old edge, replace the old edge with the new one
+            
             successors.get(x).put(y, d);
             predecessors.get(y).put(x,d);
             edgesMatrix.get(x).set(y, edge);

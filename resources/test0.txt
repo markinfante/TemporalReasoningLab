@@ -2,6 +2,8 @@
 STN
 # Num Time-Points
 5
+# Num Ordinary Edges
+8
 # Time-Point Names
 A0 C0 A1 C1 X
 # Ordinary Edges 
