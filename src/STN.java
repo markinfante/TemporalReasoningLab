@@ -44,6 +44,7 @@ public class STN {
             {
                 edgesMatrix.get(i).add(null);
                 successors.get(i).put(k, 0.0);
+                predecessors.get(i).put(k, 0.0);
             }
         }   
     }
@@ -57,7 +58,7 @@ public class STN {
         
         if (w == 0.0){ //if an edge doesn't exist in successors, input the given edge argument. also increment numsuccessors, since we are adding a new edge
             successors.get(x).put(y, d);
-            predecessors.get(y).put(x,d);
+            predecessors.get(y).put(x, d);
             numSuccessors.set(x, numSuccessors.get(x)+1);
             edgesMatrix.get(x).set(y, edge);
         } else if (w > d){ //else if new edge gives a shorter path from x->y than the old edge, replace the old edge with the new one
