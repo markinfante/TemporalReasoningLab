@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
 
+/**
+ * A Test Suite for testing STN's. Bad code/design lives here. 
+ * @author Mark Infante
+ */
 public class TestSuite {
     
     private final static AlgName[] DEFAULT_TEST = {AlgName.FWARSHALL, AlgName.NAIVE, AlgName.BELLFORD};

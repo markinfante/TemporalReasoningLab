@@ -31,7 +31,7 @@ public class Edge{
     public String toString(){
         return startNode.toString() + "-->" + endNode.toString() + ": " + weight.toString();
     }
-
+    
     public Integer getStart(){ return startNode; }
     public Integer getEnd(){ return endNode; }
     public Double getWeight(){ return weight; }
