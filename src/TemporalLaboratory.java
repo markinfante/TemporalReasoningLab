@@ -54,6 +54,7 @@ public class TemporalLaboratory{
         String option = "";
         STN tSTN = null;
         ArrayList<STN> stnList = new ArrayList<>();
+        String[] inputArgs = {};
 
         if (args.length < 1){  // Dont let the user carry on without an input file
             System.out.println("Temporal laboratory should take in a resource file of graph constraints.");
@@ -76,6 +77,7 @@ public class TemporalLaboratory{
                     file = new File("resources/" + args[0]);
                     parser = new STNParser();
                     lab.network = parser.parseFile(file);
+                    parser.echoFile(file);
                 } catch (NullPointerException np){
                     System.err.println("Path to file cannot be null.");
                 } catch (Exception e){
@@ -84,8 +86,10 @@ public class TemporalLaboratory{
             } else if (ts.equals("n")){
                 lab = new TemporalLaboratory(); // placeholder
                 lab.printFlags();
+                return;
             } else {
                 System.out.println("That was not valid. Exiting the program.");
+                return;
             }
         
 
@@ -98,6 +102,27 @@ public class TemporalLaboratory{
                         break;
                     } else if (ts.equals("help") || ts.equals("h")){
                         lab.printHelp();
+                    } else {
+                        inputArgs = ts.split(" ");
+                        switch(inputArgs[0]){
+                            case "add":
+                                switch (inputArgs[1]){
+                                    case "edge":
+                                        // take in values for new edge
+                                        // add edge to network
+                                        // create new test suite
+                                        // run stn test
+                                        // run new incrementor test (should print distance matrix)
+                                        break;
+                                    default:
+                                        System.out.println("BAD");
+                                        break;
+                                }
+                                break;
+                            default:
+                                System.out.println("BAD");
+                                break;
+                        }
                     }
                 }
             } catch (Exception e){

@@ -20,7 +20,7 @@ public class STN {
                                                      // index of the list is start, map at index contains end and delta
     private List<Integer> numSuccessors;             // Number of successor nodes for corresponding node index
     private List<ArrayList <Edge>> edgesMatrix;      // A 2D matrix of edge weights for corresponding node index pair
-    private HashMap<Integer, Edge> edges;			 // List of edges
+    private ArrayList<Edge> edges;			 // List of edges
     private List<HashMap<Integer, Double>> predecessors; // A 2D vector that holds information about a node's preds.
                                                      // index of the list is end, map at index contains start and delta
 
@@ -41,6 +41,7 @@ public class STN {
             predecessors.add(i, new HashMap<Integer, Double>()); 
             numSuccessors.add(0);
             edgesMatrix.add(i, new ArrayList<Edge>());
+            edges = new ArrayList<Edge>();
             for (int k = 0; k < tps; k++)
             {
                 edgesMatrix.get(i).add(null);

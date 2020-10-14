@@ -1,5 +1,8 @@
 package src;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 /* 
  * BellmanFord.java
  * Author: Jonathan Fong
@@ -78,11 +81,9 @@ public class BellmanFord {
 	public boolean generate_BF()
 	{
 		ArrayList<Edge> tEdges = network.getEdges();
-		ArrayList<Double> distVector = new ArrayList<Double>(Collections.nCopies(network.getNumTimePoints(), 0));
-		
-		Edge tEdge = null;	// temp edge
+		ArrayList<Double> distVector = new ArrayList<Double>(Collections.nCopies(network.getNumTimePoints(), 0.0));
 
-		for (int i = 0; i < tEdges.length()-1; i++)			// for each node X
+		for (int i = 0; i < tEdges.size()-1; i++)			// for each node X
 		{
 			for (Edge tEdge : tEdges)		// for each outgoing edge from node X to node Y
 			{
