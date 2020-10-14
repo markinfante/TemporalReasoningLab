@@ -22,6 +22,7 @@ public class BellmanFord {
 	 * 			edge lengths {l_e : e in E} with no negative cycles;
 	 * 			vertex s in V
 	 * Output:	For all vertices u reachable from s, dist(u) is set to the distance from s to u.
+	 * 			Distance vector
 	 * 
 	 *  
 	 *  for all u in V:
@@ -44,60 +45,60 @@ public class BellmanFord {
 	 * 
 	 * do: for each node X,
 	 * 			for each (Y, delta) in succs[X] hash table...
+	 * 
+	 * Two versions:
+	 * 		1. Source node s (distances from s to other nodes)
+	 * 		2. Sink node s (distances from other nodes to s)
+	 * 
+	 * 
+	 * Hunsberger's pseudocode
+	 * for each X, d(X) = 0
+	 * for i=1 to (n-1),
+	 * 		for each edge (U,δ,V) in graph,
+	 *			d(V) = min{d(V), d(U) + δ}
+	 * for each edge (U,δ,V) in graph,
+	 * 		if (d(V) > d(U) + δ) return false
+	 * return true
 	 */
 	
-	private TemporalNetwork network;
+	private STN network;
 	private DistanceMatrix outputmatrix;
 	
 	/**
 	 * Create a new instance of the Bellman-Ford algorithm and generate a distance matrix as output.
 	 * @param network The local temporal network
-	 * @param vertex
+	 * @param sos SOURCE-OR-SINK? flag
 	 */
-	public BellmanFord(TemporalNetwork network, Integer vertex)
-	{
-		Edge tEdge = null;	// temp edge
-		
+	public BellmanFord(STN network, Integer sos)
+	{		
 		this.network = network;
-		ArrayList<Double> distVector = new ArrayList<Double>(network.getNumTimePoints());
-		distVector.add(0);				// First element will be the source (or sink) node, distance is 0
-		ArrayList<Double> prevVector = new ArrayList<Double>(network.getNumTimePoints());
-		prevVector.add(0);
+		this.outputmatrix = network.getDistanceMatrix();
+	}
+	
+	public boolean generate_BF()
+	{
+		ArrayList<Edge> tEdges = network.getEdges();
+		ArrayList<Double> distVector = new ArrayList<Double>(Collections.nCopies(network.getNumTimePoints(), 0));
 		
-		for (int i = 0; i < network.getNumTimePoints(); i++)			// for each node X
+		Edge tEdge = null;	// temp edge
+
+		for (int i = 0; i < tEdges.length()-1; i++)			// for each node X
 		{
-			distVector.add(Double.POSITIVE_INFINITY);					// initialize distances to infinity
-			prevVector.add(null);								// previous values
-		}
-		
-		for (int i = 0; i < network.getNumTimePoints(); i++)			// for each node X
-		{
-			for (int j = 0; j < network.getNumTimePoints(); j++)		// for each outgoing edge from node X to node Y
+			for (Edge tEdge : tEdges)		// for each outgoing edge from node X to node Y
 			{
-				tEdge = network.getEdge(i, j);
-				// Using i+1 so we don't interfere with index 0, which holds the source (or sink) node
-				if (tEdge != null && distVector.get(i+1) > prevVector.get(i+1) + tEdge.getWeight())		// Edit distance if needed
-				{
-					prevVector.set(i+1, distVector.get(i+1));
-					distVector.set(i+1, tEdge.getWeight());
-				}
+				distVector.set(tEdge.getEnd(), Math.min(distVector.get(tEdge.getStart()) + tEdge.getWeight(),
+														distVector.get(tEdge.getEnd())));
 			}
 		}
+		
+		for (Edge tEdge : tEdges)
+		{
+			if (distVector.get(tEdge.getEnd()) > distVector.get(tEdge.getStart()) + tEdge.getWeight())
+			{
+				return false;
+			}
+		}
+		
+		return true;
 	}
-	/*
-	// copied from Mark's Floyd-Warshall algorithm
-	public DistanceMatrix generateMatrix()
-	{
-        for (int k = 0; k < outputMatrix.size(); k++){
-            for (int i = 0; i < outputMatrix.size(); i++){
-                for (int j = 0; j< outputMatrix.size(); j++){
-                    if (outputMatrix.get(i).get(j) > outputMatrix.get(i).get(k) + outputMatrix.get(k).get(j)){
-                        outputMatrix.get(i).set(j, (outputMatrix.get(i).get(k) + outputMatrix.get(k).get(j)));
-                    }
-                }
-            }
-        }
-        return outputMatrix;
-	}
-	*/
 }
