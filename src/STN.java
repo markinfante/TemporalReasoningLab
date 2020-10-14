@@ -20,6 +20,7 @@ public class STN {
                                                      // index of the list is start, map at index contains end and delta
     private List<Integer> numSuccessors;             // Number of successor nodes for corresponding node index
     private List<ArrayList <Edge>> edgesMatrix;      // A 2D matrix of edge weights for corresponding node index pair
+    private HashMap<Integer, Edge> edges;			 // List of edges
     private List<HashMap<Integer, Double>> predecessors; // A 2D vector that holds information about a node's preds.
                                                      // index of the list is end, map at index contains start and delta
 
@@ -55,17 +56,22 @@ public class STN {
         Integer y = edge.getEnd();
         Double d = edge.getWeight();
         Double w = successors.get(x).get(y);
+        Edge tEdge = edgesMatrix.get(x).get(y);
+        int i = 0;
         
         if (w == 0.0){ //if an edge doesn't exist in successors, input the given edge argument. also increment numsuccessors, since we are adding a new edge
             successors.get(x).put(y, d);
             predecessors.get(y).put(x, d);
             numSuccessors.set(x, numSuccessors.get(x)+1);
             edgesMatrix.get(x).set(y, edge);
+            edges.add(edge);
         } else if (w > d){ //else if new edge gives a shorter path from x->y than the old edge, replace the old edge with the new one
             
             successors.get(x).put(y, d);
             predecessors.get(y).put(x,d);
             edgesMatrix.get(x).set(y, edge);
+            i = edges.indexOf(tEdge);
+            edges.set(i, edge);
         }
     }
 
@@ -115,6 +121,8 @@ public class STN {
     public boolean hasDistanceMatrix(){ return distanceMatrix == null; }
     public void setDistanceMatrix(DistanceMatrix dm){ distanceMatrix = dm; }
     public DistanceMatrix getDistanceMatrix(){ return distanceMatrix; }
+    
+    public ArrayList<Edge> getEdges(){ return edges; }
 
     @Override
     public String toString(){
