@@ -18,10 +18,14 @@ public class FloydWarshall {
         this.network = network;
     }
 
+    /**
+     * Generates a distance matrix for this instance of Floyd Warshall.
+     * @return A DistanceMatrix.
+     */
     public DistanceMatrix generateMatrix(){     
         DistanceMatrix outputMatrix = new DistanceMatrix();
 
-        outputMatrix.makeCleanMatrixFromSTN(network); 
+        outputMatrix.makeCleanMatrixFromSTN(network); // initialize matrix
 
         for (int k = 0; k < outputMatrix.size(); k++){                      
             for (int i = 0; i < outputMatrix.size(); i++){              

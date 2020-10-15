@@ -78,7 +78,7 @@ public class STNParser {
             }
             echo += "Finished network creation.\n";
         } catch (NullPointerException np){
-            System.err.println("Path to file cannot be null.");
+            System.err.println(np.getCause());
         } catch (FileNotFoundException fnf){
             System.err.println("File not found, make sure to input a valid path.");
         } catch (Exception e){

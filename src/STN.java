@@ -7,14 +7,11 @@ import java.util.*;
  * @author Mark Infante
  * @author Ciara O'Donnell
 */
-
-//#mi  NOTE DOES NOT EXTEND TEMPNET ANYMORE
 public class STN {
-    // #mi TRANSFERED FROM TEMPORAL NETWORK
-    private TemporalNetworks networkType; 
-    private List<String> timePointNames;
-    private Integer numTimePoints;
-    private DistanceMatrix distanceMatrix;
+    private TemporalNetworks networkType;       // Enum describing net type
+    private List<String> timePointNames;        // List of strings representing time point names
+    private Integer numTimePoints;              // Number of nodes in the graph
+    private DistanceMatrix distanceMatrix;      // A distance matrix initialized to null
 
     private List<HashMap<Integer, Double>> successors;   // A 2D vector that holds information about a node's successors.
                                                      // index of the list is start, map at index contains end and delta
@@ -52,7 +49,6 @@ public class STN {
     }
 
     public void addEdge(Edge edge){ 
-        // TODO: test
         Integer x = edge.getStart();
         Integer y = edge.getEnd();
         Double d = edge.getWeight();
@@ -110,7 +106,6 @@ public class STN {
     public Map<Integer, Double> getPredsOf(Integer node){ return predecessors.get(node); }
     public List<HashMap<Integer, Double>> getPreds() { return predecessors; }
 
-    // #mi EVERYTHING EXCEPT toString IS ADDED FROM TEMPNET
     public void setNetType(TemporalNetworks networkType){ this.networkType = networkType; }
     public TemporalNetworks getNetType(){ return networkType; }
 

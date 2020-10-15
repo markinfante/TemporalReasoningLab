@@ -5,19 +5,18 @@ import java.util.ArrayList;
 import java.io.File;
 
 /**
- * A Test Suite for testing STN's. Bad code/design lives here. 
+ * A Test Suite for testing STN's.  
  * @author Mark Infante
  */
 public class TestSuite {
-    
-    private ArrayList<STN> stnList;
 
     public TestSuite() {}
 
-    public TestSuite(ArrayList<STN> stnList){
-        this.stnList = stnList;
-    }
-
+    /**
+     * Runs default network algs and prints output to the screen
+     * for manual testing. 
+     * @param tSTN
+     */
     public void testSTN(STN tSTN){
         String display = "";
 
@@ -31,10 +30,6 @@ public class TestSuite {
             DPC dpc = new DPC(tSTN);
             display += String.format("\nIs consistent (DPC): %s\n\n", String.valueOf(dpc.isConsistent()));
             display += String.format("New network: %s\n\n", tSTN.toString());
-            // #mi IF YOU WANT TO TEST YOUR ALG MIMIC THE ABOVE HERE
-            //      vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-            //
-            //      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         } catch (Exception e){
             System.err.println("Failed: "+ e);
         }
