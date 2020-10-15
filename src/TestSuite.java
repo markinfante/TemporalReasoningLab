@@ -46,8 +46,8 @@ public class TestSuite {
 
     public void testIncrementor(Edge edge, STN tSTN){
         String display = "";
-
         display += tSTN.toString() + "\n";
+        
         try {
             FloydWarshall fw = new FloydWarshall(tSTN);
             tSTN.setDistanceMatrix(fw.generateMatrix());
