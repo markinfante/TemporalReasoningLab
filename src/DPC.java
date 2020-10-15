@@ -16,10 +16,10 @@ public class DPC {
      */
     public DPC(STN network){
         this.network = network;
+        this.shuffledNodes = new ArrayList<Integer>();
         for (int i = 0; i < network.getNumTimePoints(); i++){
             shuffledNodes.add(i);
         }
-
         Collections.shuffle(shuffledNodes);  // Shuffle nodes in the graph
     }
 
@@ -32,26 +32,43 @@ public class DPC {
      */
     public boolean isConsistent(){
         List<? extends Map<Integer,Edge>> relaxed = new ArrayList<HashMap<Integer,Edge>>();
-        Integer tstart = 0;
-        Integer tend = 0;
-        Double tweight = 0.0;
-        boolean output = true;
+        ArrayList<Edge> edges = network.getEdges();
+        Map<Integer, Double> succs = null;
+        Map<Integer, Double> preds = null;
+        Double tWeight1 = 0.0;
+        Double tWeight2 = 0.0;
+        Edge tEdge1 = null;
+        Edge tEdge2 = null;
         
-        Collections.reverse(shuffledNodes); // Work from the back first
-
-        for (Integer node: shuffledNodes){  // For all nodes
-            for (Integer key: network.getSuccsOf(node).keySet()){ // For all succs
-                if (key < node){
-
-                }
-            }
-            for (Integer key: network.getPredsOf(node).keySet()){ // For all preds
-                if (key < node){
-
+        for (int k = network.getNumTimePoints() - 1; k >= 0; k--){
+            succs = network.getSuccsOf(shuffledNodes.get(k));
+            preds = network.getPredsOf(shuffledNodes.get(k));
+            for (int j = 0; j < k; j++){
+                for (int i = 0; i < k; i++){
+                    tWeight1 = succs.get(i);   // weight from k -> i
+                    tWeight2 = preds.get(j);   // weight from j -> k 
+                    // Relax
+                    if (tWeight1 != 0.0 && tWeight2 != 0.0){    // if1 : both pred and succ edges exist
+                        tEdge1 = network.getEdge(i, j);         //       edge = i -> j 
+                        if (tEdge1 != null){                        // if2 : edge exists in the graph from i -> j
+                            if (tEdge1.getWeight() > tWeight1 + tWeight2) { // if3 : the weight of new is less than prev val
+                                tEdge1.setWeight(tWeight1 + tWeight2);
+                            } else {                                        // else3 : weight of new is greater
+                                continue;       
+                            }
+                        } else {                                    // else2 : edge doesn't exist in the graph from i -> j 
+                            network.addEdge(new Edge(i, j, tWeight1 + tWeight2));
+                        }
+                    } else {                                    // else1 :  at lest one edge doesn't exist
+                        continue;
+                    } 
                 }
             }
         }
+        
+        if (network.getEdge(shuffledNodes.get(0), shuffledNodes.get(0)).getWeight() < 0) 
+            return false;
 
-        return output;
+        return true;
     }
 }

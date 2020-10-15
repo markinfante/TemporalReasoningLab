@@ -80,7 +80,8 @@ public class STN {
         Integer x = edge.getStart();
         Integer y = edge.getEnd();
         
-        successors.get(x).put(y, null);
+        successors.get(x).put(y, 0.0);
+        predecessors.get(y).put(x, 0.0);
         numSuccessors.set(x, numSuccessors.get(x)-1);
         edgesMatrix.get(x).set(y, null);
         

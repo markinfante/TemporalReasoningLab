@@ -30,6 +30,8 @@ public class TestSuite {
             FloydWarshall fw = new FloydWarshall(tSTN);
             tSTN.setDistanceMatrix(fw.generateMatrix());
             display += tSTN.getDistanceMatrix().toString();
+            DPC dpc = new DPC(tSTN);
+            display += String.format("Is consistent (DPC): %s\n\n", String.valueOf(dpc.isConsistent()));
             // #mi IF YOU WANT TO TEST YOUR ALG MIMIC THE ABOVE HERE
             //      vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
             
