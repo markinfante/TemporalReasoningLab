@@ -10,8 +10,6 @@ import java.io.File;
  */
 public class TestSuite {
     
-    private final static AlgName[] DEFAULT_TEST = {AlgName.FWARSHALL, AlgName.NAIVE, AlgName.BELLFORD};
-    
     private ArrayList<STN> stnList;
 
     public TestSuite() {}
@@ -23,7 +21,7 @@ public class TestSuite {
     public void testSTN(STN tSTN){
         String display = "";
 
-        display += tSTN.toString() + "\n";
+        display += String.format("Printing original network: \n%s\n\n", tSTN.toString());
         display += String.format("Successors List: %s \n\n", tSTN.getSuccs().toString());
         display += String.format("Predecessors List: %s \n\n", tSTN.getPreds().toString());
         try {
@@ -31,7 +29,8 @@ public class TestSuite {
             tSTN.setDistanceMatrix(fw.generateMatrix());
             display += tSTN.getDistanceMatrix().toString();
             DPC dpc = new DPC(tSTN);
-            display += String.format("Is consistent (DPC): %s\n\n", String.valueOf(dpc.isConsistent()));
+            display += String.format("\nIs consistent (DPC): %s\n\n", String.valueOf(dpc.isConsistent()));
+            display += String.format("New network: %s\n\n", tSTN.toString());
             // #mi IF YOU WANT TO TEST YOUR ALG MIMIC THE ABOVE HERE
             //      vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
             
@@ -42,18 +41,6 @@ public class TestSuite {
         display += "\n========================================================\n\n";
 
         System.out.println(display);
-    }
-
-    public void runTests(){
-        String display = "";
-        STN tSTN = null;
-
-        for (int i = 0; i < stnList.size(); i++){
-            tSTN = stnList.get(i);
-            display += String.format("Successors List: %s \n\n", tSTN.getSuccs().toString());
-            display += String.format("Predecessors List: %s \n\n", tSTN.getPreds().toString()); 
-            display += "Edges matrix: \n\n" + tSTN.toString();
-        }
     }
     
 }

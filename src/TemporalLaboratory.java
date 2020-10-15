@@ -37,9 +37,8 @@ public class TemporalLaboratory{
     private void printFlags(){
         String flagString = ""; // The help string to be returned
         flagString += "\nAvailable flags: \n";
-        flagString += "\t-> None implemented.\n";
-        //flagString += "\t-> \'print\' or \'p\' to print a representation of the network.\n";
-        //flagString += "\t-> \'quit\' or \'q\' to quit.\n";
+        flagString += "\t-> <flag> <option> :\n";
+        flagString += "\t-> \'-t all\' to run default tests on all STNs in test repo.\n";
         System.out.println(flagString);
     }
 
@@ -84,7 +83,6 @@ public class TemporalLaboratory{
                     System.err.println(e);
                 }
             } else if (ts.equals("n")){
-                lab = new TemporalLaboratory(); // placeholder
                 lab.printFlags();
                 return;
             } else {

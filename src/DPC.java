@@ -37,8 +37,7 @@ public class DPC {
         Map<Integer, Double> preds = null;
         Double tWeight1 = 0.0;
         Double tWeight2 = 0.0;
-        Edge tEdge1 = null;
-        Edge tEdge2 = null;
+        Edge tEdge = null;
         
         for (int k = network.getNumTimePoints() - 1; k >= 0; k--){
             succs = network.getSuccsOf(shuffledNodes.get(k));
@@ -49,10 +48,10 @@ public class DPC {
                     tWeight2 = preds.get(j);   // weight from j -> k 
                     // Relax
                     if (tWeight1 != 0.0 && tWeight2 != 0.0){    // if1 : both pred and succ edges exist
-                        tEdge1 = network.getEdge(i, j);         //       edge = i -> j 
-                        if (tEdge1 != null){                        // if2 : edge exists in the graph from i -> j
-                            if (tEdge1.getWeight() > tWeight1 + tWeight2) { // if3 : the weight of new is less than prev val
-                                tEdge1.setWeight(tWeight1 + tWeight2);
+                        tEdge = network.getEdge(i, j);             //   edge = i -> j 
+                        if (tEdge != null){                        // if2 : edge exists in the graph from i -> j
+                            if (tEdge.getWeight() > tWeight1 + tWeight2) { // if3 : the weight of new is less than prev val
+                                tEdge.setWeight(tWeight1 + tWeight2);
                             } else {                                        // else3 : weight of new is greater
                                 continue;       
                             }

@@ -129,20 +129,20 @@ public class STN {
     @Override
     public String toString(){
         // TODO: test
-        String output = "\nPrinting network: \n\n";
+        String output = "\n\n";
         Edge tEdge = null;
-        for (int y = 0; y < getSizeEdgesMatrix() + 1; y++){
-            for (int x = 0; x <= getSizeEdgesMatrix() + 1; x++){
-                if (x == getSizeEdgesMatrix()+1){     // Create new line in matrix
+        for (int x = 0; x < getSizeEdgesMatrix() + 1; x++){
+            for (int y = 0; y <= getSizeEdgesMatrix() + 1; y++){
+                if (y == getSizeEdgesMatrix()+1){     // Create new line in matrix
                     output = output + "\n\n";
-                } else if (y == 0){     // Create first row of start nodes
-                    if (x == 0) {       // Skip a space for alignment at 0,0 because we use 0 as a node
-                        output = output + "\t\t" + Integer.toString(x); 
-                    } else if (x < getSizeEdgesMatrix()){            
-                        output = output + "\t" + Integer.toString(x);
+                } else if (x == 0){     // Create first row of start nodes
+                    if (y == 0) {       // Skip a space for alignment at 0,0 because we use 0 as a node
+                        output = output + "\t\t" + Integer.toString(y); 
+                    } else if (y < getSizeEdgesMatrix()){            
+                        output = output + "\t" + Integer.toString(y);
                     }
-                } else if (x == 0){     // Create first column of end nodes
-                    output = output + "\t" + Integer.toString(y - 1); 
+                } else if (y == 0){     // Create first column of end nodes
+                    output = output + "\t" + Integer.toString(x - 1); 
                 } else {
                     tEdge = this.getEdge(x-1, y-1);
                     if (tEdge == null) {

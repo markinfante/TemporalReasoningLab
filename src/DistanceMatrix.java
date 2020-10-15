@@ -44,18 +44,18 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
     public String toString(){
         String output = "\nPrinting Distance Matrix: \n\n";
         Double tWeight = Double.POSITIVE_INFINITY;
-        for (int y = 0; y < size() + 1; y++){
-            for (int x = 0; x <= size() + 1; x++){
-                if (x == size()+1){     // Create new line in matrix
+        for (int x = 0; x < size() + 1; x++){
+            for (int y = 0; y <= size() + 1; y++){
+                if (y == size()+1){     // Create new line in matrix
                     output = output + "\n\n";
-                } else if (y == 0){     // Create first row of start nodes
-                    if (x == 0) {       // Skip a space for alignment at 0,0 because we use 0 as a node
-                        output = output + "\t\t" + Integer.toString(x); 
-                    } else if (x < size()){            
-                        output = output + "\t" + Integer.toString(x);
+                } else if (x == 0){     // Create first row of start nodes
+                    if (y == 0) {       // Skip a space for alignment at 0,0 because we use 0 as a node
+                        output = output + "\t\t" + Integer.toString(y); 
+                    } else if (y < size()){            
+                        output = output + "\t" + Integer.toString(y);
                     }
-                } else if (x == 0){     // Create first column of end nodes
-                    output = output + "\t" + Integer.toString(y - 1); 
+                } else if (y == 0){     // Create first column of end nodes
+                    output = output + "\t" + Integer.toString(x - 1); 
                 } else { // fill with weights
                     tWeight = this.get(x-1).get(y-1);
                     if (tWeight == Double.POSITIVE_INFINITY) {
