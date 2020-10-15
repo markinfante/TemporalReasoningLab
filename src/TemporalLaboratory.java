@@ -114,10 +114,8 @@ public class TemporalLaboratory{
                                             // add edge to network
                                             // create new test suite
                                             tSuite = new TestSuite();
-                                            System.out.println("yoooo");
                                             // run stn test
                                             tSuite.testIncrementor((new Edge (x,y,z)), lab.network);
-                                            System.out.println("yoooo");
                                             // run new incrementor test (should print distance matrix)
                                             break;
                                         default:

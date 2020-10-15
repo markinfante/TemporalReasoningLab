@@ -33,10 +33,27 @@ public class TestSuite {
             display += String.format("New network: %s\n\n", tSTN.toString());
             // #mi IF YOU WANT TO TEST YOUR ALG MIMIC THE ABOVE HERE
             //      vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+            //
+            //      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        } catch (Exception e){
+            System.err.println("Failed: "+ e);
+        }
+        display += "\n========================================================\n\n";
+
+        System.out.println(display);
+    }
+
+    public void testIncrementor(Edge edge, STN tSTN){
+        String display = "";
+        display += tSTN.toString() + "\n";
+        
+        try {
+            FloydWarshall fw = new FloydWarshall(tSTN);
+            tSTN.setDistanceMatrix(fw.generateMatrix());
+            display += "Old distance matrix: \n" + tSTN.getDistanceMatrix().toString();
             NaiveAlgorithm na = new NaiveAlgorithm(tSTN);
             tSTN.setDistanceMatrix(na.updateDistanceMatrix(edge, tSTN.getDistanceMatrix()));
             display += "New distance matrix: \n" + tSTN.getDistanceMatrix().toString() + "\n";
-            //      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         } catch (Exception e){
             System.err.println("Failed: "+ e);
         }
