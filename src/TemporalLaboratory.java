@@ -101,26 +101,38 @@ public class TemporalLaboratory{
                     } else if (ts.equals("help") || ts.equals("h")){
                         lab.printHelp();
                     } else {
-                        inputArgs = ts.split(" ");
-                        switch(inputArgs[0]){
-                            case "add":
-                                switch (inputArgs[1]){
-                                    case "edge":
-                                        // take in values for new edge
-                                        // add edge to network
-                                        // create new test suite
-                                        // run stn test
-                                        // run new incrementor test (should print distance matrix)
-                                        break;
-                                    default:
-                                        System.out.println("BAD");
-                                        break;
-                                }
-                                break;
-                            default:
-                                System.out.println("BAD");
-                                break;
+                        try{
+                            inputArgs = ts.split(" ");
+                            switch(inputArgs[0]){
+                                case "add":
+                                    switch (inputArgs[1]){
+                                        case "edge":
+                                            // take in values for new edge
+                                            Integer x = Integer.parseInt(inputArgs[2]);
+                                            Integer y = Integer.parseInt(inputArgs[3]);
+                                            Double z = Double.parseDouble(inputArgs[4]);
+                                            // add edge to network
+                                            // create new test suite
+                                            tSuite = new TestSuite();
+                                            System.out.println("yoooo");
+                                            // run stn test
+                                            tSuite.testIncrementor((new Edge (x,y,z)), lab.network);
+                                            System.out.println("yoooo");
+                                            // run new incrementor test (should print distance matrix)
+                                            break;
+                                        default:
+                                            System.out.println("BAD");
+                                            break;
+                                    }
+                                    break;
+                                default:
+                                    System.out.println("BAD");
+                                    break;
+                            }
+                        } catch (Exception e){
+                            System.out.println(e);
                         }
+                        
                     }
                 }
             } catch (Exception e){

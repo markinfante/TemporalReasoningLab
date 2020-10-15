@@ -27,13 +27,15 @@ public class TestSuite {
         try {
             FloydWarshall fw = new FloydWarshall(tSTN);
             tSTN.setDistanceMatrix(fw.generateMatrix());
-            display += tSTN.getDistanceMatrix().toString();
+            display += "Original distance matrix: \n" + tSTN.getDistanceMatrix().toString();
             DPC dpc = new DPC(tSTN);
             display += String.format("\nIs consistent (DPC): %s\n\n", String.valueOf(dpc.isConsistent()));
             display += String.format("New network: %s\n\n", tSTN.toString());
             // #mi IF YOU WANT TO TEST YOUR ALG MIMIC THE ABOVE HERE
             //      vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-            
+            NaiveAlgorithm na = new NaiveAlgorithm(tSTN);
+            tSTN.setDistanceMatrix(na.updateDistanceMatrix(edge, tSTN.getDistanceMatrix()));
+            display += "New distance matrix: \n" + tSTN.getDistanceMatrix().toString() + "\n";
             //      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         } catch (Exception e){
             System.err.println("Failed: "+ e);
