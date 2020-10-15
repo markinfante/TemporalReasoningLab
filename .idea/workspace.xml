@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a3e3d173-7639-46e9-8163-3d93358a3161" name="Default Changelist" comment="Added TwoPhasePropagation class(not complete or working). Fixed some errors I picked up from initial Branch creation.">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/TemporalReasoningLab.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TemporalReasoningLab.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/STN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/STN.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TemporalLaboratory$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TemporalLaboratory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TemporalNetwork.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TemporalNetworks.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TwoPhasePropagation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TwoPhasePropagation.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1iFsSB1iOmsxmJvhLhrnB4kLfLn" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a3e3d173-7639-46e9-8163-3d93358a3161" name="Default Changelist" comment="" />
+      <created>1601514674443</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1601514674443</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Added TwoPhasePropagation class(not complete or working). Fixed some errors I picked up from initial Branch creation.">
+      <created>1601522250802</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1601522250802</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added TwoPhasePropagation class(not complete or working). Fixed some errors I picked up from initial Branch creation." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added TwoPhasePropagation class(not complete or working). Fixed some errors I picked up from initial Branch creation." />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="379" y="98" key="#Project_Structure" timestamp="1602187386163">
+      <screen x="0" y="23" width="1680" height="961" />
+    </state>
+    <state x="379" y="98" key="#Project_Structure/0.23.1680.961@0.23.1680.961" timestamp="1602187386163" />
+    <state x="1169" y="105" key="#com.intellij.ide.util.MemberChooser" timestamp="1601517810954">
+      <screen x="0" y="23" width="1680" height="967" />
+    </state>
+    <state x="1169" y="105" key="#com.intellij.ide.util.MemberChooser/0.23.1680.967@0.23.1680.967" timestamp="1601517810954" />
+    <state x="379" y="98" key="SettingsEditor" timestamp="1602187431537">
+      <screen x="0" y="23" width="1680" height="961" />
+    </state>
+    <state x="379" y="98" key="SettingsEditor/0.23.1680.961@0.23.1680.961" timestamp="1602187431537" />
+    <state x="661" y="295" width="1019" height="633" key="dock-window-1" timestamp="1602176851752">
+      <screen x="0" y="23" width="1680" height="963" />
+    </state>
+    <state x="661" y="295" width="1019" height="633" key="dock-window-1/0.23.1680.963@0.23.1680.963" timestamp="1602176851752" />
+    <state x="725" y="295" width="1019" height="633" key="dock-window-1/0.23.1680.965@0.23.1680.965" timestamp="1601583263298" />
+  </component>
+</project>
