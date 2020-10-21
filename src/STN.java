@@ -89,12 +89,19 @@ public class STN {
      * Takes the 'from' and 'to' nodes and returns the corresponding edge.
      * @param src Source index.
      * @param dest Destination index.
+     * @param isSucc A boolean whether to get succ or pred.
      * @return An edge if found, or null.
      */
-    public Edge getEdge(Integer src, Integer dest){
-        Double weight = successors.get(src).get(dest);
-        System.out.println(weight);
-        if (weight == 0.0) return null;
+    public Edge getEdge(Integer src, Integer dest, boolean isSucc){
+        Double weight = 0.0;
+        
+        if (isSucc) {
+            weight = successors.get(src).get(dest);
+        } else {
+            weight = predecessors.get(src).get(dest);
+        }
+
+        if (weight == 0.0) return new Edge(src,dest,Double.POSITIVE_INFINITY);
         return new Edge(src,dest,weight);
     }
 

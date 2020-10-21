@@ -27,7 +27,7 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
         for (int i = 0; i < network.getNumTimePoints(); i++){
             this.add(new ArrayList<Double>());  // Add lists for every edge 
             for (int j = 0; j < network.getNumTimePoints(); j++){ // Fill every list (ie. j at column i)
-                tEdge = network.getEdge(i, j);
+                tEdge = network.getEdge(i, j, true);
                 if (tEdge != null){
                     this.get(i).add(tEdge.getWeight());
                 } else {
