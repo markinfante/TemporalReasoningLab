@@ -1,7 +1,7 @@
 package src;
 
 /** 
- * An Edge is a 3-tuple (X, d, Y), where X is a start node, Y is an end node,
+ * An Edge is a 3-tuple (X, Y, d), where X is a start node, Y is an end node,
  * and d is delta, the weight of the edge from X --> Y.
  * @author Mark Infante 
 */

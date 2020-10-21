@@ -24,10 +24,10 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
     public void makeCleanMatrixFromSTN(STN network){
         Edge tEdge = null;
 
-        for (int i = 0; i < network.getSizeEdgesMatrix(); i++){
+        for (int i = 0; i < network.getNumTimePoints(); i++){
             this.add(new ArrayList<Double>());  // Add lists for every edge 
-            for (int j = 0; j < network.getSizeEdgesMatrix(); j++){ // Fill every list (ie. j at column i)
-                tEdge = network.getEdge(i, j);
+            for (int j = 0; j < network.getNumTimePoints(); j++){ // Fill every list (ie. j at column i)
+                tEdge = network.getEdge(i, j, true);
                 if (tEdge != null){
                     this.get(i).add(tEdge.getWeight());
                 } else {
@@ -42,7 +42,7 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
      */
     @Override
     public String toString(){
-        String output = "\nPrinting Distance Matrix: \n\n";
+        String output = "";
         Double tWeight = Double.POSITIVE_INFINITY;
         for (int x = 0; x < size() + 1; x++){
             for (int y = 0; y <= size() + 1; y++){

@@ -86,19 +86,26 @@ public class STN {
         return;
     }
     
-    public Edge getEdge(Integer src, Integer dest){
-        return edgesMatrix.get(src).get(dest);
+    /**
+     * Takes the 'from' and 'to' nodes and returns the corresponding edge.
+     * @param src Source index.
+     * @param dest Destination index.
+     * @param isSucc A boolean whether to get succ or pred.
+     * @return An edge if found, or null.
+     */
+    public Edge getEdge(Integer src, Integer dest, boolean isSucc){
+        Double weight = 0.0;
+        
+        if (isSucc) {
+            weight = successors.get(src).get(dest);
+        } else {
+            weight = predecessors.get(src).get(dest);
+        }
+
+        if (weight == 0.0) return new Edge(src,dest,Double.POSITIVE_INFINITY);
+        return new Edge(src,dest,weight);
     }
 
-    public void addNode() {
-        // TODO: all
-        return;
-    }
-
-    public void removeNode() {
-        // TODO Auto-generated method stub 
-        return; 
-    }
 
     public Integer getSizeEdgesMatrix(){ return edgesMatrix.size(); }
     
@@ -127,25 +134,25 @@ public class STN {
     public String toString(){
         // TODO: test
         String output = "\n\n";
-        Edge tEdge = null;
-        for (int x = 0; x < getSizeEdgesMatrix() + 1; x++){
-            for (int y = 0; y <= getSizeEdgesMatrix() + 1; y++){
-                if (y == getSizeEdgesMatrix()+1){     // Create new line in matrix
+        Double tWeight = null;
+        for (int x = 0; x < getNumTimePoints() + 1; x++){
+            for (int y = 0; y <= getNumTimePoints() + 1; y++){
+                if (y == getNumTimePoints()+1){     // Create new line in matrix
                     output = output + "\n\n";
                 } else if (x == 0){     // Create first row of start nodes
                     if (y == 0) {       // Skip a space for alignment at 0,0 because we use 0 as a node
                         output = output + "\t\t" + Integer.toString(y); 
-                    } else if (y < getSizeEdgesMatrix()){            
+                    } else if (y < getNumTimePoints()){            
                         output = output + "\t" + Integer.toString(y);
                     }
                 } else if (y == 0){     // Create first column of end nodes
                     output = output + "\t" + Integer.toString(x - 1); 
                 } else {
-                    tEdge = this.getEdge(x-1, y-1);
-                    if (tEdge == null) {
+                    tWeight = this.successors.get(x-1).get(y-1);
+                    if (tWeight == null) {
                         output = output + "\t" + "null";
                     } else {
-                        output = output + "\t" + tEdge.getWeight().toString();
+                        output = output + "\t" + tWeight;
                     }
                 }
             }

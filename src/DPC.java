@@ -30,43 +30,23 @@ public class DPC {
      * 
      * @return A boolean representing network consistency
      */
-    public boolean isConsistent(){
-        List<? extends Map<Integer,Edge>> relaxed = new ArrayList<HashMap<Integer,Edge>>();
-        ArrayList<Edge> edges = network.getEdges();
-        Map<Integer, Double> succs = null;
-        Map<Integer, Double> preds = null;
-        Double tWeight1 = 0.0;
-        Double tWeight2 = 0.0;
+    public boolean isConsistent(List<Integer> permutation){
+        Edge succ = null;
+        Edge pred = null;
         Edge tEdge = null;
         
-        for (int k = network.getNumTimePoints() - 1; k >= 0; k--){
-            succs = network.getSuccsOf(shuffledNodes.get(k));
-            preds = network.getPredsOf(shuffledNodes.get(k));
+        for (int k = permutation.size() - 1; k >= 0; k--){
             for (int j = 0; j < k; j++){
                 for (int i = 0; i < k; i++){
-                    tWeight1 = succs.get(i);   // weight from k -> i
-                    tWeight2 = preds.get(j);   // weight from j -> k 
-                    // Relax
-                    if (tWeight1 != 0.0 && tWeight2 != 0.0){    // if1 : both pred and succ edges exist
-                        tEdge = network.getEdge(i, j);             //   edge = i -> j 
-                        if (tEdge != null){                        // if2 : edge exists in the graph from i -> j
-                            if (tEdge.getWeight() > tWeight1 + tWeight2) { // if3 : the weight of new is less than prev val
-                                tEdge.setWeight(tWeight1 + tWeight2);
-                            } else {                                        // else3 : weight of new is greater
-                                continue;       
-                            }
-                        } else {                                    // else2 : edge doesn't exist in the graph from i -> j 
-                            network.addEdge(new Edge(i, j, tWeight1 + tWeight2));
-                        }
-                    } else {                                    // else1 :  at lest one edge doesn't exist
-                        continue;
+                    pred = network.getEdge(permutation.get(i), permutation.get(k), true);
+                    succ = network.getEdge(permutation.get(k), permutation.get(j), true);
+                    tEdge = network.getEdge(permutation.get(i), permutation.get(j), true);
+                    if (tEdge.getWeight() > pred.getWeight() + succ.getWeight()){
+                        if (pred.getWeight() + succ.getWeight() < 0) return false;
                     } 
                 }
             }
         }
-        
-        if (network.getEdge(shuffledNodes.get(0), shuffledNodes.get(0)).getWeight() < 0) 
-            return false;
 
         return true;
     }
