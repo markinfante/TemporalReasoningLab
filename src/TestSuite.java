@@ -27,9 +27,9 @@ public class TestSuite {
             FloydWarshall fw = new FloydWarshall(tSTN);
             tSTN.setDistanceMatrix(fw.generateMatrix());
             display += "Original distance matrix: \n" + tSTN.getDistanceMatrix().toString();
-            DPC dpc = new DPC(tSTN);
-            display += String.format("\nIs consistent (DPC): %s\n\n", String.valueOf(dpc.isConsistent()));
-            display += String.format("New network: %s\n\n", tSTN.toString());
+            //DPC dpc = new DPC(tSTN);
+            //display += String.format("\nIs consistent (DPC): %s\n\n", String.valueOf(dpc.isConsistent()));
+            //display += String.format("New network: %s\n\n", tSTN.toString());
         } catch (Exception e){
             System.err.println("Failed: "+ e);
         }

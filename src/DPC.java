@@ -30,6 +30,7 @@ public class DPC {
      * 
      * @return A boolean representing network consistency
      */
+    // isDPC
     public boolean isConsistent(){
         List<? extends Map<Integer,Edge>> relaxed = new ArrayList<HashMap<Integer,Edge>>();
         ArrayList<Edge> edges = network.getEdges();
