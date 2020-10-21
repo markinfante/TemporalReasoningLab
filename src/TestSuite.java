@@ -48,6 +48,8 @@ public class TestSuite {
             display += "Old distance matrix: \n" + tSTN.getDistanceMatrix().toString();
             NaiveAlgorithm na = new NaiveAlgorithm(tSTN);
             tSTN.setDistanceMatrix(na.updateDistanceMatrix(edge, tSTN.getDistanceMatrix()));
+            FloydWarshall fw2 = new FloydWarshall(tSTN);
+            display += "new fw" + fw.generateMatrix();
             display += "New distance matrix: \n" + tSTN.getDistanceMatrix().toString() + "\n";
         } catch (Exception e){
             System.err.println("Failed: "+ e);

@@ -11,17 +11,35 @@ public class NaiveAlgorithm
     private STN network;
     private DistanceMatrix dm;
 
+    /**
+     * Create a new instance of the Naive update algorithm
+     * @param network The local temporal network
+     */
     public NaiveAlgorithm(STN network)
     {
         this.network = network;
     }
-    
+
+    /**
+     * Updates the distance matrix using the naive algorithm. 
+     * @param edge the edge being added to the network
+     * @param dm the distance matrix which will be updated and returned
+     */
     public DistanceMatrix updateDistanceMatrix(Edge edge, DistanceMatrix dm)
     {
         Integer x = edge.getStart();
         Integer y = edge.getEnd();
         Double w = edge.getWeight();
         network.addEdge(edge);
+
+        /*for (int u = 0; u < dm.size(); u++){
+            for (int v = 0; v < dm.size(); v++){
+                if (u == v) { 
+                    dm.get(u).set(v, 0.0);
+                }
+            }
+        }*/
+
 
         for (int u = 0; u < dm.size(); u++){
             for (int v = 0; v < dm.size(); v++){

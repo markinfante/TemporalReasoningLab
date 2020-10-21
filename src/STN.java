@@ -81,6 +81,7 @@ public class STN {
         predecessors.get(y).put(x, 0.0);
         numSuccessors.set(x, numSuccessors.get(x)-1);
         edgesMatrix.get(x).set(y, null);
+        distanceMatrix.setUpToDate(false);
         
         return;
     }
