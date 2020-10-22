@@ -34,6 +34,7 @@ public class DPC {
         Edge succ = null;
         Edge pred = null;
         Edge tEdge = null;
+        Double tWeight = 0.0;
         
         for (int k = permutation.size() - 1; k >= 0; k--){
             for (int j = 0; j < k; j++){
@@ -41,9 +42,10 @@ public class DPC {
                     pred = network.getEdge(permutation.get(i), permutation.get(k), true);
                     succ = network.getEdge(permutation.get(k), permutation.get(j), true);
                     tEdge = network.getEdge(permutation.get(i), permutation.get(j), true);
-                    if (tEdge.getWeight() > pred.getWeight() + succ.getWeight()){
-                        if (pred.getWeight() + succ.getWeight() < 0) return false;
+                    if (tEdge.getWeight() > pred.getWeight() + succ.getWeight()){ // relax
+                        tEdge.setWeight(pred.getWeight() + succ.getWeight());
                     } 
+                    if (tEdge.getWeight() + network.getEdge(j, i, true).getWeight() < 0) return false;
                 }
             }
         }
