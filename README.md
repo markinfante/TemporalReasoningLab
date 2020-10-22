@@ -1,2 +1,2 @@
 # TemporalReasoningLab
-Private repository for Applications of AI in Java
+Public repository for Applications of AI in Java
