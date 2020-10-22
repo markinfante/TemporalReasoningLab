@@ -67,40 +67,66 @@ public class BellmanFord {
 	
 	private STN network;
 	private DistanceMatrix outputmatrix;
+	private ArrayList<Edge> tEdges;
 	
 	/**
 	 * Create a new instance of the Bellman-Ford algorithm and generate a distance matrix as output.
 	 * @param network The local temporal network
-	 * @param sos SOURCE-OR-SINK? flag
 	 */
-	public BellmanFord(STN network, Integer sos)
+	public BellmanFord(STN network)
 	{		
 		this.network = network;
 		this.outputmatrix = network.getDistanceMatrix();
+		this.tEdges = new ArrayList<Edge>();
+		
+		for (int i = 0; i < network.getNumTimePoints(); i++)
+		{
+			tEdges.add(network.getEdge(i, i, true));
+			
+			for (int j = 0; j < network.getNumTimePoints(); j++)
+			{
+				if (i != j)
+				{
+					tEdges.add(network.getEdge(i, j, true));
+					tEdges.add(network.getEdge(j, i, true));
+				}
+			}
+		}
 	}
 	
-	public boolean generate_BF()
-	{
-		ArrayList<Edge> tEdges = network.getEdges();
-		ArrayList<Double> distVector = new ArrayList<Double>(Collections.nCopies(network.getNumTimePoints(), 0.0));
-
-		for (int i = 0; i < tEdges.size()-1; i++)			// for each node X
+	/**
+	 * @param source SOURCE flag
+	 */
+	public ArrayList<Double> generate_BF(int source)
+	{	
+		ArrayList<Double> distVector = new ArrayList<Double>(Collections.nCopies(network.getNumTimePoints(), Double.POSITIVE_INFINITY));
+		distVector.set(source, 0.0);
+		
+		for (int i = 0; i < network.getNumTimePoints()-1; i++)
 		{
-			for (Edge tEdge : tEdges)		// for each outgoing edge from node X to node Y
-			{
-				distVector.set(tEdge.getEnd(), Math.min(distVector.get(tEdge.getStart()) + tEdge.getWeight(),
-														distVector.get(tEdge.getEnd())));
+			for (Edge tEdge : tEdges)		// for each outgoing edge in successors
+			{				
+				if (distVector.get(tEdge.getStart()) != Double.POSITIVE_INFINITY &&
+					distVector.get(tEdge.getStart()) + tEdge.getWeight() < distVector.get(tEdge.getEnd()))
+				{
+					distVector.set(tEdge.getEnd(),
+									distVector.get(tEdge.getStart()) + tEdge.getWeight());
+				}
 			}
 		}
 		
+		
+		
+		// Checking for negative cycles
 		for (Edge tEdge : tEdges)
 		{
-			if (distVector.get(tEdge.getEnd()) > distVector.get(tEdge.getStart()) + tEdge.getWeight())
+			if (distVector.get(tEdge.getStart()) != Double.POSITIVE_INFINITY &&
+				distVector.get(tEdge.getEnd()) > distVector.get(tEdge.getStart()) + tEdge.getWeight())
 			{
-				return false;
+				return null;
 			}
 		}
 		
-		return true;
+		return distVector;
 	}
 }

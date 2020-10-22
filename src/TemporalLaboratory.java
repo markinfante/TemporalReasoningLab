@@ -154,6 +154,7 @@ public class TemporalLaboratory{
                                     tSTN = parser.parseFile(f);
                                     parser.echoFile(f);
                                     tSuite.testSTN(tSTN);
+                                    tSuite.testConsistencyChecker(tSTN);
                                 }
                             } catch (Exception e){
                                 System.err.println(e);

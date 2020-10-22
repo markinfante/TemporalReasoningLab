@@ -58,5 +58,22 @@ public class TestSuite {
 
         System.out.println(display);
     }
+
+    public void testConsistencyChecker(STN tSTN){
+        String display = "";
+        display += "Original graph" + tSTN.toString() + "bellford\n";
+        
+        try {
+            BellmanFord bf = new BellmanFord(tSTN);
+            display += "Bellman ford outcome:" + bf.generate_BF(0);
+        } catch (Exception e){
+            System.err.println("Failed: "+ e);
+        }
+        display += "\n========================================================\n\n";
+
+        System.out.println(display);
+    }
+
+
     
 }

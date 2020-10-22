@@ -32,13 +32,13 @@ public class NaiveAlgorithm
         Double w = edge.getWeight();
         network.addEdge(edge);
 
-        /*for (int u = 0; u < dm.size(); u++){
+        for (int u = 0; u < dm.size(); u++){
             for (int v = 0; v < dm.size(); v++){
                 if (u == v) { 
                     dm.get(u).set(v, 0.0);
                 }
             }
-        }*/
+        }
 
 
         for (int u = 0; u < dm.size(); u++){
