@@ -63,14 +63,14 @@ public class TemporalLaboratory{
             System.out.println("Else, type "help" or "h" to see a list of other options.");
             boolean run = true;
             // should probably put everything in the while in a try catch block
+            inputScanner = new Scanner(System.in);
             while (run)
             {
-                inputScanner = new Scanner(System.in);
                 ts = inputScanner.nextLine();
                 if (ts.equals("create"))
                 {
                     System.out.println("To add an edge to the STN, type in "add edge" and then the start node, end node, and edge weight.");
-                    System.out.println("Please add spaces between the start, end, and weight.");
+                    System.out.println("Example: 'add edge 1 2 3' ");
                     lab.network = new STN();
                     ts = inputScanner.nextLine();
                     while(true)
