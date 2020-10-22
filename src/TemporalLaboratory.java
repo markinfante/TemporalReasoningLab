@@ -57,6 +57,37 @@ public class TemporalLaboratory{
 
         if (args.length < 1){  // Dont let the user carry on without an input file
             System.out.println("Temporal laboratory should take in a resource file of graph constraints.");
+
+            /*
+            System.out.println("Welcome to the Temporal Laboratory. If you would like to create an STN, type "create.");
+            System.out.println("Else, type "help" or "h" to see a list of other options.");
+            boolean run = true;
+            // should probably put everything in the while in a try catch block
+            while (run)
+            {
+                inputScanner = new Scanner(System.in);
+                ts = inputScanner.nextLine();
+                if (ts.equals("create"))
+                {
+                    System.out.println("To add an edge to the STN, type in "add edge" and then the start node, end node, and edge weight.");
+                    System.out.println("Please add spaces between the start, end, and weight.");
+                    lab.network = new STN();
+                    ts = inputScanner.nextLine();
+                    while(true)
+                    {
+                        inputargs = ts.split(" ");
+                    }
+                }
+                else if (ts.equals("help") || ts.equals("h")){
+                    lab.printHelp();
+                }
+                else if (ts.equals("quit") || ts.equals("q"))
+                {
+                    run = false;
+                    return;
+                }
+            }
+            */
             return;
         } else if (args.length == 1){
             System.out.println("A flag should be specified. If none, a new network will be created without");
