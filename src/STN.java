@@ -16,20 +16,17 @@ public class STN {
 
     private List<HashMap<Integer, Double>> successors;   // A 2D vector that holds information about a node's successors.
                                                      // index of the list is start, map at index contains end and delta
-    private List<Integer> numSuccessors;             // Number of successor nodes for corresponding node index
-    private List<ArrayList <Edge>> edgesMatrix;      // A 2D matrix of edge weights for corresponding node index pair
-    private ArrayList<Edge> edges;			 // List of edges
     private List<HashMap<Integer, Double>> predecessors; // A 2D vector that holds information about a node's preds.
                                                      // index of the list is end, map at index contains start and delta
+    private List<Integer> numSuccessors;             // Number of successor nodes for corresponding node index
+    
 
     // Default constructor for simple temporal network
-    // TODO: Figure out how to prompt if wanting a distance matrix 
     public STN(){
-        setNetType(TemporalNetworks.STN);
+        networkType = TemporalNetworks.STN;
         numSuccessors = new ArrayList<Integer>();
         successors = new ArrayList<HashMap<Integer, Double>>(); //iniitialize successors as a Vector
         predecessors = new ArrayList<HashMap<Integer, Double>>();
-        edgesMatrix = new ArrayList<ArrayList<Edge>>();
     }
     
     public void init(){
@@ -38,11 +35,8 @@ public class STN {
             successors.add(i, new HashMap<Integer, Double>());
             predecessors.add(i, new HashMap<Integer, Double>()); 
             numSuccessors.add(0);
-            edgesMatrix.add(i, new ArrayList<Edge>());
-            edges = new ArrayList<Edge>();
             for (int k = 0; k < tps; k++)
             {
-                edgesMatrix.get(i).add(null);
                 successors.get(i).put(k, 0.0);
                 predecessors.get(i).put(k, 0.0);
             }
@@ -54,22 +48,15 @@ public class STN {
         Integer y = edge.getEnd();
         Double d = edge.getWeight();
         Double w = successors.get(x).get(y);
-        Edge tEdge = edgesMatrix.get(x).get(y);
-        int i = 0;
         
         if (w == 0.0){ //if an edge doesn't exist in successors, input the given edge argument. also increment numsuccessors, since we are adding a new edge
             successors.get(x).put(y, d);
             predecessors.get(y).put(x, d);
             numSuccessors.set(x, numSuccessors.get(x)+1);
-            edgesMatrix.get(x).set(y, edge);
-            edges.add(edge);
+
         } else if (w > d){ //else if new edge gives a shorter path from x->y than the old edge, replace the old edge with the new one
-            
             successors.get(x).put(y, d);
             predecessors.get(y).put(x,d);
-            edgesMatrix.get(x).set(y, edge);
-            i = edges.indexOf(tEdge);
-            edges.set(i, edge);
         }
     }
 
@@ -80,7 +67,6 @@ public class STN {
         successors.get(x).put(y, 0.0);
         predecessors.get(y).put(x, 0.0);
         numSuccessors.set(x, numSuccessors.get(x)-1);
-        edgesMatrix.get(x).set(y, null);
         distanceMatrix.setUpToDate(false);
         
         return;
@@ -106,8 +92,6 @@ public class STN {
         return new Edge(src,dest,weight);
     }
 
-
-    public Integer getSizeEdgesMatrix(){ return edgesMatrix.size(); }
     
     public Map<Integer, Double> getSuccsOf(Integer node){ return successors.get(node); }
     public List<HashMap<Integer, Double>> getSuccs() { return successors; }
@@ -127,8 +111,6 @@ public class STN {
     public boolean hasDistanceMatrix(){ return distanceMatrix == null; }
     public void setDistanceMatrix(DistanceMatrix dm){ distanceMatrix = dm; }
     public DistanceMatrix getDistanceMatrix(){ return distanceMatrix; }
-    
-    public ArrayList<Edge> getEdges(){ return edges; }
 
     @Override
     public String toString(){
