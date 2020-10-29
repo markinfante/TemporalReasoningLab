@@ -27,9 +27,9 @@ public class TestSuite {
             FloydWarshall fw = new FloydWarshall(tSTN);
             tSTN.setDistanceMatrix(fw.generateMatrix());
             display += "Original distance matrix: \n" + tSTN.getDistanceMatrix().toString();
-            DPC dpc = new DPC(tSTN);
-            display += String.format("\nIs consistent (DPC): %s\n\n", String.valueOf(dpc.isConsistent()));
-            display += String.format("New network: %s\n\n", tSTN.toString());
+            //DPC dpc = new DPC(tSTN);
+            //display += String.format("\nIs consistent (DPC): %s\n\n", String.valueOf(dpc.isConsistent()));
+            //display += String.format("New network: %s\n\n", tSTN.toString());
         } catch (Exception e){
             System.err.println("Failed: "+ e);
         }
@@ -48,6 +48,8 @@ public class TestSuite {
             display += "Old distance matrix: \n" + tSTN.getDistanceMatrix().toString();
             NaiveAlgorithm na = new NaiveAlgorithm(tSTN);
             tSTN.setDistanceMatrix(na.updateDistanceMatrix(edge, tSTN.getDistanceMatrix()));
+            FloydWarshall fw2 = new FloydWarshall(tSTN);
+            display += "new fw" + fw.generateMatrix();
             display += "New distance matrix: \n" + tSTN.getDistanceMatrix().toString() + "\n";
         } catch (Exception e){
             System.err.println("Failed: "+ e);
@@ -56,5 +58,22 @@ public class TestSuite {
 
         System.out.println(display);
     }
+
+    public void testConsistencyChecker(STN tSTN){
+        String display = "";
+        display += "Original graph" + tSTN.toString() + "bellford\n";
+        
+        try {
+            BellmanFord bf = new BellmanFord(tSTN);
+            display += "Bellman ford outcome:" + bf.generate_BF(0);
+        } catch (Exception e){
+            System.err.println("Failed: "+ e);
+        }
+        display += "\n========================================================\n\n";
+
+        System.out.println(display);
+    }
+
+
     
 }
