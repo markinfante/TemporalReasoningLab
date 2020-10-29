@@ -22,25 +22,36 @@ public class TwoPhasePropagation {
 
     public DistanceMatrix twoPhasePropagate(Edge addedEdge){
 
-        // check if the DM is reliable
-        if(outputMatrix.isUpToDate()){ 
-            // start working on DM, upToDate = False
-            outputMatrix.setUpToDate(false);
-        } else {
-            // DM not reliable, cancel
-            return null;
-        }
+        // // check if the DM is reliable
+        // if(outputMatrix.isUpToDate()){ 
+        //     // start working on DM, upToDate = False
+        //     outputMatrix.setUpToDate(false);
+        // } else {
+        //     System.out.println("DM not up to date!");
+        //     // DM not reliable, cancel
+        //     return null;
+        // }
 
+        
 
         int nodeFrom = addedEdge.getStart(); // x
         int nodeTo = addedEdge.getEnd(); // y 
         double addedEdgeWeight = addedEdge.getWeight(); // delta
+
+        network.addEdge(addedEdge);
+        if(addedEdgeWeight<outputMatrix.get(nodeFrom).get(nodeTo)){
+            outputMatrix.get(nodeFrom).set(nodeTo, addedEdgeWeight);
+        } else {
+            outputMatrix.setUpToDate(true);
+            return outputMatrix;
+        }
 
         // @Group - Is the DistanceMatrix designed to have negative values on 
         //          backward traversal? If not it should be.
         
         // check if new weight is better than the backwards traversal between these nodes
         if(addedEdgeWeight < -(outputMatrix.get(nodeTo).get(nodeFrom))){
+            System.out.println("useless input edge");
             return null;
         }
 
@@ -55,13 +66,17 @@ public class TwoPhasePropagation {
 
         // loop through every node forward of y
         while(!forwardToDoPriorityQueue.isEmpty()){
+            
             // pop a node off
             int node = forwardToDoPriorityQueue.poll(); // v
+            System.out.println("pop "+ node);
             // loop through successors
             for(Map.Entry<Integer,Double> entry : network.getSuccsOf(node).entrySet()){
+                
                 int successorIndex = entry.getKey(); // w
                 double successorWeight = entry.getValue(); // d
-
+                System.out.print("Successor index: " + successorIndex + "\n");
+                System.out.print("Successor weight: " + successorWeight + "\n");
                 // ignore node if it has been checked &&
                 // given path abc, if (ab + bc) == abc, continue
                 if(!forwardEncountered.contains(successorIndex) &&  
@@ -72,12 +87,13 @@ public class TwoPhasePropagation {
                     forwardEncountered.add(successorIndex); 
                     
                     // if current path recorded is worse than new path
-                    if((outputMatrix.get(nodeTo).get(successorIndex) + addedEdgeWeight) <
-                      outputMatrix.get(nodeFrom).get(successorIndex)){ // delta + D(y,v) < D(x,w)
+                double newDistance = addedEdgeWeight + outputMatrix.get(nodeTo).get(successorIndex);
+                    if(newDistance < outputMatrix.get(nodeFrom).get(successorIndex)){ // delta + D(y,v) < D(x,w)
                         
                         // get and set new distance, new edge + old stored path
-                        double newDistance = addedEdgeWeight + outputMatrix.get(nodeTo).get(successorIndex);
-                        outputMatrix.get(nodeFrom).set(nodeFrom, newDistance);
+                        
+                        System.out.println("src: " + nodeFrom + ", dest: " + successorIndex + ", newDistance: " + newDistance + " \n");
+                        outputMatrix.get(nodeFrom).set(successorIndex, newDistance);
                         
                         // record change in successor
                         forwardChanged.add(successorIndex);
@@ -89,6 +105,7 @@ public class TwoPhasePropagation {
         }
 
         for(int i = 0; i < forwardChanged.size(); i++){
+            System.out.println("fwd changed:" + i);
             ArrayList<Integer> backwardEncountered = new ArrayList<Integer>();
             PriorityQueue<Integer> backwardToDoPriorityQueue = new PriorityQueue<Integer>();
 
@@ -103,10 +120,15 @@ public class TwoPhasePropagation {
             while(!backwardToDoPriorityQueue.isEmpty()){
                 // current predecessor
                 int thisNode = backwardToDoPriorityQueue.poll(); // f
+                
+                System.out.println("pop:" + thisNode);
                 // loop through thisNode's predecessors
                 for(Map.Entry<Integer,Double> entry : network.getPredsOf(thisNode).entrySet()){
                     int predecessorIndex = entry.getKey(); // e
                     double predecessorWeight = entry.getValue(); // a
+
+                    System.out.print("Predecessor index: " + predecessorIndex + "\n");
+                    System.out.print("Predecessor weight: " + predecessorWeight + "\n");
 
                     // if predecessor has not been encountered &&
                     // pred -> baseNode == (pred -> thisNode + thisNode -> baseNode)
@@ -124,14 +146,19 @@ public class TwoPhasePropagation {
                         // if pred->baseNode + baseNode -> nodeFrom(successor) < pred->successor
                         if(newDistance < outputMatrix.get(predecessorIndex).get(baseNode)){ // D(e,x) + D(x,w) < D(e,w)
                             // set new distance
-                            outputMatrix.get(predecessorIndex).set(baseNode, newDistance); // D(e,f) = newDistance
+
+                            System.out.println("src: " + predecessorIndex + ", dest: " + baseNode + ", newDistance: " + newDistance + " \n");
+                            outputMatrix.get(predecessorIndex).set(baseNode, newDistance); // D(e,w) = newDistance
                             // add predecessor onto queue
+
+                            System.out.println("offer: " + baseNode);
                             backwardToDoPriorityQueue.offer(baseNode); // add f
                           }
                       }
                 }
             }
         }
+        // network.setDistanceMatrix(outputMatrix);
         // set distance matrix as up to date
         outputMatrix.setUpToDate(true);
         // return distance matrix

@@ -28,6 +28,9 @@ public class TemporalLaboratory{
         helpString += "\t-> \'help\' or \'h\' to print this message again.\n";
         helpString += "\t-> \'print\' or \'p\' to print a representation of the network.\n";
         helpString += "\t-> \'quit\' or \'q\' to quit.\n";
+        helpString += "\t-> \'add edge\' prompts the creation of a new edge. This can then be followed by:\n";
+        helpString += "\t\t-> \'inc\' to test the incrementor algorithm.\n";
+        helpString += "\t\t-> \'fwdback\' to test the forward backward propagation algorithm.\n";
         System.out.println(helpString);
     }
 
@@ -93,7 +96,7 @@ public class TemporalLaboratory{
             System.out.println("A flag should be specified. If none, a new network will be created without");
             System.out.println(" a distance matrix and your actions will be limited.\n");
             System.out.println("If you would like to continue without a flag enter \'y\', else \'n\' and");
-            System.out.println(" a list of available flags will be printed for you.");
+            System.out.println(" a list of available flags will be printed for you and the program will exit.");
             try{
                 inputScanner = new Scanner(System.in);
                 ts = inputScanner.nextLine();
@@ -123,6 +126,7 @@ public class TemporalLaboratory{
         
 
             try { // try to read input from user after network creation
+                lab.printHelp();
                 while (inputScanner.hasNext()){
                     ts = inputScanner.nextLine().trim();
                     if (ts.equals("print") || ts.equals("p")){
@@ -146,8 +150,16 @@ public class TemporalLaboratory{
                                             // create new test suite
                                             tSuite = new TestSuite();
                                             // run stn test
-                                            tSuite.testIncrementor((new Edge (x,y,z)), lab.network);
-                                            // run new incrementor test (should print distance matrix)
+                                            switch(inputArgs[5]){
+                                                case "inc":
+                                                    tSuite.testIncrementor((new Edge (x,y,z)), lab.network);
+                                                    // run new incrementor test (should print distance matrix)
+                                                    break;
+                                                case "fwdback":
+                                                tSuite.testFwdBackPropagation((new Edge (x,y,z)), lab.network);
+                                            }
+
+                                           
                                             break;
                                         default:
                                             System.out.println("BAD");

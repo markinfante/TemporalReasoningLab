@@ -35,11 +35,11 @@ public class STN {
             successors.add(i, new HashMap<Integer, Double>());
             predecessors.add(i, new HashMap<Integer, Double>()); 
             numSuccessors.add(0);
-            for (int k = 0; k < tps; k++)
-            {
-                successors.get(i).put(k, 0.0);
-                predecessors.get(i).put(k, 0.0);
-            }
+            // for (int k = 0; k < tps; k++)
+            // {
+            //     successors.get(i).put(k, Double.POSITIVE_INFINITY); // this defeats the entire point of using a hashmap...
+            //     predecessors.get(i).put(k, Double.POSITIVE_INFINITY); // only add keys when we have values for them
+            // }
         }   
     }
 
@@ -49,7 +49,7 @@ public class STN {
         Double d = edge.getWeight();
         Double w = successors.get(x).get(y);
         
-        if (w == 0.0){ //if an edge doesn't exist in successors, input the given edge argument. also increment numsuccessors, since we are adding a new edge
+        if (w == null){ //if an edge doesn't exist in successors, input the given edge argument. also increment numsuccessors, since we are adding a new edge
             successors.get(x).put(y, d);
             predecessors.get(y).put(x, d);
             numSuccessors.set(x, numSuccessors.get(x)+1);
@@ -61,15 +61,15 @@ public class STN {
     }
 
     public void removeEdge(Edge edge){
-        Integer x = edge.getStart();
-        Integer y = edge.getEnd();
-        
-        successors.get(x).put(y, 0.0);
-        predecessors.get(y).put(x, 0.0);
-        numSuccessors.set(x, numSuccessors.get(x)-1);
-        distanceMatrix.setUpToDate(false);
-        
-        return;
+        if(getEdge(edge.getStart(), edge.getEnd(), true) != null){
+            Integer x = edge.getStart();
+            Integer y = edge.getEnd();
+            
+            successors.get(x).remove(y);
+            predecessors.get(y).remove(x);
+            numSuccessors.set(x, numSuccessors.get(x)-1);
+            distanceMatrix.setUpToDate(false);
+        }
     }
     
     /**
@@ -80,16 +80,20 @@ public class STN {
      * @return An edge if found, or null.
      */
     public Edge getEdge(Integer src, Integer dest, boolean isSucc){
-        Double weight = 0.0;
+        Double weight = Double.POSITIVE_INFINITY;
         
         if (isSucc) {
-            weight = successors.get(src).get(dest);
+            if(successors.get(src).containsKey(dest)){
+                weight = successors.get(src).get(dest);
+            }
         } else {
-            weight = predecessors.get(src).get(dest);
+            if(predecessors.get(src).containsKey(dest)){
+                weight = predecessors.get(src).get(dest);
+            }
         }
 
-        if (weight == 0.0) return new Edge(src,dest,Double.POSITIVE_INFINITY);
-        return new Edge(src,dest,weight);
+        Edge edge = (weight == Double.POSITIVE_INFINITY)?  null : new Edge(src,dest,weight);
+        return edge;
     }
 
     
@@ -112,6 +116,7 @@ public class STN {
     public void setDistanceMatrix(DistanceMatrix dm){ distanceMatrix = dm; }
     public DistanceMatrix getDistanceMatrix(){ return distanceMatrix; }
 
+
     @Override
     public String toString(){
         // TODO: test
@@ -133,6 +138,8 @@ public class STN {
                     tWeight = this.successors.get(x-1).get(y-1);
                     if (tWeight == null) {
                         output = output + "\t" + "null";
+                    } else if (tWeight == Double.POSITIVE_INFINITY){
+                        output = output + "\t" + "inf";
                     } else {
                         output = output + "\t" + tWeight;
                     }

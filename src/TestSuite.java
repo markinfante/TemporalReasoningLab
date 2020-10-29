@@ -74,6 +74,29 @@ public class TestSuite {
         System.out.println(display);
     }
 
+    public void testFwdBackPropagation(Edge edge, STN stn){
+        String display = "Current STN:\n";
+        display += stn.toString() + "\n";
+        
+        try {
+            
+            FloydWarshall fw = new FloydWarshall(stn);
+            stn.setDistanceMatrix(fw.generateMatrix());
+            display += "Old distance matrix: \n" + stn.getDistanceMatrix().toString();
+            TwoPhasePropagation tpp = new TwoPhasePropagation(stn);
+            DistanceMatrix outputMatrix = tpp.twoPhasePropagate(edge);
+            if (outputMatrix != null){
+                stn.setDistanceMatrix(outputMatrix);
+            }
+            display += "New distance matrix: \n" + stn.getDistanceMatrix().toString() + "\n";
+        } catch (Exception e){
+            System.err.println("Failed: "+ e);
+        }
+        display += "\n========================================================\n\n";
+
+        System.out.println(display);
+    }
+
 
     
 }

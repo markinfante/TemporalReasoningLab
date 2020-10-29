@@ -1,6 +1,6 @@
 package src;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * A matrix abstraction using a 2D ArrayList of Doubles. 
@@ -23,16 +23,26 @@ public class DistanceMatrix extends ArrayList<ArrayList<Double>>{
      */
     public void makeCleanMatrixFromSTN(STN network){
         Edge tEdge = null;
+        int numTimePoints = network.getNumTimePoints();
 
-        for (int i = 0; i < network.getNumTimePoints(); i++){
-            this.add(new ArrayList<Double>());  // Add lists for every edge 
-            for (int j = 0; j < network.getNumTimePoints(); j++){ // Fill every list (ie. j at column i)
+        // for (int i = 0; i < numTimePoints; i++){// Add lists for every edge
+            
+        //     for(int incy = 0; incy < numTimePoints; incy++){ 
+                
+        //     }
+        // }
+
+        for (int i = 0; i < numTimePoints; i++){
+            this.add(new ArrayList<Double>());
+            for (int j = 0; j < numTimePoints; j++){ // Fill every list (ie. j at column i)
+                
                 tEdge = network.getEdge(i, j, true);
                 if (tEdge != null){
                     this.get(i).add(tEdge.getWeight());
                 } else {
-                    this.get(i).add(Double.POSITIVE_INFINITY);  
+                    this.get(i).add(Double.POSITIVE_INFINITY);
                 }
+                
             }
         }
     }
