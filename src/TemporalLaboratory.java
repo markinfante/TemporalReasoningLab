@@ -29,8 +29,8 @@ public class TemporalLaboratory{
         helpString += "\t-> \'print\' or \'p\' to print a representation of the network.\n";
         helpString += "\t-> \'quit\' or \'q\' to quit.\n";
         helpString += "\t-> \'add edge\' prompts the creation of a new edge. This can then be followed by:\n";
-        helpString += "\t\t-> \'inc\' to test the incrementor algorithm.\n";
-        helpString += "\t\t-> \'fwdback\' to test the forward backward propagation algorithm.\n";
+        helpString += "\t\t-> \'naive\' to test the incrementor algorithm. (ex. 'add edge 1 2 3.0 naive')\n";
+        helpString += "\t\t-> \'fwdback\' to test the forward backward propagation algorithm. (ex. 'add edge 1 2 3.0 fwdback')\n";
         System.out.println(helpString);
     }
 
@@ -151,23 +151,21 @@ public class TemporalLaboratory{
                                             tSuite = new TestSuite();
                                             // run stn test
                                             switch(inputArgs[5]){
-                                                case "inc":
+                                                case "naive":
                                                     tSuite.testIncrementor((new Edge (x,y,z)), lab.network);
                                                     // run new incrementor test (should print distance matrix)
                                                     break;
                                                 case "fwdback":
-                                                tSuite.testFwdBackPropagation((new Edge (x,y,z)), lab.network);
+                                                    tSuite.testFwdBackPropagation((new Edge (x,y,z)), lab.network);
                                             }
-
-                                           
                                             break;
                                         default:
-                                            System.out.println("BAD");
+                                            System.out.println("Error. (Maybe misspelled 'edge'?)");
                                             break;
                                     }
                                     break;
                                 default:
-                                    System.out.println("BAD");
+                                    System.out.println("Error. (Maybe misspelled 'add')?");
                                     break;
                             }
                         } catch (Exception e){
@@ -198,6 +196,8 @@ public class TemporalLaboratory{
                                     parser.echoFile(f);
                                     tSuite.testSTN(tSTN);
                                     tSuite.testConsistencyChecker(tSTN);
+                                    tSuite.testIncrementor((new Edge (3,4,4.0)), tSTN);
+                                    
                                 }
                             } catch (Exception e){
                                 System.err.println(e);

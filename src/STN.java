@@ -28,6 +28,13 @@ public class STN {
         successors = new ArrayList<HashMap<Integer, Double>>(); //iniitialize successors as a Vector
         predecessors = new ArrayList<HashMap<Integer, Double>>();
     }
+    public STN(Integer numTimePoints){
+        this.numTimePoints = numTimePoints; 
+        networkType = TemporalNetworks.STN;
+        numSuccessors = new ArrayList<Integer>();
+        successors = new ArrayList<HashMap<Integer, Double>>(); //iniitialize successors as a Vector
+        predecessors = new ArrayList<HashMap<Integer, Double>>();
+    }
     
     public void init(){
         int tps = getNumTimePoints(); //populate the spaces in the vector, based on the number of timepoints

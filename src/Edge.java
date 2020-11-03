@@ -1,4 +1,5 @@
 package src;
+import java.util.*;
 
 /** 
  * An Edge is a 3-tuple (X, Y, d), where X is a start node, Y is an end node,
@@ -6,7 +7,7 @@ package src;
  * @author Mark Infante 
 */
 
-public class Edge{
+public class Edge  implements Comparator<Edge>{
 
     private Integer startNode;
     private Integer endNode;
@@ -24,6 +25,15 @@ public class Edge{
         this.weight = weight;
     }
 
+    @Override
+    public int compare(Edge e1, Edge e2)
+    {
+        if (e1.getWeight()  < e2.getWeight())
+            return -1;
+        if (e1.getWeight()  > e2.getWeight())
+            return 1;
+        return 0;
+    }
     /**
      * Returns the string representation of an edge.
      */

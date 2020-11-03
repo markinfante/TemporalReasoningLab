@@ -40,16 +40,15 @@ public class TestSuite {
 
     public void testIncrementor(Edge edge, STN tSTN){
         String display = "";
-        display += tSTN.toString() + "\n";
-        
+        System.out.println("teststt1");
         try {
             FloydWarshall fw = new FloydWarshall(tSTN);
             tSTN.setDistanceMatrix(fw.generateMatrix());
-            display += "Old distance matrix: \n" + tSTN.getDistanceMatrix().toString();
+            display += "Old DM:" + tSTN.getDistanceMatrix();
             NaiveAlgorithm na = new NaiveAlgorithm(tSTN);
             tSTN.setDistanceMatrix(na.updateDistanceMatrix(edge, tSTN.getDistanceMatrix()));
-            FloydWarshall fw2 = new FloydWarshall(tSTN);
-            display += "new fw" + fw.generateMatrix();
+            //FloydWarshall fw2 = new FloydWarshall(tSTN);
+            //display += "new fw" + fw2.generateMatrix();
             display += "New distance matrix: \n" + tSTN.getDistanceMatrix().toString() + "\n";
         } catch (Exception e){
             System.err.println("Failed: "+ e);
