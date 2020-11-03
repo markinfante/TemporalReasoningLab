@@ -10,7 +10,7 @@ class DijkstraPQ{
 private int dist[];
 private Set<Integer> settled;
 private PriorityQueue<Edge> pq;
-private int numOfVertices;
+private int numOfVertices; 
 List<HashMap<Integer, Double>> adjacencyMatrix;
 private STN tSTN;
 
@@ -38,6 +38,7 @@ public int[] dijkstra(STN tSTN, int srcNode){
   dist[srcNode] = 0;
   while(settled.size() != numOfVertices){
     // remove the min distance node from the priority queue
+    //DIKSTRA IS HAVING PROBLEMS HERE!!!!
     int minDistNode = (int)pq.remove().getStart();
     settled.add(minDistNode);
     e_Neighbours(minDistNode);
@@ -47,8 +48,8 @@ public int[] dijkstra(STN tSTN, int srcNode){
 }
 
 private void e_Neighbours(Integer minDistNode){
-  double edgeDistance = 0;
-  double newDistance = 0;
+  double edgeDistance = -1;
+  double newDistance = -1;
 
   // All the neighbors of edge v
   Map<Integer, Double> succNodes = tSTN.getSuccsOf(minDistNode); 

@@ -135,7 +135,10 @@ public class TemporalLaboratory{
                         break;
                     } else if (ts.equals("help") || ts.equals("h")){
                         lab.printHelp();
-                    } else {
+                    } else if (ts.equals ("j")){ //to test johnsons, just type j instead of p or q or h
+                        tSuite = new TestSuite();
+                        tSuite.testJohnsons(lab.network);
+                    }else {
                         try{
                             inputArgs = ts.split(" ");
                             switch(inputArgs[0]){
@@ -152,7 +155,7 @@ public class TemporalLaboratory{
                                             // run stn test
                                             switch(inputArgs[5]){
                                                 case "naive":
-                                                    tSuite.testIncrementor((new Edge (x,y,z)), lab.network);
+                                                    tSuite.testNaive((new Edge (x,y,z)), lab.network);
                                                     // run new incrementor test (should print distance matrix)
                                                     break;
                                                 case "fwdback":
@@ -165,7 +168,7 @@ public class TemporalLaboratory{
                                     }
                                     break;
                                 default:
-                                    System.out.println("Error. (Maybe misspelled 'add')?");
+                                    System.out.println("Error.");
                                     break;
                             }
                         } catch (Exception e){
@@ -196,7 +199,7 @@ public class TemporalLaboratory{
                                     parser.echoFile(f);
                                     tSuite.testSTN(tSTN);
                                     tSuite.testConsistencyChecker(tSTN);
-                                    tSuite.testIncrementor((new Edge (3,4,4.0)), tSTN);
+                                    tSuite.testNaive((new Edge (3,4,4.0)), tSTN);
                                     
                                 }
                             } catch (Exception e){

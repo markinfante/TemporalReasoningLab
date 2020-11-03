@@ -8,7 +8,7 @@ import java.util.*;
   */
 
 public class Johnsons{
-  private STN network; // STN to generate matrix
+  private STN network; // STN to generate matrix 
   private DistanceMatrix outputMatrix;
   //private Edge srcNode = new Edge(0,0,0.0);
 
@@ -79,6 +79,7 @@ public class Johnsons{
       */
       ///******** ****************************************/
       outputMatrix.makeCleanMatrixFromSTN(network);
+      System.out.println("outputmatrix" + outputMatrix);
 
       //reweight graph
       for (int source = 0; source < network.getNumTimePoints(); source++)
@@ -86,7 +87,7 @@ public class Johnsons{
           for (int dest = 0; dest < network.getNumTimePoints(); dest++)
           {
               outputMatrix.get(source).set(dest, outputMatrix.get(source).get(dest)
-              + newDistances.get(source+1) - newDistances.get(dest+1));
+              + newDistances.get(source) - newDistances.get(dest));
           } //maybe ask jonathan about deleting the src node (first) element in bellford output. thats why i put the +1s
       }
     }
@@ -107,8 +108,9 @@ public class Johnsons{
             }
           }
     }
+    System.out.println("newww" + newNetwork);
 
-    DijkstraPQ dpq = new DijkstraPQ(network);
+    DijkstraPQ dpq = new DijkstraPQ(newNetwork);
     int [] shortestPathsFromU;
     //ArrayList <Double> shortestPathsFromU;
 
@@ -117,7 +119,7 @@ public class Johnsons{
         shortestPathsFromU = dpq.dijkstra(newNetwork,u); //run dijkstra using u as the source node
         for (int v = 0; v < outputMatrix.size(); v++)  //for each vertex v in the graph 
         {
-            outputMatrix.get(u).set(v, shortestPathsFromU[v] + newDistances.get(v+1) - newDistances.get(u+1));
+            outputMatrix.get(u).set(v, shortestPathsFromU[v] + newDistances.get(v) - newDistances.get(u));
             //set elements of distance matrix
         }
 
