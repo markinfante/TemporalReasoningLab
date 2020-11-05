@@ -1,4 +1,4 @@
-package src;
+package edu.vassar.trl;
 
 import java.io.File;
 import java.io.FileNotFoundException;

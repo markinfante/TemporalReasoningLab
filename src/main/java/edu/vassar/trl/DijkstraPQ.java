@@ -1,4 +1,5 @@
-package src;
+package edu.vassar.trl;
+
 import java.util.*;
 /**
   * Implementation of Dijkstra's Algorithm for finding the shortest paths between nodes in a graph. 

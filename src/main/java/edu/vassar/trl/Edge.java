@@ -1,4 +1,5 @@
-package src;
+package edu.vassar.trl;
+
 import java.util.*;
 
 /** 
@@ -6,7 +7,6 @@ import java.util.*;
  * and d is delta, the weight of the edge from X --> Y.
  * @author Mark Infante 
 */
-
 public class Edge  implements Comparator<Edge>{
 
     private Integer startNode;

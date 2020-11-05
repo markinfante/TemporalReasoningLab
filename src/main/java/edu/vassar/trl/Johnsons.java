@@ -1,4 +1,4 @@
-package src;
+package edu.vassar.trl;
 import java.util.*;
 /**
   * Implementation of Johnson's Algorithm to find shortest paths between every
