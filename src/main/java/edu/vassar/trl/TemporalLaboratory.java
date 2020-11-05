@@ -147,8 +147,8 @@ public class TemporalLaboratory{
                                     switch (inputArgs[1]){
                                         case "edge":
                                             // take in values for new edge
-                                            Integer x = Integer.parseInt(inputArgs[2]);
-                                            Integer y = Integer.parseInt(inputArgs[3]);
+                                            int x = Integer.parseInt(inputArgs[2]);
+                                            int y = Integer.parseInt(inputArgs[3]);
                                             Double z = Double.parseDouble(inputArgs[4]);
                                             // add edge to network
                                             // create new test suite

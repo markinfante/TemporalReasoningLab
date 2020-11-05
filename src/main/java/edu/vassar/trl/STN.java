@@ -11,7 +11,7 @@ import java.util.*;
 public class STN {
     private TemporalNetworks networkType;       // Enum describing net type
     private List<String> timePointNames;        // List of strings representing time point names
-    private Integer numTimePoints;              // Number of nodes in the graph
+    private int numTimePoints;              // Number of nodes in the graph
     private DistanceMatrix distanceMatrix;      // A distance matrix initialized to null
 
     private List<HashMap<Integer, Double>> successors;   // A 2D vector that holds information about a node's successors.
@@ -51,8 +51,8 @@ public class STN {
     }
 
     public void addEdge(Edge edge){ 
-        Integer x = edge.getStart();
-        Integer y = edge.getEnd();
+        int x = edge.getStart();
+        int y = edge.getEnd();
         Double d = edge.getWeight();
         Double w = successors.get(x).get(y);
         
@@ -69,8 +69,8 @@ public class STN {
 
     public void removeEdge(Edge edge){
         if(getEdge(edge.getStart(), edge.getEnd(), true) != null){
-            Integer x = edge.getStart();
-            Integer y = edge.getEnd();
+            int x = edge.getStart();
+            int y = edge.getEnd();
             
             successors.get(x).remove(y);
             predecessors.get(y).remove(x);

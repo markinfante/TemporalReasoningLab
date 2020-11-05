@@ -26,8 +26,8 @@ public class NaiveAlgorithm
      */
     public DistanceMatrix updateDistanceMatrix(Edge edge, DistanceMatrix dm)
     {
-        Integer x = edge.getStart();
-        Integer y = edge.getEnd();
+        int x = edge.getStart();
+        int y = edge.getEnd();
         Double w = edge.getWeight();
         network.addEdge(edge);
 
