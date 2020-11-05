@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class TemporalLaboratory{
 
     private STN network;
+    private static final String PATH_TO_STN = "src/main/resources/stn/";
 
     public TemporalLaboratory(){}
 
@@ -107,7 +108,7 @@ public class TemporalLaboratory{
         
             if (ts.equals("y")){
                 try {  // Try to parse input file
-                    file = new File("resources/" + args[0]);
+                    file = new File(PATH_TO_STN + args[0]);
                     parser = new STNParser();
                     lab.network = parser.parseFile(file);
                     parser.echoFile(file);
@@ -191,7 +192,7 @@ public class TemporalLaboratory{
                     switch (option){
                         case "all":
                             try{
-                                file = new File("resources/");
+                                file = new File(PATH_TO_STN);
                                 parser = new STNParser();
                                 tSuite = new TestSuite();
                                 for (File f : file.listFiles()){

@@ -121,6 +121,7 @@ public class STNParser {
      * @param file A File to be echoed.
      */
     public void echoFile(File file){
+        //TODO: Wrap in try catch, file may not have been parsed.
         System.out.println(echoMap.get(file));
     }
 
