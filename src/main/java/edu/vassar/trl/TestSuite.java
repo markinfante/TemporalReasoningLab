@@ -38,6 +38,13 @@ public class TestSuite {
         System.out.println(display);
     }
 
+    /**
+     * Runs Johnson's algorithm and compares it to the output of Floyd Warshall.
+     * If they are the same (except for the diagonals), then it works!
+     * 
+     * For manual testing. 
+     * @param tSTN the local temporal network
+     */
     public void testJohnsons(STN tSTN){
         String display = "";
 
@@ -49,7 +56,6 @@ public class TestSuite {
             Johnsons jns = new Johnsons(tSTN);
             tSTN.setDistanceMatrix(jns.johnsonsAlgorithm());
             display += "Johnson's Distance matrix: \n" + tSTN.getDistanceMatrix().toString();
-            System.out.println("sydftyg");
         } catch (Exception e){
             System.err.println("Failed: "+ e);
         }
@@ -58,6 +64,12 @@ public class TestSuite {
         System.out.println(display);
     }
 
+    /**
+     * Runs the Naive Algorithm.
+     * 
+     * For manual testing. 
+     * @param tSTN the local temporal network
+     */
     public void testNaive(Edge edge, STN tSTN){
         String display = "";
         try {
@@ -66,8 +78,6 @@ public class TestSuite {
             display += "Old DM:" + tSTN.getDistanceMatrix();
             NaiveAlgorithm na = new NaiveAlgorithm(tSTN);
             tSTN.setDistanceMatrix(na.updateDistanceMatrix(edge, tSTN.getDistanceMatrix()));
-            //FloydWarshall fw2 = new FloydWarshall(tSTN);
-            //display += "new fw" + fw2.generateMatrix();
             display += "New distance matrix: \n" + tSTN.getDistanceMatrix().toString() + "\n";
         } catch (Exception e){
             System.err.println("Failed: "+ e);

@@ -6,6 +6,7 @@ import java.util.*;
  * Implementation of the Bellman-Ford algorithm
  * 
  * @author Jonathan Fong
+ * @author Ciara O'Donnell
  */
 
 public class BellmanFord {
@@ -70,7 +71,6 @@ public class BellmanFord {
 				return null;
 			}
 		}
-		System.out.println("shgdh" + distVector);
 		return distVector;
 	}
 }

@@ -30,6 +30,7 @@ public class TemporalLaboratory{
         helpString += "\t-> \'help\' or \'h\' to print this message again.\n";
         helpString += "\t-> \'print\' or \'p\' to print a representation of the network.\n";
         helpString += "\t-> \'quit\' or \'q\' to quit.\n";
+        helpString += "\t-> \'johnsons\' or \'j\' to run Johnson's Algorithm on the network.\n";
         helpString += "\t-> \'add edge\' prompts the creation of a new edge. This can then be followed by:\n";
         helpString += "\t\t-> \'naive\' to test the incrementor algorithm. (ex. 'add edge 1 2 3.0 naive')\n";
         helpString += "\t\t-> \'fwdback\' to test the forward backward propagation algorithm. (ex. 'add edge 1 2 3.0 fwdback')\n";
@@ -137,7 +138,7 @@ public class TemporalLaboratory{
                         break;
                     } else if (ts.equals("help") || ts.equals("h")){
                         lab.printHelp();
-                    } else if (ts.equals ("j")){ //to test johnsons, just type j instead of p or q or h
+                    } else if (ts.equals("johnsons") || ts.equals("j")){ 
                         tSuite = new TestSuite();
                         tSuite.testJohnsons(lab.network);
                     }else {
