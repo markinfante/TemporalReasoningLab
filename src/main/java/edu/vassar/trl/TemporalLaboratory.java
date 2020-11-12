@@ -16,6 +16,7 @@ public class TemporalLaboratory{
 
     private STN network;
     private static final String PATH_TO_STN = "src/main/resources/stn/";
+    private static final String PATH_TO_STNU = "src/main/resources/stnu/";
 
     public TemporalLaboratory(){}
 

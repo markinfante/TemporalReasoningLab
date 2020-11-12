@@ -1,3 +1,6 @@
 src/*.class
 .VSCodeCounter*
 target/
+.classpath
+.project
+.settings/
