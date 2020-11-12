@@ -1,13 +1,11 @@
 package edu.vassar.trl;
 
-import java.util.*;
-
 /** 
  * An Edge is a 3-tuple (X, Y, d), where X is a start node, Y is an end node,
  * and d is delta, the weight of the edge from X --> Y.
  * @author Mark Infante 
 */
-public class Edge  implements Comparator<Edge>{
+public class Edge{
 
     private int startNode;
     private int endNode;
@@ -25,15 +23,6 @@ public class Edge  implements Comparator<Edge>{
         this.weight = weight;
     }
 
-    @Override
-    public int compare(Edge e1, Edge e2)
-    {
-        if (e1.getWeight()  < e2.getWeight())
-            return -1;
-        if (e1.getWeight()  > e2.getWeight())
-            return 1;
-        return 0;
-    }
     /**
      * Returns the string representation of an edge.
      */

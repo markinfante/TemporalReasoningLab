@@ -8,7 +8,6 @@ package edu.vassar.trl;
 public class NaiveAlgorithm
 {
     private STN network;
-    private DistanceMatrix dm;
 
     /**
      * Create a new instance of the Naive update algorithm

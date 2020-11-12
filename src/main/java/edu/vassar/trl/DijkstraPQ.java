@@ -24,7 +24,7 @@ public DijkstraPQ(STN tSTN){
   // super for call parametric constructer, comparator for method reference?  (Comparator<? super Edge>)
   // recommendation from net beans 
   //pq = new PriorityQueue<Edge>(numOfVertices, new Edge(0,0,0.0));
-  pq = new PriorityQueue<Edge>(numOfVertices);
+  pq = new PriorityQueue<Edge>(new EdgeSort());// , comparator class
 }
 
 public int[] dijkstra(STN tSTN, int srcNode){
@@ -40,7 +40,9 @@ public int[] dijkstra(STN tSTN, int srcNode){
   while(settled.size() != numOfVertices){
     // remove the min distance node from the priority queue
     //DIKSTRA IS HAVING PROBLEMS HERE!!!!
-    int minDistNode = (int)pq.remove().getStart();
+    System.out.println("jwhugeyw" + pq);
+    int minDistNode = (int)pq.remove().getEnd();
+    System.out.println("misns" + pq);
     settled.add(minDistNode);
     e_Neighbours(minDistNode);
   }
@@ -54,6 +56,7 @@ private void e_Neighbours(Integer minDistNode){
 
   // All the neighbors of edge v
   Map<Integer, Double> succNodes = tSTN.getSuccsOf(minDistNode); 
+  System.out.println("succnodes" + succNodes);
   for (Map.Entry<Integer, Double> entry : succNodes.entrySet()){
      //Double weight = entry.getValue();
 
@@ -64,7 +67,7 @@ private void e_Neighbours(Integer minDistNode){
 
       // if new distance is cheaper in cost
       if(newDistance < dist[entry.getKey()]){
-        dist[minDistNode] = (int) newDistance;
+        dist[entry.getKey()] = (int) newDistance;
    
         // add the current node to the queue
         pq.add(new Edge(minDistNode,entry.getKey(),newDistance));

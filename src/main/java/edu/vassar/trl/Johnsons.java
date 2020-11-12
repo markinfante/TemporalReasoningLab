@@ -66,18 +66,6 @@ public class Johnsons{
     }
     else{
 
-      // for(Map.Entry<Integer,Double> entry : Map.entrySet()){
-     // modifiedMatrix = bf.generate_BF(sourceNode);
-
-    /*
-      for(int u = 0; u < outputMatrix.size();u++){
-        for(int v = 0; v < outputMatrix.size();v++){
-         outputMatrix.get(u).set(v,(outputMatrix.get(u).get(v)+ bf.generate_BF(u).get(v) - bf.generate_BF(v).get(u)));
-          // original weight + h(u) - h(v), where 
-        }
-      } //not sure this part is right
-      */
-      ///******** ****************************************/
       outputMatrix.makeCleanMatrixFromSTN(network);
       System.out.println("outputmatrix" + outputMatrix);
 
@@ -88,7 +76,7 @@ public class Johnsons{
           {
               outputMatrix.get(source).set(dest, outputMatrix.get(source).get(dest)
               + newDistances.get(source) - newDistances.get(dest));
-          } //maybe ask jonathan about deleting the src node (first) element in bellford output. thats why i put the +1s
+          } 
       }
     }
 
@@ -112,6 +100,7 @@ public class Johnsons{
 
     DijkstraPQ dpq = new DijkstraPQ(newNetwork);
     int [] shortestPathsFromU;
+
     //ArrayList <Double> shortestPathsFromU;
 
     for (int u = 0; u < outputMatrix.size(); u++) //for each vertex u in the graph 
