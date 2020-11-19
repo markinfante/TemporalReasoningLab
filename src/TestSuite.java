@@ -1,8 +1,7 @@
 package src;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.io.File;
+import java.util.*;
+// import java.io.File;
 
 /**
  * A Test Suite for testing STN's.  
@@ -97,6 +96,32 @@ public class TestSuite {
         System.out.println(display);
     }
 
+    public void testDispatchability(STN stn, int startTimePoint){
+        String display = "Current STN:\n";
+        display += stn.toString() + "\n";
+        
+        try {
+            
+            FloydWarshall fw = new FloydWarshall(stn);
+            System.out.println("Floyd Warshall Graph\n" + fw.generateMatrix().toString());
+            // stn.setDistanceMatrix(fw.generateMatrix());
+            DistanceMatrix basicDM = new DistanceMatrix();
+            basicDM.makeCleanMatrixFromSTN(stn);
+            stn.setDistanceMatrix(basicDM);
 
-    
+            // System.out.println(stn.getDistanceMatrix().toString());
+
+            Dispatchability dispatch = new Dispatchability(stn);
+            HashMap<Integer,Integer> timePoints = dispatch.timeDispatchingAlgorithm(startTimePoint);
+            display +=timePoints.toString();
+
+        } catch (Exception e){
+            System.err.println("Failed: "+ e);
+        }
+        display += "\n========================================================\n\n";
+
+        // System.out.println(display);
+    }
 }
+
+

@@ -166,6 +166,11 @@ public class TemporalLaboratory{
                                             break;
                                     }
                                     break;
+                                case "dispatch":
+                                    int startTimePoint = Integer.parseInt(inputArgs[1]);
+                                    tSuite = new TestSuite();
+                                    tSuite.testDispatchability(lab.network, startTimePoint);
+                                    break;
                                 default:
                                     System.out.println("BAD");
                                     break;
