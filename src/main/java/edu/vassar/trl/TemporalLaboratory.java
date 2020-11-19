@@ -200,9 +200,10 @@ public class TemporalLaboratory{
                                 for (File f : file.listFiles()){
                                     tSTN = parser.parseFile(f);
                                     parser.echoFile(f);
-                                    tSuite.testSTN(tSTN);
-                                    tSuite.testConsistencyChecker(tSTN);
-                                    tSuite.testNaive((new Edge (3,4,4.0)), tSTN);
+                                    //tSuite.testSTN(tSTN);
+                                    //tSuite.testJohnsons(tSTN);
+                                    //tSuite.testConsistencyChecker(tSTN);
+                                    //tSuite.testNaive((new Edge (3,4,4.0)), tSTN);
                                     
                                 }
                             } catch (Exception e){
