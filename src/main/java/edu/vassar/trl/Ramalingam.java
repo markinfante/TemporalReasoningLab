@@ -51,7 +51,7 @@ package edu.vassar.trl;
                   double weight = entry.getValue();
                   if (output.get(v) > (output.get(currNode) - weight))
                   {
-                      output.set(v, (output.get(currNode) - weight))
+                      output.set(v, (output.get(currNode) - weight));
                   }
                   double newKey = potential.get(v) - output.get(v);
                   if (v == source && (newKey < 0))
