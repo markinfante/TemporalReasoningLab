@@ -2,6 +2,12 @@ package edu.vassar.trl;
 
 import java.util.*;
 
+/**
+ * Class containing the Greedy Dispatcher and Minimal Dispatch Filtering algorithms 
+ * @author Jonathan Fong
+ * @author Mike Jaklitsch
+ */
+
 class Dispatchability{
     DistanceMatrix dm;
     STN network;
@@ -17,10 +23,33 @@ class Dispatchability{
         System.out.println(str);
     }
 
+    public boolean isValidTimeMap(int startTimePoint, HashMap<Integer,Integer> timeMap){
+        if(timeMap.containsKey(-1)){
+            return false;
+        }
+        for(Map.Entry<Integer,Integer> entry: timeMap.entrySet()){
+            int key = entry.getKey();
+            int lowerTimeBound = (int)Math.round(-dm.get(key).get(startTimePoint));
+            int upperTimeBound = (int)Math.round(dm.get(startTimePoint).get(key));
+
+            if(!(entry.getValue()>= lowerTimeBound && entry.getValue() <=upperTimeBound)){
+                return false;
+            }
+
+        }
+        return true;
+    }
+
     public HashMap<Integer,Integer> timeDispatchingAlgorithm(int startTimePoint){
         System.out.println("timeDispatchingAlgorithm");
-        System.out.println(dm.toString());
-        // note where peudo code comes from
+        System.out.println("STN Edge Graph\n" + dm.toString());
+        // note where pseudo code comes from
+        // Reformulating Temporal Plans For Efficient Execution.pdf
+        /*1. Let
+            A = {start_time_point}
+            current_time = 0
+            S = {}
+        */
         HashMap<Integer,Integer> timeMap = new HashMap<Integer,Integer>(); // swap to integer,integer
         HashMap<Integer,Integer> lowerBoundMap = new HashMap<Integer,Integer>();
         HashMap<Integer,Integer> upperBoundMap = new HashMap<Integer,Integer>();
@@ -42,56 +71,69 @@ class Dispatchability{
         // starting time includes 0
 
         while(frontier.size() > 0){
+            p("\ncurrent time: "+currentTime);
             p("lower bound map: "+ lowerBoundMap.toString());
             p("upper bound map: "+ upperBoundMap.toString());
             
+           
             
-            
-            int randomIndex =(int)(Math.random() * frontier.size());
+            /*
+                2. Arbitrarily pick a time point TP in A such
+                that current_time belongs to TP's time bound;
+            */
+            int randomIndex = (int)(Math.random() * frontier.size());
             int currentNode = frontier.remove(randomIndex);
-            // for(int i = 0; i <frontier.size(); i++){
-            //     int tp = frontier.get(i);
-            //     double lowerTimeBound = -dm.get(tp).get(startTimePoint);
 
-            //     double upperTimeBound = dm.get(startTimePoint).get(tp);
-            //     if(lowerTimeBound < currentTime && currentTime < upperTimeBound){
-            //         currentNode = frontier.remove(i);
-            //         hasCurrentNode = true;
-            //         System.out.println("this should be printing");
-            //         break;
-            //     } // bad
-            // }
+            /*
+                3. Set TP's execution time to current_time and add
+                TP to S;
+            */
             timeMap.put(currentNode, currentTime);
-
             traversedNodes.add(currentNode);
+
+            /*
+                4. Propagate the time of execution
+                to its IMMEDIATE NEIGHBORS in the distance
+                graph;
+            */
+            // for each successor of currentNode
             for(Map.Entry<Integer,Double> entry : network.getSuccsOf(currentNode).entrySet()){
                 int succVal = (int)Math.round(entry.getValue());
                 if(succVal >= 0){
                     int succNode = entry.getKey();
-                    if(upperBoundMap.get(succNode) > succVal){ // set the lower value to upperbound
-                        upperBoundMap.put(succNode, succVal);
+                    if(succVal >= currentTime){
+                        if(upperBoundMap.get(succNode) > succVal){ // set the lower value to upperbound
+                            upperBoundMap.put(succNode, succVal);
+                        }
                     }
                 }
             }
+            // for each predecessor of currentNode
             for(Map.Entry<Integer,Double> entry : network.getPredsOf(currentNode).entrySet()){
                 int predVal = (int)Math.round(entry.getValue());
                 if(predVal < 0){
-                    int succNode = entry.getKey();
-                    if(upperBoundMap.get(succNode) < predVal){ // set the lower value to upperbound
-                        upperBoundMap.put(succNode, predVal);
+                    int predNode = entry.getKey();
+                    if(predVal >= currentTime){
+                        if(upperBoundMap.get(predNode) < predVal){ // set the lower value to upperbound
+                            upperBoundMap.put(predNode, predVal);
+                        }
                     }
                 }
             }
-            p("S" + traversedNodes.toString());
-            p("A" + frontier.toString());
+            
+            /*
+                5. Put in A all time points TPx such that all
+                negative edges starting from TPx have a
+                destination that is already in S;
+            */
             for(int i = 0; i <network.getNumTimePoints(); i++){ // not in S
                 boolean addToFrontier= true;
                 if(traversedNodes.contains(i) || frontier.contains(i)){ // 
                     addToFrontier = false;
                 } else {
                     for(Map.Entry<Integer,Double> entry : network.getSuccsOf(i).entrySet()){
-                        p("key: "+ entry.getKey());
-                        p("value: "+ entry.getValue());
+                        // p("key: "+ entry.getKey());
+                        // p("value: "+ entry.getValue());
                         if(entry.getValue() < 0){ 
                             
                             if(!traversedNodes.contains(entry.getKey())){ // if s contains succ, add to frontier
@@ -116,20 +158,37 @@ class Dispatchability{
                 }
                 
                 int u = Collections.min(lowers);
+                if(u<currentTime){
+                    u = currentTime;
+                }
                 int v = Collections.min(uppers);
+                p("A" + frontier.toString());
+                p("S" + traversedNodes.toString());
                 p("u:"+u);
                 p("v:"+v);
                 // check for legal range u <= v
                 if(u>v && u > 0 && v > 0){ 
                     p("Non-Dispatchable");
-                    return null;
+                    HashMap<Integer,Integer> badMap = new HashMap<Integer,Integer>();
+                    badMap.put(-1, 0);
+                    p("valid time map? "+isValidTimeMap(startTimePoint, badMap));
+                    return badMap;
                 }
-                p(""+currentTime);
+                // p(""+currentTime);
+                /*
+                    6. Wait until current_time has advanced to
+                    some time between
+                        min{lower_bound(TP) : TP in A}
+                        and
+                        min{upper_bound(TP) : TP in A}
+                */
                 currentTime = (int)(Math.random() * (v-u + 1)) + u;
             }
         
-            
+            // 7. Go to 2 until every time point is in S.
         }
+        p(timeMap.toString());
+        p("valid time map? "+isValidTimeMap(startTimePoint, timeMap));
         return timeMap;
 
     }
