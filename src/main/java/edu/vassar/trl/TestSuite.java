@@ -6,6 +6,7 @@ import java.util.*;
 /**
  * A Test Suite for testing STN's.  
  * @author Mark Infante
+ * @author Mike Jaklitsch
  */
 public class TestSuite {
 
@@ -129,7 +130,13 @@ public class TestSuite {
         try {
             
             FloydWarshall fw = new FloydWarshall(stn);
-            stn.setDistanceMatrix(fw.generateMatrix());
+            System.out.println("Floyd Warshall Graph\n" + fw.generateMatrix().toString());
+            // stn.setDistanceMatrix(fw.generateMatrix());
+            DistanceMatrix basicDM = new DistanceMatrix();
+            basicDM.makeCleanMatrixFromSTN(stn);
+            stn.setDistanceMatrix(basicDM);
+
+            // System.out.println(stn.getDistanceMatrix().toString());
 
             Dispatchability dispatch = new Dispatchability(stn);
             HashMap<Integer,Integer> timePoints = dispatch.timeDispatchingAlgorithm(startTimePoint);
@@ -140,7 +147,7 @@ public class TestSuite {
         }
         display += "\n========================================================\n\n";
 
-        System.out.println(display);
+        // System.out.println(display);
     }
 }
 
