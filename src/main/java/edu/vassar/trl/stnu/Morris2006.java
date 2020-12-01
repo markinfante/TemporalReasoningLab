@@ -32,15 +32,22 @@ public class Morris2006 {
     private STNU network;
     private ArrayList<Link> links;
 
+    /**
+     * Constructor for Morris2006 Algorithm
+     */
     public Morris2006(STNU network) {
         this.network = network;
         this.links = network.getLinks();
     }
 
+    /**
+     * The Morris2006 Algorithm for checking consistency in an STNU.
+     * @return A boolean representing if the STNU is consistent
+     */
     public boolean isConsistent(){
         boolean output = false;
 
-        for (int i = 0; i < network.getNumLinks(); i++) { // do k times where k is num links
+        for (int i = 0; i < network.getNumCLinks(); i++) { // do k times where k is num links
             BellmanFord bf = new BellmanFord(network); // this needs to be changed to run on ordinary AND upper case edges
             ArrayList<Double> h = bf.generate_BF(0);
 

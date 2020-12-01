@@ -42,11 +42,6 @@ public class STN {
             successors.add(i, new HashMap<Integer, Double>());
             predecessors.add(i, new HashMap<Integer, Double>()); 
             numSuccessors.add(0);
-            // for (int k = 0; k < tps; k++)
-            // {
-            //     successors.get(i).put(k, Double.POSITIVE_INFINITY); // this defeats the entire point of using a hashmap...
-            //     predecessors.get(i).put(k, Double.POSITIVE_INFINITY); // only add keys when we have values for them
-            // }
         }   
     }
 
