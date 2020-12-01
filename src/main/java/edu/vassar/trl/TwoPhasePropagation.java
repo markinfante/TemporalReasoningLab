@@ -51,7 +51,6 @@ public class TwoPhasePropagation {
         
         // check if new weight is better than the backwards traversal between these nodes
         if(addedEdgeWeight < -(outputMatrix.get(nodeTo).get(nodeFrom))){
-            System.out.println("useless input edge");
             return null;
         }
 
@@ -69,14 +68,11 @@ public class TwoPhasePropagation {
             
             // pop a node off
             int node = forwardToDoPriorityQueue.poll(); // v
-            System.out.println("pop "+ node);
             // loop through successors
             for(Map.Entry<Integer,Double> entry : network.getSuccsOf(node).entrySet()){
                 
                 int successorIndex = entry.getKey(); // w
                 double successorWeight = entry.getValue(); // d
-                System.out.print("Successor index: " + successorIndex + "\n");
-                System.out.print("Successor weight: " + successorWeight + "\n");
                 // ignore node if it has been checked &&
                 // given path abc, if (ab + bc) == abc, continue
                 if(!forwardEncountered.contains(successorIndex) &&  
@@ -92,7 +88,6 @@ public class TwoPhasePropagation {
                         
                         // get and set new distance, new edge + old stored path
                         
-                        System.out.println("src: " + nodeFrom + ", dest: " + successorIndex + ", newDistance: " + newDistance + " \n");
                         outputMatrix.get(nodeFrom).set(successorIndex, newDistance);
                         
                         // record change in successor
@@ -105,7 +100,6 @@ public class TwoPhasePropagation {
         }
 
         for(int i = 0; i < forwardChanged.size(); i++){
-            System.out.println("fwd changed:" + i);
             ArrayList<Integer> backwardEncountered = new ArrayList<Integer>();
             PriorityQueue<Integer> backwardToDoPriorityQueue = new PriorityQueue<Integer>();
 
@@ -121,14 +115,10 @@ public class TwoPhasePropagation {
                 // current predecessor
                 int thisNode = backwardToDoPriorityQueue.poll(); // f
                 
-                System.out.println("pop:" + thisNode);
                 // loop through thisNode's predecessors
                 for(Map.Entry<Integer,Double> entry : network.getPredsOf(thisNode).entrySet()){
                     int predecessorIndex = entry.getKey(); // e
                     double predecessorWeight = entry.getValue(); // a
-
-                    System.out.print("Predecessor index: " + predecessorIndex + "\n");
-                    System.out.print("Predecessor weight: " + predecessorWeight + "\n");
 
                     // if predecessor has not been encountered &&
                     // pred -> baseNode == (pred -> thisNode + thisNode -> baseNode)
@@ -147,11 +137,9 @@ public class TwoPhasePropagation {
                         if(newDistance < outputMatrix.get(predecessorIndex).get(baseNode)){ // D(e,x) + D(x,w) < D(e,w)
                             // set new distance
 
-                            System.out.println("src: " + predecessorIndex + ", dest: " + baseNode + ", newDistance: " + newDistance + " \n");
                             outputMatrix.get(predecessorIndex).set(baseNode, newDistance); // D(e,w) = newDistance
                             // add predecessor onto queue
 
-                            System.out.println("offer: " + baseNode);
                             backwardToDoPriorityQueue.offer(baseNode); // add f
                           }
                       }

@@ -6,7 +6,6 @@ import java.util.*;
 /**
  * A Test Suite for testing STN's.  
  * @author Mark Infante
- * @author Mike Jaklitsch
  */
 public class TestSuite {
 
@@ -38,33 +37,7 @@ public class TestSuite {
         System.out.println(display);
     }
 
-     /**
-     * Runs Johnson's algorithm and compares it to the output of Floyd Warshall.
-     * If they are the same (except for the diagonals), then it works!
-     * 
-     * For manual testing. 
-     * @param tSTN the local temporal network
-     */
-    public void testJohnsons(STN tSTN){
-        String display = "";
-
-        display += String.format("Printing original network: \n%s\n\n", tSTN.toString());
-        try {
-            FloydWarshall fw = new FloydWarshall(tSTN);
-            tSTN.setDistanceMatrix(fw.generateMatrix());
-            display += "FW distance matrix: \n" + tSTN.getDistanceMatrix().toString();
-            Johnsons jns = new Johnsons(tSTN);
-            tSTN.setDistanceMatrix(jns.johnsonsAlgorithm());
-            display += "Johnson's Distance matrix: \n" + tSTN.getDistanceMatrix().toString();
-        } catch (Exception e){
-            System.err.println("Failed: "+ e);
-        }
-        display += "\n========================================================\n\n";
-
-        System.out.println(display);
-    }
-
-    public void testNaive(Edge edge, STN tSTN){
+    public void testIncrementor(Edge edge, STN tSTN){
         String display = "";
         display += tSTN.toString() + "\n";
         
