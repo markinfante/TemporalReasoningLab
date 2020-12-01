@@ -140,7 +140,7 @@ public class TemporalLaboratory{
                         lab.printHelp();
                     } else if (ts.equals("johnsons") || ts.equals("j")){ 
                         tSuite = new TestSuite();
-                        tSuite.testJohnsons(lab.network);
+                        //tSuite.testJohnsons(lab.network);
                     }else {
                         try{
                             inputArgs = ts.split(" ");
