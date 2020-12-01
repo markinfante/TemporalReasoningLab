@@ -1,4 +1,4 @@
-package src;
+package edu.vassar.trl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,10 +33,10 @@ public class STNParser {
         Scanner fileScanner = null;
         String echo = "";
         String ts = ""; // Temp string
-        Integer lStart = 0;   // Local start node 
-        Integer lEnd = 0;     // Local end node
+        int lStart = 0;   // Local start node 
+        int lEnd = 0;     // Local end node
         Double lWeight = 0.0; // Local edge weight
-        Integer numTimePoints = 0; // Number of time points from input file
+        int numTimePoints = 0; // Number of time points from input file
         List<String> timePointNames = new ArrayList<String>();  // Time point names from input file
         List<String> pseudoEdge = new ArrayList<String>();  // An edge from input file in the format of string list
         STN network = new STN();
@@ -121,6 +121,7 @@ public class STNParser {
      * @param file A File to be echoed.
      */
     public void echoFile(File file){
+        //TODO: Wrap in try catch, file may not have been parsed.
         System.out.println(echoMap.get(file));
     }
 

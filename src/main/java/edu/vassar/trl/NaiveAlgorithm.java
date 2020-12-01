@@ -1,15 +1,13 @@
-package src;
+package edu.vassar.trl;
+
 /**
  * Implements the Naive Algorithm for updating the distance matrix
  * @author Ciara O'Donnell
  * @version 1.0
 */
-
-
 public class NaiveAlgorithm
 {
     private STN network;
-    private DistanceMatrix dm;
 
     /**
      * Create a new instance of the Naive update algorithm
@@ -27,8 +25,8 @@ public class NaiveAlgorithm
      */
     public DistanceMatrix updateDistanceMatrix(Edge edge, DistanceMatrix dm)
     {
-        Integer x = edge.getStart();
-        Integer y = edge.getEnd();
+        int x = edge.getStart();
+        int y = edge.getEnd();
         Double w = edge.getWeight();
         network.addEdge(edge);
 

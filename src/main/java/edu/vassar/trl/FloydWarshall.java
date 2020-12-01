@@ -1,4 +1,4 @@
-package src;
+package edu.vassar.trl;
 
 import java.util.ArrayList;
 

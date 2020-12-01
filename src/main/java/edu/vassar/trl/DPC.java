@@ -1,6 +1,6 @@
-package src;
-import java.util.*;
+package edu.vassar.trl;
 
+import java.util.*;
 import java.util.Collections;
 import java.util.HashMap;
 

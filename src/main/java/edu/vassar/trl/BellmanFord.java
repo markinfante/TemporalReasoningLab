@@ -1,4 +1,4 @@
-package src;
+package edu.vassar.trl;
 
 import java.util.*;
 
@@ -6,6 +6,7 @@ import java.util.*;
  * Implementation of the Bellman-Ford algorithm
  * 
  * @author Jonathan Fong
+ * @author Ciara O'Donnell
  */
 
 public class BellmanFord {
@@ -25,12 +26,14 @@ public class BellmanFord {
 		
 		for (int i = 0; i < network.getNumTimePoints(); i++)
 		{
-			tEdges.add(network.getEdge(i, i, true));
+			if (network.getEdge(i, i, true) != null)
+
+				tEdges.add(network.getEdge(i, i, true));
 			
 			// Adds all edges to the ArrayList of edges
-			for(Map.Entry<Integer,Double> entry : network.getPredsOf(i).entrySet())
+			for(Map.Entry<Integer,Double> entry : network.getSuccsOf(i).entrySet())
 			{
-				tEdges.add(network.getEdge(entry.getKey(), i, false));
+				tEdges.add(network.getEdge(i, entry.getKey(), true));
 			}
 		}
 	}
@@ -48,7 +51,6 @@ public class BellmanFord {
 		
 		for (int i = 0; i < network.getNumTimePoints()-1; i++)
 		{
-			// For each outgoing edge in successors
 			for (Edge tEdge : tEdges)
 			{
 				// Edit distance vector if needed
@@ -60,7 +62,6 @@ public class BellmanFord {
 				}
 			}
 		}	
-		
 		// Checking for negative cycles
 		for (Edge tEdge : tEdges)
 		{
@@ -70,7 +71,6 @@ public class BellmanFord {
 				return null;
 			}
 		}
-		
 		return distVector;
 	}
 }

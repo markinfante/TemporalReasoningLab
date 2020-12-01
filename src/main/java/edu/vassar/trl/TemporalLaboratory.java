@@ -1,4 +1,4 @@
-package src;
+package edu.vassar.trl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,6 +15,8 @@ import java.util.Scanner;
 public class TemporalLaboratory{
 
     private STN network;
+    private static final String PATH_TO_STN = "src/main/resources/stn/";
+    private static final String PATH_TO_STNU = "src/main/resources/stnu/";
 
     public TemporalLaboratory(){}
 
@@ -28,9 +30,10 @@ public class TemporalLaboratory{
         helpString += "\t-> \'help\' or \'h\' to print this message again.\n";
         helpString += "\t-> \'print\' or \'p\' to print a representation of the network.\n";
         helpString += "\t-> \'quit\' or \'q\' to quit.\n";
+        helpString += "\t-> \'johnsons\' or \'j\' to run Johnson's Algorithm on the network.\n";
         helpString += "\t-> \'add edge\' prompts the creation of a new edge. This can then be followed by:\n";
-        helpString += "\t\t-> \'inc\' to test the incrementor algorithm.\n";
-        helpString += "\t\t-> \'fwdback\' to test the forward backward propagation algorithm.\n";
+        helpString += "\t\t-> \'naive\' to test the incrementor algorithm. (ex. 'add edge 1 2 3.0 naive')\n";
+        helpString += "\t\t-> \'fwdback\' to test the forward backward propagation algorithm. (ex. 'add edge 1 2 3.0 fwdback')\n";
         System.out.println(helpString);
     }
 
@@ -107,7 +110,7 @@ public class TemporalLaboratory{
         
             if (ts.equals("y")){
                 try {  // Try to parse input file
-                    file = new File("resources/" + args[0]);
+                    file = new File(PATH_TO_STN + args[0]);
                     parser = new STNParser();
                     lab.network = parser.parseFile(file);
                     parser.echoFile(file);
@@ -135,7 +138,10 @@ public class TemporalLaboratory{
                         break;
                     } else if (ts.equals("help") || ts.equals("h")){
                         lab.printHelp();
-                    } else {
+                    } else if (ts.equals("johnsons") || ts.equals("j")){ 
+                        tSuite = new TestSuite();
+                        tSuite.testJohnsons(lab.network);
+                    }else {
                         try{
                             inputArgs = ts.split(" ");
                             switch(inputArgs[0]){
@@ -143,26 +149,24 @@ public class TemporalLaboratory{
                                     switch (inputArgs[1]){
                                         case "edge":
                                             // take in values for new edge
-                                            Integer x = Integer.parseInt(inputArgs[2]);
-                                            Integer y = Integer.parseInt(inputArgs[3]);
+                                            int x = Integer.parseInt(inputArgs[2]);
+                                            int y = Integer.parseInt(inputArgs[3]);
                                             Double z = Double.parseDouble(inputArgs[4]);
                                             // add edge to network
                                             // create new test suite
                                             tSuite = new TestSuite();
                                             // run stn test
                                             switch(inputArgs[5]){
-                                                case "inc":
-                                                    tSuite.testIncrementor((new Edge (x,y,z)), lab.network);
+                                                case "naive":
+                                                    tSuite.testNaive((new Edge (x,y,z)), lab.network);
                                                     // run new incrementor test (should print distance matrix)
                                                     break;
                                                 case "fwdback":
-                                                tSuite.testFwdBackPropagation((new Edge (x,y,z)), lab.network);
+                                                    tSuite.testFwdBackPropagation((new Edge (x,y,z)), lab.network);
                                             }
-
-                                           
                                             break;
                                         default:
-                                            System.out.println("BAD");
+                                            System.out.println("Error. (Maybe misspelled 'edge'?)");
                                             break;
                                     }
                                     break;
@@ -172,7 +176,7 @@ public class TemporalLaboratory{
                                     tSuite.testDispatchability(lab.network, startTimePoint);
                                     break;
                                 default:
-                                    System.out.println("BAD");
+                                    System.out.println("Error.");
                                     break;
                             }
                         } catch (Exception e){
@@ -195,14 +199,17 @@ public class TemporalLaboratory{
                     switch (option){
                         case "all":
                             try{
-                                file = new File("resources/");
+                                file = new File(PATH_TO_STN);
                                 parser = new STNParser();
                                 tSuite = new TestSuite();
                                 for (File f : file.listFiles()){
                                     tSTN = parser.parseFile(f);
                                     parser.echoFile(f);
-                                    tSuite.testSTN(tSTN);
-                                    tSuite.testConsistencyChecker(tSTN);
+                                    //tSuite.testSTN(tSTN);
+                                    //tSuite.testJohnsons(tSTN);
+                                    //tSuite.testConsistencyChecker(tSTN);
+                                    //tSuite.testNaive((new Edge (3,4,4.0)), tSTN);
+                                    
                                 }
                             } catch (Exception e){
                                 System.err.println(e);

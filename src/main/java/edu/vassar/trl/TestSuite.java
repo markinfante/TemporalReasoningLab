@@ -103,6 +103,7 @@ public class TestSuite {
         try {
             
             FloydWarshall fw = new FloydWarshall(stn);
+<<<<<<< HEAD:src/TestSuite.java
             System.out.println("Floyd Warshall Graph\n" + fw.generateMatrix().toString());
             // stn.setDistanceMatrix(fw.generateMatrix());
             DistanceMatrix basicDM = new DistanceMatrix();
@@ -115,12 +116,24 @@ public class TestSuite {
             HashMap<Integer,Integer> timePoints = dispatch.timeDispatchingAlgorithm(startTimePoint);
             display +=timePoints.toString();
 
+=======
+            stn.setDistanceMatrix(fw.generateMatrix());
+
+            Dispatchability dispatch = new Dispatchability(stn);
+            HashMap<Integer,Integer> timePoints = dispatch.timeDispatchingAlgorithm(startTimePoint);
+            display +=timePoints.toString();
+
+>>>>>>> d336cadb9c7682e2da60da19cbaf943d71e1a4f1:src/main/java/edu/vassar/trl/TestSuite.java
         } catch (Exception e){
             System.err.println("Failed: "+ e);
         }
         display += "\n========================================================\n\n";
 
+<<<<<<< HEAD:src/TestSuite.java
         // System.out.println(display);
+=======
+        System.out.println(display);
+>>>>>>> d336cadb9c7682e2da60da19cbaf943d71e1a4f1:src/main/java/edu/vassar/trl/TestSuite.java
     }
 }
 

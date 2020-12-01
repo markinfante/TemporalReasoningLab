@@ -1,4 +1,4 @@
-package src;
+package edu.vassar.trl;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ import java.util.*;
 public class STN {
     private TemporalNetworks networkType;       // Enum describing net type
     private List<String> timePointNames;        // List of strings representing time point names
-    private Integer numTimePoints;              // Number of nodes in the graph
+    private int numTimePoints;              // Number of nodes in the graph
     private DistanceMatrix distanceMatrix;      // A distance matrix initialized to null
 
     private List<HashMap<Integer, Double>> successors;   // A 2D vector that holds information about a node's successors.
@@ -23,6 +23,13 @@ public class STN {
 
     // Default constructor for simple temporal network
     public STN(){
+        networkType = TemporalNetworks.STN;
+        numSuccessors = new ArrayList<Integer>();
+        successors = new ArrayList<HashMap<Integer, Double>>(); //iniitialize successors as a Vector
+        predecessors = new ArrayList<HashMap<Integer, Double>>();
+    }
+    public STN(Integer numTimePoints){
+        this.numTimePoints = numTimePoints; 
         networkType = TemporalNetworks.STN;
         numSuccessors = new ArrayList<Integer>();
         successors = new ArrayList<HashMap<Integer, Double>>(); //iniitialize successors as a Vector
@@ -44,8 +51,8 @@ public class STN {
     }
 
     public void addEdge(Edge edge){ 
-        Integer x = edge.getStart();
-        Integer y = edge.getEnd();
+        int x = edge.getStart();
+        int y = edge.getEnd();
         Double d = edge.getWeight();
         Double w = successors.get(x).get(y);
         
@@ -62,8 +69,8 @@ public class STN {
 
     public void removeEdge(Edge edge){
         if(getEdge(edge.getStart(), edge.getEnd(), true) != null){
-            Integer x = edge.getStart();
-            Integer y = edge.getEnd();
+            int x = edge.getStart();
+            int y = edge.getEnd();
             
             successors.get(x).remove(y);
             predecessors.get(y).remove(x);
