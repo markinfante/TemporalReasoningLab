@@ -1,12 +1,12 @@
 package edu.vassar.trl;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.io.File;
+import java.util.*;
+// import java.io.File;
 
 /**
  * A Test Suite for testing STN's.  
  * @author Mark Infante
+ * @author Mike Jaklitsch
  */
 public class TestSuite {
 
@@ -38,6 +38,13 @@ public class TestSuite {
         System.out.println(display);
     }
 
+     /**
+     * Runs Johnson's algorithm and compares it to the output of Floyd Warshall.
+     * If they are the same (except for the diagonals), then it works!
+     * 
+     * For manual testing. 
+     * @param tSTN the local temporal network
+     */
     public void testJohnsons(STN tSTN){
         String display = "";
 
@@ -49,7 +56,6 @@ public class TestSuite {
             Johnsons jns = new Johnsons(tSTN);
             tSTN.setDistanceMatrix(jns.johnsonsAlgorithm());
             display += "Johnson's Distance matrix: \n" + tSTN.getDistanceMatrix().toString();
-            System.out.println("sydftyg");
         } catch (Exception e){
             System.err.println("Failed: "+ e);
         }
@@ -60,14 +66,16 @@ public class TestSuite {
 
     public void testNaive(Edge edge, STN tSTN){
         String display = "";
+        display += tSTN.toString() + "\n";
+        
         try {
             FloydWarshall fw = new FloydWarshall(tSTN);
             tSTN.setDistanceMatrix(fw.generateMatrix());
-            display += "Old DM:" + tSTN.getDistanceMatrix();
+            display += "Old distance matrix: \n" + tSTN.getDistanceMatrix().toString();
             NaiveAlgorithm na = new NaiveAlgorithm(tSTN);
             tSTN.setDistanceMatrix(na.updateDistanceMatrix(edge, tSTN.getDistanceMatrix()));
-            //FloydWarshall fw2 = new FloydWarshall(tSTN);
-            //display += "new fw" + fw2.generateMatrix();
+            FloydWarshall fw2 = new FloydWarshall(tSTN);
+            display += "new fw" + fw.generateMatrix();
             display += "New distance matrix: \n" + tSTN.getDistanceMatrix().toString() + "\n";
         } catch (Exception e){
             System.err.println("Failed: "+ e);
@@ -115,6 +123,32 @@ public class TestSuite {
         System.out.println(display);
     }
 
+    public void testDispatchability(STN stn, int startTimePoint){
+        String display = "Current STN:\n";
+        display += stn.toString() + "\n";
+        
+        try {
+            
+            FloydWarshall fw = new FloydWarshall(stn);
+            System.out.println("Floyd Warshall Graph\n" + fw.generateMatrix().toString());
+            // stn.setDistanceMatrix(fw.generateMatrix());
+            DistanceMatrix basicDM = new DistanceMatrix();
+            basicDM.makeCleanMatrixFromSTN(stn);
+            stn.setDistanceMatrix(basicDM);
 
-    
+            // System.out.println(stn.getDistanceMatrix().toString());
+
+            Dispatchability dispatch = new Dispatchability(stn);
+            HashMap<Integer,Integer> timePoints = dispatch.timeDispatchingAlgorithm(startTimePoint);
+            display +=timePoints.toString();
+
+        } catch (Exception e){
+            System.err.println("Failed: "+ e);
+        }
+        display += "\n========================================================\n\n";
+
+        // System.out.println(display);
+    }
 }
+
+
