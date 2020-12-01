@@ -208,6 +208,7 @@ public class TemporalLaboratory{
                                     //tSuite.testSTN(tSTN);
                                     //tSuite.testJohnsons(tSTN);
                                     //tSuite.testConsistencyChecker(tSTN);
+                                    tSuite.testRam(tSTN, new Edge(3,4,4.0));
                                     //tSuite.testNaive((new Edge (3,4,4.0)), tSTN);
                                     
                                 }

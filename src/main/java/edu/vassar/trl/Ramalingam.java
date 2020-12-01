@@ -29,7 +29,7 @@ package edu.vassar.trl;
           settled = new HashSet<Integer>();
       }
   
-      public ArrayList<Double> RamalingamNN(ArrayList<Double> potential, Edge newEdge, int source)
+      public ArrayList<Double> updatePotential(ArrayList<Double> potential, Edge newEdge, int source)
       {
           ArrayList<Double> output = new ArrayList<Double>();
           
@@ -49,7 +49,7 @@ package edu.vassar.trl;
               {
                   int v = entry.getKey();
                   double weight = entry.getValue();
-                  if (output.get(v) > (output.get(currNode) - weight))
+                  if (output.get(v) < (output.get(currNode) - weight))
                   {
                       output.set(v, (output.get(currNode) - weight));
                   }
