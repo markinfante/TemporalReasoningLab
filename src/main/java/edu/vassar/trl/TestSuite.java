@@ -36,8 +36,33 @@ public class TestSuite {
 
         System.out.println(display);
     }
+     /**
+     * Runs Johnson's algorithm and compares it to the output of Floyd Warshall.
+     * If they are the same (except for the diagonals), then it works!
+     * 
+     * For manual testing. 
+     * @param tSTN the local temporal network
+     */
+    public void testJohnsons(STN tSTN){
+        String display = "";
 
-    public void testIncrementor(Edge edge, STN tSTN){
+        display += String.format("Printing original network: \n%s\n\n", tSTN.toString());
+        try {
+            FloydWarshall fw = new FloydWarshall(tSTN);
+            tSTN.setDistanceMatrix(fw.generateMatrix());
+            display += "FW distance matrix: \n" + tSTN.getDistanceMatrix().toString();
+            Johnsons jns = new Johnsons(tSTN);
+            tSTN.setDistanceMatrix(jns.johnsonsAlgorithm());
+            display += "Johnson's Distance matrix: \n" + tSTN.getDistanceMatrix().toString();
+        } catch (Exception e){
+            System.err.println("Failed: "+ e);
+        }
+        display += "\n========================================================\n\n";
+
+        System.out.println(display);
+    }
+
+    public void testNaive(Edge edge, STN tSTN){
         String display = "";
         display += tSTN.toString() + "\n";
         
@@ -50,6 +75,32 @@ public class TestSuite {
             FloydWarshall fw2 = new FloydWarshall(tSTN);
             display += "new fw" + fw.generateMatrix();
             display += "New distance matrix: \n" + tSTN.getDistanceMatrix().toString() + "\n";
+        } catch (Exception e){
+            System.err.println("Failed: "+ e);
+        }
+        display += "\n========================================================\n\n";
+
+        System.out.println(display);
+    }
+    
+    public void testRam(STN tSTN, Edge newEdge){
+        String display = "Current STN:\n";
+        display += tSTN.toString() + "\n";
+        
+        try {
+            BellmanFord bf = new BellmanFord(tSTN);
+            ArrayList<Double> potential =  bf.generate_BF(0);
+            display += "Bellman ford outcome:" + potential;
+            if (potential != null)
+            {
+                Ramalingam r = new Ramalingam(tSTN);
+                display += "\nRamalingam 99 outcome:" + r.updatePotential(potential, newEdge, 0);
+            }
+            else
+            {
+                display += "\nRamalingam 99 outcome: null (negative weight cycle detected)";
+            }
+
         } catch (Exception e){
             System.err.println("Failed: "+ e);
         }
