@@ -73,7 +73,7 @@ public class TestSuite {
             NaiveAlgorithm na = new NaiveAlgorithm(tSTN);
             tSTN.setDistanceMatrix(na.updateDistanceMatrix(edge, tSTN.getDistanceMatrix()));
             FloydWarshall fw2 = new FloydWarshall(tSTN);
-            display += "new fw" + fw.generateMatrix();
+            display += "new fw" + fw2.generateMatrix();
             display += "New distance matrix: \n" + tSTN.getDistanceMatrix().toString() + "\n";
         } catch (Exception e){
             System.err.println("Failed: "+ e);
@@ -90,11 +90,11 @@ public class TestSuite {
         try {
             BellmanFord bf = new BellmanFord(tSTN);
             ArrayList<Double> potential =  bf.generate_BF(0);
-            display += "Bellman ford outcome:" + potential;
+            display += "Bellman ford outcome: " + potential;
             if (potential != null)
             {
                 Ramalingam r = new Ramalingam(tSTN);
-                display += "\nRamalingam 99 outcome:" + r.updatePotential(potential, newEdge, 0);
+                display += "\nRamalingam 99 outcome: " + r.updatePotential(potential, newEdge, 0);
             }
             else
             {
@@ -115,7 +115,7 @@ public class TestSuite {
         
         try {
             BellmanFord bf = new BellmanFord(tSTN);
-            display += "Bellman ford outcome:" + bf.generate_BF(0);
+            display += "Bellman ford outcome: " + bf.generate_BF(0);
         } catch (Exception e){
             System.err.println("Failed: "+ e);
         }
