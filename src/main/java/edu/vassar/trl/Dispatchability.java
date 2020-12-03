@@ -19,6 +19,63 @@ class Dispatchability{
         dm = network.getDistanceMatrix();
     }
 
+    public STN convert(){
+        STN newSTN = new STN();
+        FloydWarshall fw = new FloydWarshall(network);
+        DistanceMatrix apsp = fw.generateMatrix();
+        ArrayList<ArrayList<Boolean>> marks = new ArrayList<ArrayList<Boolean>>();
+        int timepoints = network.getNumTimePoints();
+        for (int i = 0; i < timepoints; i++){
+            for (int j = 0; j < timepoints; j++){
+                marks.get(i).add(false);
+            }
+        }
+
+        for (int i = 0; i < timepoints; i++){ // get first time point
+
+            
+            for (int j = 0; j < timepoints; j++){ // get time point connected to first
+                if(i == j){
+                    continue;
+                }                
+                if(apsp.get(i).get(j) != Double.POSITIVE_INFINITY && apsp.get(i).get(j) != null){ // i connects to j
+                    for (int k = 0; k < timepoints; k++){ // get time point connected to second
+                        if(j == k || i == k){
+                            continue;
+                        }     
+                        if((apsp.get(j).get(k) != Double.POSITIVE_INFINITY && apsp.get(j).get(k) != null) && // j connects to k and
+                            (apsp.get(i).get(k) != Double.POSITIVE_INFINITY && apsp.get(i).get(k) != null)){ // i connects to k
+                            // DistanceMatrix dm = network.getDistanceMatrix();
+                            if((apsp.get(i).get(j) + apsp.get(j).get(k) == apsp.get(i).get(k)) &&
+                              (apsp.get(i).get(k) + apsp.get(k).get(j) == apsp.get(i).get(j))){// dominate each other (bad relationship dynamics yikes)
+                                if(!marks.get(i).get(k) && !marks.get(i).get(j)){
+                                    marks.get(i).add(k, true);
+                                }
+                            } else if(apsp.get(j).get(k) >= 0 && apsp.get(i).get(k) >= 0){ // upper dom
+                                double ItoK = apsp.get(i).get(j) + apsp.get(j).get(k);
+                                if(ItoK == apsp.get(i).get(k)){ // upper dom
+                                    marks.get(i).add(k,true);
+                                }
+                            } else if(apsp.get(i).get(j) < 0 && apsp.get(i).get(k) < 0){ // lower dom
+                                double ItoK = apsp.get(i).get(j) + apsp.get(j).get(k);
+                                if(ItoK == apsp.get(i).get(k)){ // upper dom
+                                    marks.get(i).add(k,true);
+                                }
+                            } 
+                            // else if (){ 
+
+                            // }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        return newSTN;
+    }
+
     public void p(String str){
         System.out.println(str);
     }
