@@ -3,8 +3,8 @@ import java.util.*;
 /**
   * Implementation of Johnson's Algorithm to find shortest paths between every
   * pair of vertices in a given weighted directed graph.
-  * @author Nyala Jackson
   * @author Ciara O'Donnell
+  * @author Nyala Jackson
   * @version 1.0
   */
 

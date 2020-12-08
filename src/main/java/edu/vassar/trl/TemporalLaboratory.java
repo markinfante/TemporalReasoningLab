@@ -208,11 +208,13 @@ public class TemporalLaboratory{
                                 tSuite = new TestSuite();
                                 for (File f : file.listFiles()){
                                     tSTN = parser.parseFile(f);
-                                    parser.echoFile(f);
+                                    //parser.echoFile(f);
                                     //tSuite.testSTN(tSTN);
                                     //tSuite.testJohnsons(tSTN);
-                                    //tSuite.testConsistencyChecker(tSTN);
+                                    tSuite.testConsistencyChecker(tSTN);
                                     tSuite.testRam(tSTN, new Edge(3,4,4.0));
+                                    //tSTN.addEdge(new Edge (0,1,4.0));
+                                    //tSuite.testConsistencyChecker(tSTN);
                                     //tSuite.testNaive((new Edge (3,4,4.0)), tSTN);
                                     
                                 }

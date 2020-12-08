@@ -85,12 +85,12 @@ public class TestSuite {
     
     public void testRam(STN tSTN, Edge newEdge){
         String display = "Current STN:\n";
-        display += tSTN.toString() + "\n";
+        //display += tSTN.toString() + "\n";
         
         try {
             BellmanFord bf = new BellmanFord(tSTN);
             ArrayList<Double> potential =  bf.generate_BF(0);
-            display += "Bellman ford outcome: " + potential;
+            //display += "Bellman ford outcome: " + potential;
             if (potential != null)
             {
                 Ramalingam r = new Ramalingam(tSTN);
@@ -111,7 +111,7 @@ public class TestSuite {
 
     public void testConsistencyChecker(STN tSTN){
         String display = "";
-        display += "Original graph" + tSTN.toString() + "bellford\n";
+        //display += "Original graph" + tSTN.toString() + "bellford\n";
         
         try {
             BellmanFord bf = new BellmanFord(tSTN);

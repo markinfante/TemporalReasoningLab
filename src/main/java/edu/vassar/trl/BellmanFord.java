@@ -64,7 +64,7 @@ public class BellmanFord {
 		}	
 		// Checking for negative cycles
 		for (Edge tEdge : tEdges)
-		{
+		{	
 			if (distVector.get(tEdge.getStart()) != Double.POSITIVE_INFINITY &&
 				distVector.get(tEdge.getStart()) + tEdge.getWeight() < distVector.get(tEdge.getEnd()))
 			{
