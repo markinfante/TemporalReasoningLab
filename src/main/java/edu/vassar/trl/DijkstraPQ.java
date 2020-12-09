@@ -8,7 +8,7 @@ import java.util.*;
   */
 
 class DijkstraPQ{
-private int dist[];
+private double dist[];
 private Set<Integer> settled;
 private PriorityQueue<Edge> pq;
 private int numOfVertices; 
@@ -21,7 +21,7 @@ private STN tSTN;
 public DijkstraPQ(STN tSTN){
   this.tSTN = tSTN;
   this.numOfVertices = tSTN.getNumTimePoints();
-  dist = new int[numOfVertices];
+  dist = new double[numOfVertices];
   settled = new HashSet<Integer>();
   pq = new PriorityQueue<Edge>(new EdgeSort()); //create priority queue that prioritizes based on edge weights
 }
@@ -33,10 +33,10 @@ public DijkstraPQ(STN tSTN){
  * @param srcNode the source node
  * @return an array containing the shortest distances from a single source node to all other nodes in the graph
  */
-public int[] dijkstra(int srcNode){
+public double[] dijkstra(int srcNode){
   // set all the weights to "inf"
   for(int i = 0; i < numOfVertices; i++){
-    dist[i] = Integer.MAX_VALUE;
+    dist[i] = Double.POSITIVE_INFINITY;
   }
   // Add source node to the PQ
   pq.add(new Edge(0,srcNode, 0.0));
@@ -49,6 +49,11 @@ public int[] dijkstra(int srcNode){
     settled.add(minDistNode);
     e_Neighbours(minDistNode);
   }
+  for (int i = 0; i < dist.length; i++)
+  {
+    System.out.print(dist[i]);
+  }
+  System.out.println();
   return dist;
 }
 /**
@@ -73,7 +78,7 @@ private void e_Neighbours(Integer minDistNode){
 
       // if new distance is cheaper in cost
       if(newDistance < dist[entry.getKey()]){
-        dist[entry.getKey()] = (int) newDistance;
+        dist[entry.getKey()] = newDistance;
    
         // add the current node to the queue
         pq.add(new Edge(minDistNode,entry.getKey(),newDistance));

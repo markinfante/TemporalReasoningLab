@@ -70,7 +70,7 @@ public class Johnsons{
     }
 
     DijkstraPQ dpq = new DijkstraPQ(newNetwork);
-    int [] shortestPathsFromU; //this will hold the values from dijkstra's algorithm
+    double [] shortestPathsFromU; //this will hold the values from dijkstra's algorithm
 
     for (int u = 0; u < outputMatrix.size(); u++) //for each vertex u in the graph 
     {
