@@ -52,8 +52,19 @@ public class TestSuite {
             tSTN.setDistanceMatrix(fw.generateMatrix());
             display += "FW distance matrix: \n" + tSTN.getDistanceMatrix().toString();
             Johnsons jns = new Johnsons(tSTN);
-            tSTN.setDistanceMatrix(jns.johnsonsAlgorithm());
-            display += "Johnson's Distance matrix: \n" + tSTN.getDistanceMatrix().toString();
+            DistanceMatrix dm = jns.johnsonsAlgorithm();
+            if (dm == null)
+            {
+                System.out.println("Johnson's Algorithm could not be run.");
+                display += "\n========================================================\n\n";
+                System.out.println(display);
+                return;
+            }
+            else
+            {
+                tSTN.setDistanceMatrix(dm);
+                display += "Johnson's Distance matrix: \n" + tSTN.getDistanceMatrix().toString();
+            }
         } catch (Exception e){
             System.err.println("Failed: "+ e);
         }

@@ -3,8 +3,8 @@ import java.util.*;
 /**
   * Implementation of Johnson's Algorithm to find shortest paths between every
   * pair of vertices in a given weighted directed graph.
-  * @author Ciara O'Donnell
   * @author Nyala Jackson
+  * @author Ciara O'Donnell
   * @version 1.0
   */
 
@@ -34,7 +34,8 @@ public class Johnsons{
     ArrayList<Double> newDistances = bf.generate_BF(sourceNode); //these are our h(v)s (our potential function)
 
     if(newDistances == null){
-      System.out.println("Input graph has a negative weight cycle");
+      System.out.println("\nInput graph has a negative weight cycle");
+      return null;
     }
     else{
 

@@ -141,7 +141,7 @@ public class TemporalLaboratory{
                         lab.printHelp();
                     } else if (ts.equals("johnsons") || ts.equals("j")){ 
                         tSuite = new TestSuite();
-                        //tSuite.testJohnsons(lab.network);
+                        tSuite.testJohnsons(lab.network);
                     } else if (ts.equals("updateP") || ts.equals("up")){
                         tSuite = new TestSuite();
                         tSuite.testRam(lab.network, new Edge(3,4,4.0));
@@ -210,9 +210,9 @@ public class TemporalLaboratory{
                                     tSTN = parser.parseFile(f);
                                     //parser.echoFile(f);
                                     //tSuite.testSTN(tSTN);
-                                    //tSuite.testJohnsons(tSTN);
-                                    tSuite.testConsistencyChecker(tSTN);
-                                    tSuite.testRam(tSTN, new Edge(3,4,4.0));
+                                    tSuite.testJohnsons(tSTN);
+                                    //tSuite.testConsistencyChecker(tSTN);
+                                    //tSuite.testRam(tSTN, new Edge(3,4,4.0));
                                     //tSTN.addEdge(new Edge (0,1,4.0));
                                     //tSuite.testConsistencyChecker(tSTN);
                                     //tSuite.testNaive((new Edge (3,4,4.0)), tSTN);

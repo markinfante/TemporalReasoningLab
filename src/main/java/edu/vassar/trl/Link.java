@@ -11,7 +11,13 @@ public class Link
 {
     private int node;
     private double priority;
-
+    /***
+     * A custom comparator for Links. This method compares the priority of the first link to
+     * the priority of the second link.
+     * 
+     * @param node a node
+     * @param priority the priority associated with the node
+     */
     public Link(int node, double priority)
     {
         this.node = node;
@@ -28,7 +34,7 @@ public class Link
         return priority;
     }
 
-    @Override
+    @Override //overrride equals method in Object class
     public boolean equals(Object o)
     {
         if (o == this)
