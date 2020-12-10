@@ -49,11 +49,6 @@ public double[] dijkstra(int srcNode){
     settled.add(minDistNode);
     e_Neighbours(minDistNode);
   }
-  for (int i = 0; i < dist.length; i++)
-  {
-    System.out.print(dist[i]);
-  }
-  System.out.println();
   return dist;
 }
 /**
