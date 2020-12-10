@@ -76,6 +76,9 @@ public class Morris2006 {
                         for (Entry<Integer, Double> entry : network.getSuccsOf(U).entrySet()){ 
                             double nonNegCUV = nonNegCU + (entry.getValue() + h.get(U) - h.get(entry.getKey()));
                             // TODO: ADD TO Q OR UPDATE
+                            for (int j = 0; j < Q.size(); j++){
+                                
+                            }
                         }
                     }
                 }

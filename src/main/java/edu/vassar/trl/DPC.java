@@ -23,6 +23,9 @@ public class DPC {
         Collections.shuffle(shuffledNodes);  // Shuffle nodes in the graph
     }
 
+    public List<Integer> getPermutation(){
+        return shuffledNodes;
+    }
     /**
      * Checks network consistency according to Dechter's DPC algorithm.
      * Starts by shuffling list of nodes in the graph, then
