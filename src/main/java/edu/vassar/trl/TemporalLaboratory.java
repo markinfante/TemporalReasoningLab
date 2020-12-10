@@ -177,10 +177,33 @@ public class TemporalLaboratory{
                                     }
                                     break;
                                 case "dispatch":
-                                    int startTimePoint = Integer.parseInt(inputArgs[1]);
-                                    tSuite = new TestSuite();
-                                    tSuite.testDispatchability(lab.network, startTimePoint);
+                                    switch(inputArgs[1]){
+                                        case "greedy":
+                                            int startTimePoint = Integer.parseInt(inputArgs[2]);
+                                        
+                                            String greedyDisplay = "Current STN:\n";
+                                            greedyDisplay += lab.network.toString() + "\n";
+                                            System.out.print(greedyDisplay);
+                                            for (int i = 0; i < 100; i++){
+                                                tSuite = new TestSuite();
+                                                tSuite.testGreedyDispatchability(lab.network, startTimePoint);
+                                            }
+                                            break;
+                                        case "convert":
+                                            
+                                            String convertDisplay = "Current STN:\n";
+                                            convertDisplay += lab.network.toString() + "\n";
+                                            System.out.print(convertDisplay);
+                                            // System.out.print("booboo1\n");
+                                            tSuite = new TestSuite();
+                                            // System.out.print("booboo2\n");
+                                            tSuite.testConvertDispatchability(lab.network);
+                                            
+                                            break;
+                                            
+                                    }
                                     break;
+                                    
                                 default:
                                     System.out.println("Error.");
                                     break;

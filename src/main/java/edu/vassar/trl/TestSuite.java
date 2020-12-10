@@ -184,14 +184,14 @@ public class TestSuite {
         System.out.println(display);
     }
 
-    public void testDispatchability(STN stn, int startTimePoint){
-        String display = "Current STN:\n";
-        display += stn.toString() + "\n";
+    public void testGreedyDispatchability(STN stn, int startTimePoint){
+        String display =  "";//"Current STN:\n";
+        // display += stn.toString() + "\n";
         
         try {
             
             FloydWarshall fw = new FloydWarshall(stn);
-            System.out.println("Floyd Warshall Graph\n" + fw.generateMatrix().toString());
+            // System.out.println("Floyd Warshall Graph\n" + fw.generateMatrix().toString());
             // stn.setDistanceMatrix(fw.generateMatrix());
             DistanceMatrix basicDM = new DistanceMatrix();
             basicDM.makeCleanMatrixFromSTN(stn);
@@ -209,6 +209,33 @@ public class TestSuite {
         display += "\n========================================================\n\n";
 
         // System.out.println(display);
+    }
+
+
+    public void testConvertDispatchability(STN stn){
+        String display =  "";//"Current STN:\n";
+        // display += stn.toString() + "\n";
+        
+        try {
+            
+            // FloydWarshall fw = new FloydWarshall(stn);
+            // System.out.println("Floyd Warshall Graph\n" + fw.generateMatrix().toString());
+            // stn.setDistanceMatrix(fw.generateMatrix());
+            DistanceMatrix basicDM = new DistanceMatrix();
+            basicDM.makeCleanMatrixFromSTN(stn);
+            stn.setDistanceMatrix(basicDM);
+
+            // System.out.println(stn.getDistanceMatrix().toString());
+
+            Dispatchability dispatch = new Dispatchability(stn);
+            STN dominatedSTN = dispatch.convert();
+            display +=dominatedSTN.toString();
+
+        } catch (Exception e){
+            System.err.println("Failed: "+ e);
+        }
+        display += "\n========================================================\n\n";
+        System.out.println(display);
     }
 }
 

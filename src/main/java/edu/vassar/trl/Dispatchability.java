@@ -20,26 +20,35 @@ class Dispatchability{
     }
     
     public STN convert(){
-        STN newSTN = new STN();
+        // System.out.println("boo");
+        int timepoints = network.getNumTimePoints();
+        STN newSTN = new STN(timepoints);
+        newSTN.init();
         FloydWarshall fw = new FloydWarshall(network);
         DistanceMatrix apsp = fw.generateMatrix();
         ArrayList<ArrayList<Boolean>> marks = new ArrayList<ArrayList<Boolean>>();
-        int timepoints = network.getNumTimePoints();
+        
+        // System.out.println("timepoints");
+        // System.out.println("boo1");
         for (int i = 0; i < timepoints; i++){
+            marks.add(new ArrayList<Boolean>());
             for (int j = 0; j < timepoints; j++){
                 marks.get(i).add(false);
             }
         }
-
+        // System.out.println("boo11");
         for (int i = 0; i < timepoints; i++){ // get first time point
-
+            // System.out.println("boo2");
             for (int j = 0; j < timepoints; j++){ // get time point connected to first
+                // System.out.println("boo3");
                 if(i == j){
                     continue;
                 }                
                 if(apsp.get(i).get(j) != Double.POSITIVE_INFINITY && apsp.get(i).get(j) != null){ // i connects to j
                     for (int k = 0; k < timepoints; k++){ // get time point connected to second
+                        // System.out.println("boo4");
                         if(j == k || i == k){
+                            
                             continue;
                         }     
                         if((apsp.get(j).get(k) != Double.POSITIVE_INFINITY && apsp.get(j).get(k) != null) && // j connects to k and
@@ -66,7 +75,7 @@ class Dispatchability{
                 }
             }
         }
-        
+        // System.out.println("boo5");
         // Create a new STN, but without the marked edges
         for (int i = 0; i < timepoints; i++)
         {
@@ -77,20 +86,25 @@ class Dispatchability{
         		{
         			continue;
         		}
-        		// i is connected to j
+                // i is connected to j
+                // System.out.println("boo6");
         		if (apsp.get(i).get(j) != Double.POSITIVE_INFINITY && apsp.get(i).get(j) != null)
         		{
+                    // System.out.println("boo7");
         			// Marked means delete/skip, not marked means include in STN
         			if (!marks.get(i).get(j))
         			{
-        				Edge tEdge = new Edge(i, j, apsp.get(i).get(j));
-        				newSTN.addEdge(tEdge);
+                        // System.out.println("boo8");
+                        Edge tEdge = new Edge(i, j, apsp.get(i).get(j));
+                        // System.out.println("boo9");
+                        newSTN.addEdge(tEdge);
+                        // System.out.println("boo10");
         			}
         		}
         	}
         }
 
-
+        // System.out.println("booDone");
         return newSTN;
     }
 
@@ -117,8 +131,8 @@ class Dispatchability{
     }
 
     public HashMap<Integer,Integer> timeDispatchingAlgorithm(int startTimePoint){
-        System.out.println("timeDispatchingAlgorithm");
-        System.out.println("STN Edge Graph\n" + dm.toString());
+        // System.out.println("timeDispatchingAlgorithm");
+        // System.out.println("STN Edge Graph\n" + dm.toString());
         // note where pseudo code comes from
         // Reformulating Temporal Plans For Efficient Execution.pdf
         /*1. Let
@@ -147,9 +161,9 @@ class Dispatchability{
         // starting time includes 0
 
         while(frontier.size() > 0){
-            p("\ncurrent time: "+currentTime);
-            p("lower bound map: "+ lowerBoundMap.toString());
-            p("upper bound map: "+ upperBoundMap.toString());
+            // p("\ncurrent time: "+currentTime);
+            // p("lower bound map: "+ lowerBoundMap.toString());
+            // p("upper bound map: "+ upperBoundMap.toString());
             
            
             
@@ -238,16 +252,16 @@ class Dispatchability{
                     u = currentTime;
                 }
                 int v = Collections.min(uppers);
-                p("A" + frontier.toString());
-                p("S" + traversedNodes.toString());
-                p("u:"+u);
-                p("v:"+v);
+                // p("A" + frontier.toString());
+                // p("S" + traversedNodes.toString());
+                // p("u:"+u);
+                // p("v:"+v);
                 // check for legal range u <= v
                 if(u>v && u > 0 && v > 0){ 
                     p("Non-Dispatchable");
                     HashMap<Integer,Integer> badMap = new HashMap<Integer,Integer>();
                     badMap.put(-1, 0);
-                    p("valid time map? "+isValidTimeMap(startTimePoint, badMap));
+                    p("valid time map? =========> "+isValidTimeMap(startTimePoint, badMap));
                     return badMap;
                 }
                 // p(""+currentTime);
@@ -264,7 +278,7 @@ class Dispatchability{
             // 7. Go to 2 until every time point is in S.
         }
         p(timeMap.toString());
-        p("valid time map? "+isValidTimeMap(startTimePoint, timeMap));
+        p("valid time map? =========> "+isValidTimeMap(startTimePoint, timeMap));
         return timeMap;
 
     }
