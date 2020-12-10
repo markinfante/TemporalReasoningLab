@@ -45,10 +45,19 @@ public class DPC {
                     pred = network.getEdge(permutation.get(i), permutation.get(k), true);
                     succ = network.getEdge(permutation.get(k), permutation.get(j), true);
                     tEdge = network.getEdge(permutation.get(i), permutation.get(j), true);
+                    if (pred == null || succ == null || tEdge == null) 
+                        continue;
                     if (tEdge.getWeight() > pred.getWeight() + succ.getWeight()){ // relax
                         tEdge.setWeight(pred.getWeight() + succ.getWeight());
                     } 
-                    if (tEdge.getWeight() + network.getEdge(j, i, true).getWeight() < 0) return false;
+                    Edge newEdge = network.getEdge(permutation.get(j), permutation.get(i), true);
+                    if (newEdge == null)
+                    {
+                        continue;
+                    }
+                    if (tEdge.getWeight() + newEdge.getWeight() < 0) {
+                        return false;
+                    }
                 }
             }
         }
