@@ -29,6 +29,7 @@ public class Johnsons{
    */
   public DistanceMatrix johnsonsAlgorithm(){
     int sourceNode = 0;
+    double inf = Double.POSITIVE_INFINITY;
 
     BellmanFord bf = new BellmanFord(network); //creating bellman ford object
     ArrayList<Double> newDistances = bf.generate_BF(sourceNode); //these are our h(v)s (our potential function)
@@ -46,8 +47,12 @@ public class Johnsons{
       {
           for (int dest = 0; dest < network.getNumTimePoints(); dest++)
           {
-              outputMatrix.get(source).set(dest, outputMatrix.get(source).get(dest)
-              + newDistances.get(source) - newDistances.get(dest));
+            if (outputMatrix.get(source).get(dest)==inf || newDistances.get(source)== inf || newDistances.get(dest) == inf)
+                outputMatrix.get(source).set(dest, inf);
+            else{
+               outputMatrix.get(source).set(dest, outputMatrix.get(source).get(dest)
+               + newDistances.get(source) - newDistances.get(dest));
+            }
           } 
       }
     }
@@ -78,8 +83,13 @@ public class Johnsons{
         shortestPathsFromU = dpq.dijkstra(u); //run dijkstra using u as the source node
         for (int v = 0; v < outputMatrix.size(); v++)  //for each vertex v in the graph 
         {
-            outputMatrix.get(u).set(v, shortestPathsFromU[v] + newDistances.get(v) - newDistances.get(u));
-            //set elements of distance (output) matrix
+          if (shortestPathsFromU[v]==inf || newDistances.get(u)== inf || newDistances.get(v) == inf)
+            outputMatrix.get(u).set(v, inf);
+          else
+            {
+              outputMatrix.get(u).set(v, shortestPathsFromU[v] + newDistances.get(v) - newDistances.get(u));
+              //set elements of distance (output) matrix
+            }
         }
 
     }

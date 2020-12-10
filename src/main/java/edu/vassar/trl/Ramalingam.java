@@ -39,7 +39,6 @@ package edu.vassar.trl;
           source = newEdge.getEnd(); //A = source
           network.addEdge(newEdge); 
           ArrayList<Double> output = new ArrayList<Double>();
-          HashMap<Integer, Double> qTracker = new HashMap<Integer, Double>();
           
           for (int i = 0; i < potential.size(); i++) //copy potential function into output
           {
@@ -53,12 +52,10 @@ package edu.vassar.trl;
           keys[source] = 0; //A is the thing that i'm going to be getting the preds of, so pq.getEnd
   
           pq.add(new Link(source, 0.0));
-          //qTracker.put(source, 0.0);
   
           while (!pq.isEmpty())
           {
               int w = (int)pq.remove().getNode();
-              //qTracker.remove(w);
               settled.add(w);
               for (Map.Entry<Integer,Double> entry : network.getPredsOf(w).entrySet())
               {
