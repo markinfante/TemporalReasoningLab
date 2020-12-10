@@ -211,7 +211,8 @@ public class TemporalLaboratory{
                                 for (File f : file.listFiles()){
                                     tSTN = parser.parseFile(f);
                                     //parser.echoFile(f);
-                                    tSuite.testSTN(tSTN);
+                                    //tSuite.testFloydWarshall(tSTN);
+                                    tSuite.testDPC(tSTN);
                                     //tSuite.testJohnsons(tSTN);
                                     //tSuite.testConsistencyChecker(tSTN);
                                     //tSuite.testRam(tSTN, new Edge(3,4,4.0));
