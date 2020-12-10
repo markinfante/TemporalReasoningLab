@@ -16,19 +16,16 @@ public class TestSuite {
      * for manual testing. 
      * @param tSTN
      */
-    public void testSTN(STN tSTN){
+    public void testFloydWarshall(STN tSTN){
         String display = "";
 
         display += String.format("Printing original network: \n%s\n\n", tSTN.toString());
-        display += String.format("Successors List: %s \n\n", tSTN.getSuccs().toString());
-        display += String.format("Predecessors List: %s \n\n", tSTN.getPreds().toString());
+        //display += String.format("Successors List: %s \n\n", tSTN.getSuccs().toString());
+        //display += String.format("Predecessors List: %s \n\n", tSTN.getPreds().toString());
         try {
             FloydWarshall fw = new FloydWarshall(tSTN);
             tSTN.setDistanceMatrix(fw.generateMatrix());
             display += "Original distance matrix: \n" + tSTN.getDistanceMatrix().toString();
-            //DPC dpc = new DPC(tSTN);
-            //display += String.format("\nIs consistent (DPC): %s\n\n", String.valueOf(dpc.isConsistent()));
-            //display += String.format("New network: %s\n\n", tSTN.toString());
         } catch (Exception e){
             System.err.println("Failed: "+ e);
         }
@@ -36,6 +33,28 @@ public class TestSuite {
 
         System.out.println(display);
     }
+
+
+    public void testDPC(STN tSTN){
+        String display = "";
+
+        display += String.format("Printing original network: \n%s\n\n", tSTN.toString());
+        try {
+            DPC dpc = new DPC(tSTN);
+            List<Integer> shuffledNodes = new ArrayList<Integer>();
+            for (int i = 0; i < tSTN.getNumTimePoints(); i++){
+                shuffledNodes.add(i);
+            }
+            Collections.reverse(shuffledNodes); //permutation is just list in reverse
+            display += String.format("\nIs consistent (DPC): %s\n\n", String.valueOf(dpc.isConsistent(shuffledNodes)));
+        } catch (Exception e){
+            System.err.println("Failed: "+ e);
+        }
+        display += "\n========================================================\n\n";
+
+        System.out.println(display);
+    }
+
      /**
      * Runs Johnson's algorithm and compares it to the output of Floyd Warshall.
      * If they are the same (except for the diagonals), then it works!
@@ -73,6 +92,13 @@ public class TestSuite {
         System.out.println(display);
     }
 
+    /**
+     * Runs Naive's algorithm..
+     * 
+     * For manual testing. 
+     * @param tSTN the local temporal network
+     * @param edge the edge to be added
+     */
     public void testNaive(Edge edge, STN tSTN){
         String display = "";
         display += tSTN.toString() + "\n";
