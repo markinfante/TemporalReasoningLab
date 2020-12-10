@@ -41,20 +41,20 @@ public class STNUParser {
      * A1 1 10 C1
      */
 
-    public STN parseFile(File file) throws Exception {
+    public STNU parseFile(File file) throws Exception {
         Scanner fileScanner = null;
         String echo = "";
         String ts = ""; // Temp string
         Integer lStart = 0; // Local start node
         Integer lEnd = 0; // Local end node
         Double lWeight = 0.0; // Local edge weight
-        Double lX = 0.0;
-        Double lY = 0.0;
+        Integer lX = 0;
+        Integer lY = 0;
         Integer numTimePoints = 0; // Number of time points from input file
         Integer numLinks = 0;
         List<String> timePointNames = new ArrayList<String>(); // Time point names from input file
         List<String> pseudoEdge = new ArrayList<String>(); // An edge from input file in the format of string list
-        STN network = new STN();
+        STNU network = new STNU();
 
         try { // Try to read values from input file
             fileScanner = new Scanner(file);
@@ -77,6 +77,7 @@ public class STNUParser {
             fileScanner.nextLine();
             ts = fileScanner.nextLine();
             echo += "Number of Links: " + ts + "\n";
+            network.setNumCLinks(Integer.parseInt(ts));
             fileScanner.nextLine();
             ts = fileScanner.nextLine(); // Get time point names
             timePointNames = Arrays.asList(ts.split(" "));
@@ -89,6 +90,7 @@ public class STNUParser {
                 ts = fileScanner.nextLine();
                 pseudoEdge = Arrays.asList(ts.split(" "));
                 if (pseudoEdge.get(0).equals("#")) { // if attempt is start of links, break
+                    echo += "Contingent Links: \n";
                     break;
                 }
                 lStart = timePointNames.indexOf(pseudoEdge.get(0));
@@ -102,10 +104,10 @@ public class STNUParser {
                 pseudoEdge = Arrays.asList(ts.split(" "));
                 lStart = timePointNames.indexOf(pseudoEdge.get(0));
                 lEnd = timePointNames.indexOf(pseudoEdge.get(3));
-                lX = Double.parseDouble(pseudoEdge.get(1));
-                lY = Double.parseDouble(pseudoEdge.get(2));
-                echo += String.format("Start: %d. X: %f. Y: %f. End: %d.\n", lStart, lX, lY, lEnd);
-                //network.addLink(new Link(lStart, lX, lY, lEnd)); // TODO: Implement addLink
+                lX = Integer.parseInt(pseudoEdge.get(1));
+                lY = Integer.parseInt(pseudoEdge.get(2));
+                echo += String.format("Start: %d. X: %d. Y: %d. End: %d.\n", lStart, lX, lY, lEnd);
+                network.addLink(new Link(lStart, lX, lY, lEnd)); 
             }
             echo += "Finished network creation.\n";
         } catch (NullPointerException np) {
@@ -122,5 +124,14 @@ public class STNUParser {
 
         echoMap.put(file, echo); // Put echo string in map
         return network; // Return new network
+    }
+
+    /**
+     * Echos a file after its been parsed.
+     * @param file A File to be echoed.
+     */
+    public void echoFile(File file){
+        //TODO: Wrap in try catch, file may not have been parsed.
+        System.out.println(echoMap.get(file));
     }
 }

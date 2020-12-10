@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import edu.vassar.trl.stnu.STNUParser;
+
 /**  
  * Main class for project.
  * Creates specified Temporal Network from resource file and prompts user for action.
@@ -209,8 +211,8 @@ public class TemporalLaboratory{
                                 for (File f : file.listFiles()){
                                     tSTN = parser.parseFile(f);
                                     //parser.echoFile(f);
-                                    //tSuite.testSTN(tSTN);
-                                    tSuite.testJohnsons(tSTN);
+                                    tSuite.testSTN(tSTN);
+                                    //tSuite.testJohnsons(tSTN);
                                     //tSuite.testConsistencyChecker(tSTN);
                                     //tSuite.testRam(tSTN, new Edge(3,4,4.0));
                                     //tSuite.testNaive((new Edge (3,4,4.0)), tSTN);
@@ -222,6 +224,65 @@ public class TemporalLaboratory{
                             break;
                         default:
                             System.out.println("Not implemented.");
+                            break;
+                    }
+                    break;
+                default:
+                    System.out.println("Flag not recognized.");
+                    break;
+            }
+        } else if (args.length == 3){
+            flag = args[0];
+            option = args[1];
+            String netType = args[2];
+            switch (flag){
+                case "-t":
+                    switch (option){
+                        case "all":
+                            switch (netType){
+                                case "stn":
+                                try{
+                                    file = new File(PATH_TO_STN);
+                                    parser = new STNParser();
+                                    tSuite = new TestSuite();
+                                    for (File f : file.listFiles()){
+                                        tSTN = parser.parseFile(f);
+                                        //parser.echoFile(f);
+                                        tSuite.testSTN(tSTN);
+                                        //tSuite.testJohnsons(tSTN);
+                                        //tSuite.testConsistencyChecker(tSTN);
+                                        //tSuite.testRam(tSTN, new Edge(3,4,4.0));
+                                        //tSuite.testNaive((new Edge (3,4,4.0)), tSTN);
+                                        
+                                    }
+                                } catch (Exception e){
+                                    System.err.println(e);
+                                }
+                                    break;
+                                case "stnu":
+                                try{
+                                    file = new File(PATH_TO_STNU);
+                                    STNUParser parser2 = new STNUParser();
+                                    tSuite = new TestSuite();
+                                    for (File f : file.listFiles()){
+                                        tSTN = parser2.parseFile(f);
+                                        parser2.echoFile(f);
+                                        //tSuite.testJohnsons(tSTN);
+                                        //tSuite.testConsistencyChecker(tSTN);
+                                        //tSuite.testRam(tSTN, new Edge(3,4,4.0));
+                                        //tSuite.testNaive((new Edge (3,4,4.0)), tSTN);
+                                        
+                                    }
+                                } catch (Exception e){
+                                    System.err.println(e);
+                                }
+                                    break;
+                                default:
+                                    System.out.println("Net Type Not Implemented.");
+                            }
+                            break;
+                        default:
+                            System.out.println("Option Not Implemented.");
                             break;
                     }
                     break;
