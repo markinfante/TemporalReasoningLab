@@ -52,8 +52,19 @@ public class TestSuite {
             tSTN.setDistanceMatrix(fw.generateMatrix());
             display += "FW distance matrix: \n" + tSTN.getDistanceMatrix().toString();
             Johnsons jns = new Johnsons(tSTN);
-            tSTN.setDistanceMatrix(jns.johnsonsAlgorithm());
-            display += "Johnson's Distance matrix: \n" + tSTN.getDistanceMatrix().toString();
+            DistanceMatrix dm = jns.johnsonsAlgorithm();
+            if (dm == null)
+            {
+                System.out.println("Johnson's Algorithm could not be run.");
+                display += "\n========================================================\n\n";
+                System.out.println(display);
+                return;
+            }
+            else
+            {
+                tSTN.setDistanceMatrix(dm);
+                display += "Johnson's Distance matrix: \n" + tSTN.getDistanceMatrix().toString();
+            }
         } catch (Exception e){
             System.err.println("Failed: "+ e);
         }
@@ -85,12 +96,12 @@ public class TestSuite {
     
     public void testRam(STN tSTN, Edge newEdge){
         String display = "Current STN:\n";
-        display += tSTN.toString() + "\n";
+        //display += tSTN.toString() + "\n";
         
         try {
             BellmanFord bf = new BellmanFord(tSTN);
             ArrayList<Double> potential =  bf.generate_BF(0);
-            display += "Bellman ford outcome: " + potential;
+            //display += "Bellman ford outcome: " + potential;
             if (potential != null)
             {
                 Ramalingam r = new Ramalingam(tSTN);
@@ -111,7 +122,7 @@ public class TestSuite {
 
     public void testConsistencyChecker(STN tSTN){
         String display = "";
-        display += "Original graph" + tSTN.toString() + "bellford\n";
+        //display += "Original graph" + tSTN.toString() + "bellford\n";
         
         try {
             BellmanFord bf = new BellmanFord(tSTN);

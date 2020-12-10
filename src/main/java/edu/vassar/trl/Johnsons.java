@@ -34,7 +34,8 @@ public class Johnsons{
     ArrayList<Double> newDistances = bf.generate_BF(sourceNode); //these are our h(v)s (our potential function)
 
     if(newDistances == null){
-      System.out.println("Input graph has a negative weight cycle");
+      System.out.println("\nInput graph has a negative weight cycle");
+      return null;
     }
     else{
 
@@ -69,7 +70,7 @@ public class Johnsons{
     }
 
     DijkstraPQ dpq = new DijkstraPQ(newNetwork);
-    int [] shortestPathsFromU; //this will hold the values from dijkstra's algorithm
+    double [] shortestPathsFromU; //this will hold the values from dijkstra's algorithm
 
     for (int u = 0; u < outputMatrix.size(); u++) //for each vertex u in the graph 
     {
