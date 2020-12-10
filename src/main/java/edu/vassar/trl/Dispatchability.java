@@ -60,16 +60,35 @@ class Dispatchability{
                                 if(ItoK == apsp.get(i).get(k)){ // upper dom
                                     marks.get(i).add(k,true);
                                 }
-                            } 
-                            // else if (){ 
-
-                            // }
+                            }
                         }
                     }
                 }
             }
         }
-
+        
+        // Create a new STN, but without the marked edges
+        for (int i = 0; i < timepoints; i++)
+        {
+        	for (int j = 0; j < timepoints; j++)
+        	{
+        		// Skip checking if there's an edge from i to itself
+        		if (i == j)
+        		{
+        			continue;
+        		}
+        		// i is connected to j
+        		if (apsp.get(i).get(j) != Double.POSITIVE_INFINITY && apsp.get(i).get(j) != null)
+        		{
+        			// Marked means delete/skip, not marked means include in STN
+        			if (!marks.get(i).get(j))
+        			{
+        				Edge tEdge = new Edge(i, j, apsp.get(i).get(j));
+        				newSTN.addEdge(tEdge);
+        			}
+        		}
+        	}
+        }
 
 
         return newSTN;
