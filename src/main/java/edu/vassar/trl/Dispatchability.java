@@ -20,35 +20,34 @@ class Dispatchability{
     }
     
     public STN convert(){
-        // System.out.println("boo");
+    	// Initialize a new STN to add edges to
         int timepoints = network.getNumTimePoints();
         STN newSTN = new STN(timepoints);
         newSTN.init();
+        
+        // Get All-Pairs Shortest Path distance matrix
         FloydWarshall fw = new FloydWarshall(network);
         DistanceMatrix apsp = fw.generateMatrix();
-        ArrayList<ArrayList<Boolean>> marks = new ArrayList<ArrayList<Boolean>>();
         
-        // System.out.println("timepoints");
-        // System.out.println("boo1");
+        // Initialize the marks array
+        ArrayList<ArrayList<Boolean>> marks = new ArrayList<ArrayList<Boolean>>();
         for (int i = 0; i < timepoints; i++){
             marks.add(new ArrayList<Boolean>());
             for (int j = 0; j < timepoints; j++){
                 marks.get(i).add(false);
             }
         }
-        // System.out.println("boo11");
+
         for (int i = 0; i < timepoints; i++){ // get first time point
-            // System.out.println("boo2");
             for (int j = 0; j < timepoints; j++){ // get time point connected to first
-                // System.out.println("boo3");
+            	// Ensure that we are not comparing the same time point
                 if(i == j){
                     continue;
                 }                
                 if(apsp.get(i).get(j) != Double.POSITIVE_INFINITY && apsp.get(i).get(j) != null){ // i connects to j
                     for (int k = 0; k < timepoints; k++){ // get time point connected to second
-                        // System.out.println("boo4");
+                    	// Ensure that we are not comparing the same time point
                         if(j == k || i == k){
-                            
                             continue;
                         }     
                         if((apsp.get(j).get(k) != Double.POSITIVE_INFINITY && apsp.get(j).get(k) != null) && // j connects to k and
@@ -59,12 +58,12 @@ class Dispatchability{
                                 if(!marks.get(i).get(k) && !marks.get(i).get(j)){
                                     marks.get(i).add(k, true);
                                 }
-                            } else if(apsp.get(j).get(k) >= 0 && apsp.get(i).get(k) >= 0){ // upper dom
+                            } else if(apsp.get(j).get(k) >= 0 && apsp.get(i).get(k) >= 0){ // Check for upper domination
                                 double ItoK = apsp.get(i).get(j) + apsp.get(j).get(k);
                                 if(ItoK == apsp.get(i).get(k)){ // upper dom
                                     marks.get(i).add(k,true);
                                 }
-                            } else if(apsp.get(i).get(j) < 0 && apsp.get(i).get(k) < 0){ // lower dom
+                            } else if(apsp.get(i).get(j) < 0 && apsp.get(i).get(k) < 0){ // Check for lower domination
                                 double ItoK = apsp.get(i).get(j) + apsp.get(j).get(k);
                                 if(ItoK == apsp.get(i).get(k)){ // upper dom
                                     marks.get(i).add(k,true);
@@ -75,7 +74,7 @@ class Dispatchability{
                 }
             }
         }
-        // System.out.println("boo5");
+
         // Create a new STN, but without the marked edges
         for (int i = 0; i < timepoints; i++)
         {
@@ -86,25 +85,20 @@ class Dispatchability{
         		{
         			continue;
         		}
+        		
                 // i is connected to j
-                // System.out.println("boo6");
         		if (apsp.get(i).get(j) != Double.POSITIVE_INFINITY && apsp.get(i).get(j) != null)
         		{
-                    // System.out.println("boo7");
         			// Marked means delete/skip, not marked means include in STN
         			if (!marks.get(i).get(j))
         			{
-                        // System.out.println("boo8");
                         Edge tEdge = new Edge(i, j, apsp.get(i).get(j));
-                        // System.out.println("boo9");
                         newSTN.addEdge(tEdge);
-                        // System.out.println("boo10");
         			}
         		}
         	}
         }
 
-        // System.out.println("booDone");
         return newSTN;
     }
 
