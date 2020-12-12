@@ -94,8 +94,8 @@ class Dispatchability{
         			// Marked means delete/skip, not marked means include in STN
         			if (!marks.get(i).get(j))
         			{
-						Edge tEdge = new Edge(i, j, apsp.get(i).get(j));
-						newSTN.addEdge(tEdge);
+					Edge tEdge = new Edge(i, j, apsp.get(i).get(j));
+					newSTN.addEdge(tEdge);
         			}
         		}
         	}
