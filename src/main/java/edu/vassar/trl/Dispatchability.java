@@ -52,21 +52,23 @@ class Dispatchability{
                         }     
                         if((apsp.get(j).get(k) != Double.POSITIVE_INFINITY && apsp.get(j).get(k) != null) && // j connects to k and
                             (apsp.get(i).get(k) != Double.POSITIVE_INFINITY && apsp.get(i).get(k) != null)){ // i connects to k
-                            // DistanceMatrix dm = network.getDistanceMatrix();
-                            if((apsp.get(i).get(j) + apsp.get(j).get(k) == apsp.get(i).get(k)) &&
-                              (apsp.get(i).get(k) + apsp.get(k).get(j) == apsp.get(i).get(j))){// dominate each other (bad relationship dynamics yikes)
-                                if(!marks.get(i).get(k) && !marks.get(i).get(j)){
-                                    marks.get(i).add(k, true);
+                        	// Check for two-way domination (bad relationship dynamics yikes)
+                        	if((apsp.get(i).get(j) + apsp.get(j).get(k) == apsp.get(i).get(k)) &&
+                              (apsp.get(k).get(i) + apsp.get(i).get(j) == apsp.get(k).get(j)) &&  // Check triangle equalities
+                              (apsp.get(i).get(k) >= 0 && apsp.get(j).get(k) >= 0) &&  // Check for non-negative edges
+                              (apsp.get(k).get(i) < 0 && apsp.get(k).get(j) < 0)){  // Check for negative edges
+                                if(!marks.get(i).get(k) && !marks.get(k).get(j)){ // Only mark an edge if one of the edges isn't already marked
+                                    marks.get(i).set(k, true);
                                 }
                             } else if(apsp.get(j).get(k) >= 0 && apsp.get(i).get(k) >= 0){ // Check for upper domination
                                 double ItoK = apsp.get(i).get(j) + apsp.get(j).get(k);
-                                if(ItoK == apsp.get(i).get(k)){ // upper dom
-                                    marks.get(i).add(k,true);
+                                if(ItoK == apsp.get(i).get(k)){ // upper domination
+                                    marks.get(i).set(k, true);
                                 }
-                            } else if(apsp.get(i).get(j) < 0 && apsp.get(i).get(k) < 0){ // Check for lower domination
-                                double ItoK = apsp.get(i).get(j) + apsp.get(j).get(k);
-                                if(ItoK == apsp.get(i).get(k)){ // upper dom
-                                    marks.get(i).add(k,true);
+                            } else if(apsp.get(k).get(i) < 0 && apsp.get(k).get(j) < 0){ // Check for lower domination
+                                double KtoJ = apsp.get(k).get(i) + apsp.get(i).get(j);
+                                if(KtoJ == apsp.get(k).get(j)){ // lower domination
+                                    marks.get(k).set(j, true);
                                 }
                             }
                         }
